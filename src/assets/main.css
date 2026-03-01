@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-cyber-900 text-gray-100 font-sans antialiased;
+  background-image: 
+    radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.1) 0%, transparent 50%);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-cyber-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-cyber-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-cyber-accent;
+}
+
+/* Glass effect */
+.glass {
+  @apply bg-cyber-800/50 backdrop-blur-lg border border-cyber-600/30;
+}
+
+/* Neon text */
+.neon-text {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+/* Input focus ring */
+.cyber-input {
+  @apply bg-cyber-700 border border-cyber-600 rounded-lg px-4 py-3 
+         focus:outline-none focus:border-cyber-accent focus:ring-2 focus:ring-cyber-accent/20
+         transition-all duration-200 placeholder-gray-500;
+}
+
+/* Button styles */
+.cyber-btn {
+  @apply px-6 py-3 rounded-lg font-medium transition-all duration-200
+         flex items-center gap-2 justify-center;
+}
+
+.cyber-btn-primary {
+  @apply cyber-btn bg-gradient-to-r from-cyber-accent to-cyber-purple
+         hover:shadow-lg hover:shadow-cyber-accent/25 hover:scale-[1.02]
+         active:scale-[0.98];
+}
+
+.cyber-btn-secondary {
+  @apply cyber-btn bg-cyber-700 border border-cyber-600
+         hover:bg-cyber-600 hover:border-cyber-accent/50;
+}
+
+/* Code block */
+.code-block {
+  @apply bg-cyber-800 rounded-lg p-4 font-mono text-sm overflow-x-auto
+         border border-cyber-600/50;
+}
