@@ -18,7 +18,8 @@
           <div>
             <label class="block text-xs mb-1.5">姓名</label>
             <input 
-              v-model="config.basic.name"
+              :value="config.basic.name"
+              @input="updateConfig('basic.name', $event.target.value)"
               type="text" 
               placeholder="你的姓名"
               class="cyber-input w-full text-sm py-2"
@@ -28,7 +29,8 @@
           <div>
             <label class="block text-xs mb-1.5">职业</label>
             <input 
-              v-model="config.basic.occupation"
+              :value="config.basic.occupation"
+              @input="updateConfig('basic.occupation', $event.target.value)"
               type="text" 
               placeholder="例如：全栈开发工程师"
               class="cyber-input w-full text-sm py-2"
@@ -40,7 +42,8 @@
           <div>
             <label class="block text-xs mb-1.5">公司/组织</label>
             <input 
-              v-model="config.basic.company"
+              :value="config.basic.company"
+              @input="updateConfig('basic.company', $event.target.value)"
               type="text" 
               placeholder="你的公司"
               class="cyber-input w-full text-sm py-2"
@@ -49,7 +52,11 @@
 
           <div>
             <label class="block text-xs mb-1.5">工作年限</label>
-            <select v-model="config.basic.experience" class="cyber-input w-full text-sm py-2">
+            <select 
+              :value="config.basic.experience" 
+              @change="updateConfig('basic.experience', $event.target.value)"
+              class="cyber-input w-full text-sm py-2"
+            >
               <option value="">请选择</option>
               <option value="1-3年">1-3年</option>
               <option value="3-5年">3-5年</option>
@@ -63,7 +70,7 @@
       <!-- 技术背景 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
         <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Code2 class="w-4 h-4" />
+          <Code class="w-4 h-4" />
           技术背景
         </h3>
 
@@ -86,7 +93,8 @@
         <div>
           <label class="block text-xs mb-1.5">其他技术</label>
           <input 
-            v-model="config.tech.other"
+            :value="config.tech.other"
+            @input="updateConfig('tech.other', $event.target.value)"
             type="text" 
             placeholder="用逗号分隔，例如：GraphQL, Docker, Kubernetes"
             class="cyber-input w-full text-sm py-2"
@@ -105,17 +113,23 @@
           <label class="block text-xs mb-1.5">工作时间</label>
           <div class="flex items-center gap-2">
             <input 
-              v-model="config.workSchedule.start"
+              :value="config.workSchedule.start"
+              @input="updateConfig('workSchedule.start', $event.target.value)"
               type="time"
               class="cyber-input text-sm py-2"
             />
             <span class="text-gray-400">-</span>
             <input 
-              v-model="config.workSchedule.end"
+              :value="config.workSchedule.end"
+              @input="updateConfig('workSchedule.end', $event.target.value)"
               type="time"
               class="cyber-input text-sm py-2"
             />
-            <select v-model="config.workSchedule.timezone" class="cyber-input text-sm py-2 ml-2">
+            <select 
+              :value="config.workSchedule.timezone" 
+              @change="updateConfig('workSchedule.timezone', $event.target.value)"
+              class="cyber-input text-sm py-2 ml-2"
+            >
               <option value="UTC+8">UTC+8</option>
               <option value="UTC+0">UTC+0</option>
               <option value="UTC-5">UTC-5</option>
@@ -131,7 +145,8 @@
               class="flex items-center gap-2 cursor-pointer"
             >
               <input 
-                v-model="config.communication[pref.id]"
+                :checked="config.communication[pref.id]"
+                @change="updateCommunication(pref.id, $event.target.checked)"
                 type="checkbox"
                 class="w-4 h-4 rounded border-cyber-600 text-green-400"
               />
@@ -148,7 +163,8 @@
             >
               <span class="text-xs text-gray-500 w-5">{{ index + 1 }}.</span>
               <input 
-                v-model="config.priorities[index]"
+                :value="priority"
+                @input="updatePriority(index, $event.target.value)"
                 type="text"
                 class="cyber-input flex-1 text-xs py-2"
                 placeholder="例如：安全问题"
@@ -168,7 +184,7 @@
                 <ArrowDown class="w-3.5 h-3.5" />
               </button>
               <button 
-                @click="config.priorities.splice(index, 1)"
+                @click="removePriority(index)"
                 class="text-red-400 hover:text-red-300"
               >
                 <X class="w-3.5 h-3.5" />
@@ -176,7 +192,7 @@
             </div>
             <button 
               v-if="config.priorities.length < 6"
-              @click="config.priorities.push('')"
+              @click="addPriority"
               class="text-xs text-green-400 hover:text-green-300 flex items-center gap-1"
             >
               <Plus class="w-3.5 h-3.5" /> 添加优先级
@@ -188,14 +204,15 @@
       <!-- 项目信息 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
         <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <FolderOpen class="w-4 h-4" />
+          <Folder class="w-4 h-4" />
           项目信息
         </h3>
 
         <div>
           <label class="block text-xs mb-1.5">当前项目</label>
           <input 
-            v-model="config.project.name"
+            :value="config.project.name"
+            @input="updateConfig('project.name', $event.target.value)"
             type="text" 
             placeholder="项目名称"
             class="cyber-input w-full text-sm py-2"
@@ -205,7 +222,8 @@
         <div>
           <label class="block text-xs mb-1.5">技术栈</label>
           <input 
-            v-model="config.project.stack"
+            :value="config.project.stack"
+            @input="updateConfig('project.stack', $event.target.value)"
             type="text" 
             placeholder="例如：Next.js + Prisma + PostgreSQL"
             class="cyber-input w-full text-sm py-2"
@@ -215,7 +233,11 @@
         <div class="grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs mb-1.5">团队规模</label>
-            <select v-model="config.project.teamSize" class="cyber-input w-full text-sm py-2">
+            <select 
+              :value="config.project.teamSize" 
+              @change="updateConfig('project.teamSize', $event.target.value)"
+              class="cyber-input w-full text-sm py-2"
+            >
               <option value="">请选择</option>
               <option value="1人">1人</option>
               <option value="2-5人">2-5人</option>
@@ -226,7 +248,11 @@
 
           <div>
             <label class="block text-xs mb-1.5">项目状态</label>
-            <select v-model="config.project.status" class="cyber-input w-full text-sm py-2">
+            <select 
+              :value="config.project.status" 
+              @change="updateConfig('project.status', $event.target.value)"
+              class="cyber-input w-full text-sm py-2"
+            >
               <option value="">请选择</option>
               <option value="规划中">规划中</option>
               <option value="开发中">开发中</option>
@@ -242,13 +268,15 @@
 
 <script setup>
 import { 
-  User, Contact, Code2, Clock, FolderOpen,
+  User, Contact, Code, Clock, Folder,
   Plus, X, ArrowUp, ArrowDown
 } from 'lucide-vue-next'
 
 const props = defineProps({
   config: Object
 })
+
+const emit = defineEmits(['update:config'])
 
 const techCategories = [
   {
@@ -276,29 +304,69 @@ const communicationPrefs = [
   { id: 'detailed', label: '偏好详细的解释' }
 ]
 
+// 通用更新方法
+const updateConfig = (path, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const keys = path.split('.')
+  let target = newConfig
+  for (let i = 0; i < keys.length - 1; i++) {
+    target = target[keys[i]]
+  }
+  target[keys[keys.length - 1]] = value
+  emit('update:config', newConfig)
+}
+
 const toggleTech = (categoryId, tech) => {
-  const list = props.config.tech[categoryId]
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const list = newConfig.tech[categoryId]
   const index = list.indexOf(tech)
   if (index > -1) {
     list.splice(index, 1)
   } else {
     list.push(tech)
   }
+  emit('update:config', newConfig)
+}
+
+const updateCommunication = (id, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.communication[id] = value
+  emit('update:config', newConfig)
+}
+
+const updatePriority = (index, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.priorities[index] = value
+  emit('update:config', newConfig)
+}
+
+const addPriority = () => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.priorities.push('')
+  emit('update:config', newConfig)
+}
+
+const removePriority = (index) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.priorities.splice(index, 1)
+  emit('update:config', newConfig)
 }
 
 const movePriorityUp = (index) => {
-  if (index > 0) {
-    const temp = props.config.priorities[index]
-    props.config.priorities[index] = props.config.priorities[index - 1]
-    props.config.priorities[index - 1] = temp
-  }
+  if (index <= 0) return
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const temp = newConfig.priorities[index]
+  newConfig.priorities[index] = newConfig.priorities[index - 1]
+  newConfig.priorities[index - 1] = temp
+  emit('update:config', newConfig)
 }
 
 const movePriorityDown = (index) => {
-  if (index < props.config.priorities.length - 1) {
-    const temp = props.config.priorities[index]
-    props.config.priorities[index] = props.config.priorities[index + 1]
-    props.config.priorities[index + 1] = temp
-  }
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  if (index >= newConfig.priorities.length - 1) return
+  const temp = newConfig.priorities[index]
+  newConfig.priorities[index] = newConfig.priorities[index + 1]
+  newConfig.priorities[index + 1] = temp
+  emit('update:config', newConfig)
 }
 </script>

@@ -31,11 +31,13 @@
             <AgentsConfig 
               v-if="currentView === 'agents'"
               :config="config.agents"
+              @update:config="config.agents = $event"
             />
 
             <UserConfig 
               v-if="currentView === 'user'"
               :config="config.user"
+              @update:config="config.user = $event"
             />
 
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">

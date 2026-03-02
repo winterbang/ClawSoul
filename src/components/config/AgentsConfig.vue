@@ -17,7 +17,8 @@
         <div>
           <label class="block text-sm mb-2">身份</label>
           <input 
-            v-model="config.role.identity"
+            :value="config.role.identity"
+            @input="updateConfig('role.identity', $event.target.value)"
             type="text" 
             placeholder="例如：高级软件工程师助手"
             class="cyber-input w-full text-sm"
@@ -42,7 +43,11 @@
 
         <div>
           <label class="block text-sm mb-2">主要语言</label>
-          <select v-model="config.role.language" class="cyber-input w-full text-sm">
+          <select 
+            :value="config.role.language" 
+            @change="updateConfig('role.language', $event.target.value)"
+            class="cyber-input w-full text-sm"
+          >
             <option value="中文">中文</option>
             <option value="英文">英文</option>
             <option value="中英混合">中英混合（技术术语保持英文）</option>
@@ -65,7 +70,8 @@
             >
               <span class="text-xs text-gray-500 w-5">{{ index + 1 }}.</span>
               <input 
-                v-model="config.workflows[key][index]"
+                :value="step"
+                @input="updateWorkflow(key, index, $event.target.value)"
                 type="text"
                 class="cyber-input flex-1 text-xs py-2"
                 :placeholder="workflow.placeholder"
@@ -139,20 +145,21 @@
             class="flex items-center gap-2"
           >
             <input 
-              v-model="config.prohibitions[index]"
+              :value="item"
+              @input="updateProhibition(index, $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
               placeholder="例如：不要猜测用户意图，不确定时询问"
             />
             <button 
-              @click="config.prohibitions.splice(index, 1)"
+              @click="removeProhibition(index)"
               class="text-red-400 hover:text-red-300 px-1"
             >
               <X class="w-3.5 h-3.5" />
             </button>
           </div>
           <button 
-            @click="config.prohibitions.push('')"
+            @click="addProhibition"
             class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
           >
             <Plus class="w-3.5 h-3.5" /> 添加禁止项
@@ -172,26 +179,28 @@
             class="flex items-center gap-2"
           >
             <input 
-              v-model="cmd.trigger"
+              :value="cmd.trigger"
+              @input="updateCommand(index, 'trigger', $event.target.value)"
               type="text"
               class="cyber-input w-24 text-xs py-2"
               placeholder="/review"
             />
             <input 
-              v-model="cmd.action"
+              :value="cmd.action"
+              @input="updateCommand(index, 'action', $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
               placeholder="执行动作描述"
             />
             <button 
-              @click="config.commands.splice(index, 1)"
+              @click="removeCommand(index)"
               class="text-red-400 hover:text-red-300 px-1"
             >
               <X class="w-3.5 h-3.5" />
             </button>
           </div>
           <button 
-            @click="config.commands.push({trigger: '', action: ''})"
+            @click="addCommand"
             class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
           >
             <Plus class="w-3.5 h-3.5" /> 添加指令
@@ -242,38 +251,102 @@ const workflows = {
   }
 }
 
-const toggleSpecialty = (spec) => {
-  const index = props.config.role.specialties.indexOf(spec)
-  if (index > -1) {
-    props.config.role.specialties.splice(index, 1)
-  } else {
-    props.config.role.specialties.push(spec)
+// 通用更新方法
+const updateConfig = (path, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const keys = path.split('.')
+  let target = newConfig
+  for (let i = 0; i < keys.length - 1; i++) {
+    target = target[keys[i]]
   }
+  target[keys[keys.length - 1]] = value
+  emit('update:config', newConfig)
+}
+
+const toggleSpecialty = (spec) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const index = newConfig.role.specialties.indexOf(spec)
+  if (index > -1) {
+    newConfig.role.specialties.splice(index, 1)
+  } else {
+    newConfig.role.specialties.push(spec)
+  }
+  emit('update:config', newConfig)
 }
 
 const toggleFormat = (fmt) => {
-  const index = props.config.formats.indexOf(fmt)
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const index = newConfig.formats.indexOf(fmt)
   if (index > -1) {
-    props.config.formats.splice(index, 1)
+    newConfig.formats.splice(index, 1)
   } else {
-    props.config.formats.push(fmt)
+    newConfig.formats.push(fmt)
   }
+  emit('update:config', newConfig)
 }
 
 const toggleHabit = (habit) => {
-  const index = props.config.habits.indexOf(habit)
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  const index = newConfig.habits.indexOf(habit)
   if (index > -1) {
-    props.config.habits.splice(index, 1)
+    newConfig.habits.splice(index, 1)
   } else {
-    props.config.habits.push(habit)
+    newConfig.habits.push(habit)
   }
+  emit('update:config', newConfig)
+}
+
+const updateWorkflow = (key, index, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.workflows[key][index] = value
+  emit('update:config', newConfig)
 }
 
 const addWorkflowStep = (key) => {
-  props.config.workflows[key].push('')
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.workflows[key].push('')
+  emit('update:config', newConfig)
 }
 
 const removeWorkflowStep = (key, index) => {
-  props.config.workflows[key].splice(index, 1)
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.workflows[key].splice(index, 1)
+  emit('update:config', newConfig)
+}
+
+const updateProhibition = (index, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.prohibitions[index] = value
+  emit('update:config', newConfig)
+}
+
+const addProhibition = () => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.prohibitions.push('')
+  emit('update:config', newConfig)
+}
+
+const removeProhibition = (index) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.prohibitions.splice(index, 1)
+  emit('update:config', newConfig)
+}
+
+const updateCommand = (index, field, value) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.commands[index][field] = value
+  emit('update:config', newConfig)
+}
+
+const addCommand = () => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.commands.push({ trigger: '', action: '' })
+  emit('update:config', newConfig)
+}
+
+const removeCommand = (index) => {
+  const newConfig = JSON.parse(JSON.stringify(props.config))
+  newConfig.commands.splice(index, 1)
+  emit('update:config', newConfig)
 }
 </script>
