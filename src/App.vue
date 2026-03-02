@@ -430,11 +430,41 @@ const exportAsMarkdown = () => {
 }
 
 const copyToClipboard = async () => {
+  const text = previewContent.value
+  
+  // 尝试使用现代 API
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      await navigator.clipboard.writeText(text)
+      showToast('已复制到剪贴板！')
+      return
+    } catch (err) {
+      console.log('Clipboard API failed, trying fallback')
+    }
+  }
+  
+  // 降级方案：使用 textarea 复制
   try {
-    await navigator.clipboard.writeText(previewContent.value)
-    showToast('已复制到剪贴板！')
+    const textarea = document.createElement('textarea')
+    textarea.value = text
+    textarea.style.position = 'fixed'
+    textarea.style.left = '-9999px'
+    textarea.style.top = '0'
+    document.body.appendChild(textarea)
+    textarea.focus()
+    textarea.select()
+    
+    const successful = document.execCommand('copy')
+    document.body.removeChild(textarea)
+    
+    if (successful) {
+      showToast('已复制到剪贴板！')
+    } else {
+      showToast('复制失败，请手动复制')
+    }
   } catch (err) {
     showToast('复制失败，请手动复制')
+    console.error('Copy failed:', err)
   }
 }
 
