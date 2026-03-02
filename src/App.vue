@@ -160,7 +160,7 @@ import ToastNotification from './components/ToastNotification.vue'
 import { 
   presetEmojis, 
   roles, 
-  personalityTraits,
+  personalityTraits as defaultTraits,
   skillCategories,
   previewTabs,
   defaultConfig 
@@ -169,6 +169,9 @@ import {
 const currentView = ref('identity')
 const currentPreview = ref('identity')
 const config = reactive(JSON.parse(JSON.stringify(defaultConfig)))
+
+// 让 personalityTraits 响应式
+const personalityTraits = reactive(JSON.parse(JSON.stringify(defaultTraits)))
 const toast = reactive({ show: false, message: '' })
 
 const showToast = (message) => {
@@ -435,6 +438,11 @@ const copyToClipboard = async () => {
 const resetConfig = () => {
   if (confirm('确定要重置所有配置吗？')) {
     Object.assign(config, JSON.parse(JSON.stringify(defaultConfig)))
+    // 重置 personalityTraits
+    const newTraits = JSON.parse(JSON.stringify(defaultTraits))
+    personalityTraits.forEach((trait, index) => {
+      trait.value = newTraits[index].value
+    })
     currentView.value = 'identity'
     showToast('配置已重置')
   }
