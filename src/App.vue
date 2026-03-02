@@ -198,10 +198,8 @@ const updateRoleDesc = (roleId, desc) => {
 }
 
 const updatePersonalityTraits = (newTraits) => {
-  // 更新 personalityTraits 数组
-  newTraits.forEach((trait, index) => {
-    personalityTraits[index].value = trait.value
-  })
+  // 直接替换整个数组
+  personalityTraits.splice(0, personalityTraits.length, ...newTraits)
 }
 
 const updateAgentsConfig = (newConfig) => {
