@@ -430,13 +430,14 @@ const exportAsMarkdown = () => {
 }
 
 const copyToClipboard = async () => {
-  const text = previewContent.value
+  // 始终复制完整配置
+  const fullContent = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
   
   // 尝试使用现代 API
   if (navigator.clipboard && window.isSecureContext) {
     try {
-      await navigator.clipboard.writeText(text)
-      showToast('已复制到剪贴板！')
+      await navigator.clipboard.writeText(fullContent)
+      showToast('已复制完整配置到剪贴板！')
       return
     } catch (err) {
       console.log('Clipboard API failed, trying fallback')
@@ -446,7 +447,7 @@ const copyToClipboard = async () => {
   // 降级方案：使用 textarea 复制
   try {
     const textarea = document.createElement('textarea')
-    textarea.value = text
+    textarea.value = fullContent
     textarea.style.position = 'fixed'
     textarea.style.left = '-9999px'
     textarea.style.top = '0'
@@ -458,7 +459,7 @@ const copyToClipboard = async () => {
     document.body.removeChild(textarea)
     
     if (successful) {
-      showToast('已复制到剪贴板！')
+      showToast('已复制完整配置到剪贴板！')
     } else {
       showToast('复制失败，请手动复制')
     }
