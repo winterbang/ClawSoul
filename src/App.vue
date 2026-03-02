@@ -142,6 +142,7 @@
           :current-tab="currentPreview"
           :tabs="previewTabs"
           @change-tab="currentPreview = $event"
+          @copy-current="copyCurrentTab"
         />
       </div>
     </main>
@@ -432,12 +433,50 @@ const exportAsMarkdown = () => {
 const copyToClipboard = async () => {
   // 始终复制完整配置
   const fullContent = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+  await doCopy(fullContent, '已复制完整配置到剪贴板！')
+}
+
+const copyCurrentTab = async () => {
+  // 根据当前选中的标签页复制对应内容
+  let content = ''
+  let message = ''
   
+  switch (currentPreview.value) {
+    case 'identity':
+      content = generatedIdentity.value
+      message = '已复制 IDENTITY 到剪贴板！'
+      break
+    case 'soul':
+      content = generatedSoul.value
+      message = '已复制 SOUL 到剪贴板！'
+      break
+    case 'agents':
+      content = generatedAgents.value
+      message = '已复制 AGENTS 到剪贴板！'
+      break
+    case 'user':
+      content = generatedUser.value
+      message = '已复制 USER 到剪贴板！'
+      break
+    case 'memory':
+      content = generatedMemory.value
+      message = '已复制 MEMORY 到剪贴板！'
+      break
+    default:
+      // 完整模式
+      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+      message = '已复制完整配置到剪贴板！'
+  }
+  
+  await doCopy(content, message)
+}
+
+const doCopy = async (text, successMessage) => {
   // 尝试使用现代 API
   if (navigator.clipboard && window.isSecureContext) {
     try {
-      await navigator.clipboard.writeText(fullContent)
-      showToast('已复制完整配置到剪贴板！')
+      await navigator.clipboard.writeText(text)
+      showToast(successMessage)
       return
     } catch (err) {
       console.log('Clipboard API failed, trying fallback')
@@ -447,7 +486,7 @@ const copyToClipboard = async () => {
   // 降级方案：使用 textarea 复制
   try {
     const textarea = document.createElement('textarea')
-    textarea.value = fullContent
+    textarea.value = text
     textarea.style.position = 'fixed'
     textarea.style.left = '-9999px'
     textarea.style.top = '0'
@@ -459,7 +498,7 @@ const copyToClipboard = async () => {
     document.body.removeChild(textarea)
     
     if (successful) {
-      showToast('已复制完整配置到剪贴板！')
+      showToast(successMessage)
     } else {
       showToast('复制失败，请手动复制')
     }
