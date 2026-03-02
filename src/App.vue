@@ -41,6 +41,12 @@
               @update:config="updateUserConfig"
             />
 
+            <MemoryConfig 
+              v-if="currentView === 'memory'"
+              :config="config.memory"
+              @update:config="updateMemoryConfig"
+            />
+
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">
               <h2 class="text-xl font-semibold flex items-center gap-2">
                 <span class="text-cyber-pink">⚡</span>
@@ -106,6 +112,10 @@
                       <span>USER：</span>
                       <span class="text-cyber-accent">{{ config.user.basic.name || '未配置' }}</span>
                     </div>
+                    <div class="flex justify-between">
+                      <span>MEMORY：</span>
+                      <span class="text-cyber-accent">{{ config.memory.memories.length + config.memory.decisions.length + config.memory.lessons.length }} 条</span>
+                    </div>
                   </div>
                 </div>
 
@@ -143,6 +153,7 @@ import IdentityConfig from './components/config/IdentityConfig.vue'
 import SoulConfig from './components/config/SoulConfig.vue'
 import AgentsConfig from './components/config/AgentsConfig.vue'
 import UserConfig from './components/config/UserConfig.vue'
+import MemoryConfig from './components/config/MemoryConfig.vue'
 import PreviewPanel from './components/PreviewPanel.vue'
 import ToastNotification from './components/ToastNotification.vue'
 
@@ -196,6 +207,10 @@ const updateAgentsConfig = (newConfig) => {
 
 const updateUserConfig = (newConfig) => {
   Object.assign(config.user, newConfig)
+}
+
+const updateMemoryConfig = (newConfig) => {
+  Object.assign(config.memory, newConfig)
 }
 
 const getRoleNames = () => {
@@ -322,12 +337,68 @@ const generatedUser = computed(() => {
 
 // 生成 MEMORY.md
 const generatedMemory = computed(() => {
-  const skillList = config.skills.map(s => {
-    const skill = skillCategories.flatMap(c => c.skills).find(x => x.id === s)
-    return skill ? `- **${skill.name}**: ${skill.description}` : `- ${s}`
-  }).join('\n')
-
-  return `# MEMORY.md\n\n## 已安装 Skills\n\n${skillList}`
+  const hasContent = config.memory.memories.length > 0 ||
+    config.memory.decisions.length > 0 ||
+    config.memory.lessons.length > 0 ||
+    config.memory.projectContext ||
+    config.memory.preferences.length > 0 ||
+    config.memory.security.length > 0
+  
+  if (!hasContent) return '# MEMORY.md\n\n（未配置）'
+  
+  let result = '# MEMORY.md\n\n'
+  
+  // 重要记忆
+  if (config.memory.memories.some(m => m)) {
+    result += '## 重要记忆\n\n'
+    config.memory.memories.filter(m => m).forEach((memory, i) => {
+      result += `${i + 1}. ${memory}\n`
+    })
+    result += '\n'
+  }
+  
+  // 决策记录
+  if (config.memory.decisions.some(d => d.title || d.reason)) {
+    result += '## 决策记录\n\n'
+    config.memory.decisions.filter(d => d.title || d.reason).forEach((decision, i) => {
+      result += `### ${decision.title || '未命名决策'}\n${decision.reason || '未记录原因'}\n\n`
+    })
+  }
+  
+  // 经验教训
+  if (config.memory.lessons.some(l => l)) {
+    result += '## 经验教训\n\n'
+    config.memory.lessons.filter(l => l).forEach((lesson, i) => {
+      result += `- ${lesson}\n`
+    })
+    result += '\n'
+  }
+  
+  // 项目上下文
+  if (config.memory.projectContext) {
+    result += '## 项目上下文\n\n'
+    result += config.memory.projectContext + '\n\n'
+  }
+  
+  // 个人偏好
+  if (config.memory.preferences.some(p => p.key || p.value)) {
+    result += '## 个人偏好\n\n'
+    config.memory.preferences.filter(p => p.key || p.value).forEach(pref => {
+      result += `- **${pref.key || '未命名'}**: ${pref.value || '未指定'}\n`
+    })
+    result += '\n'
+  }
+  
+  // 安全提醒
+  if (config.memory.security.some(s => s)) {
+    result += '## 安全提醒\n\n'
+    config.memory.security.filter(s => s).forEach((reminder, i) => {
+      result += `- ⚠️ ${reminder}\n`
+    })
+    result += '\n'
+  }
+  
+  return result
 })
 
 const previewContent = computed(() => {

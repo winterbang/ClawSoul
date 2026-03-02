@@ -160,5 +160,14 @@ export const defaultConfig = {
       status: ''
     }
   },
+  // MEMORY.md 配置
+  memory: {
+    memories: [],
+    decisions: [],
+    lessons: [],
+    projectContext: '',
+    preferences: [],
+    security: []
+  },
   skills: ['searxng', 'opencode', 'find-skill'],
 }

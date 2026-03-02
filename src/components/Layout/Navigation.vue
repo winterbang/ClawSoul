@@ -67,7 +67,7 @@
 
 <script setup>
 import { 
-  Fingerprint, Sparkles, Bot, User, Wrench, 
+  Fingerprint, Sparkles, Bot, User, Brain, Wrench, 
   Download, RotateCcw 
 } from 'lucide-vue-next'
 
@@ -85,6 +85,7 @@ const identitySteps = [
 const behaviorSteps = [
   { id: 'agents', name: '行为', icon: Bot },
   { id: 'user', name: '用户', icon: User },
+  { id: 'memory', name: '记忆', icon: Brain },
   { id: 'skills', name: '技能', icon: Wrench },
 ]
 </script>
