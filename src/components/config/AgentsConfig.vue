@@ -14,10 +14,15 @@
     <div class="space-y-6">
       <!-- 角色定位 -->
       <div class="space-y-4">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Target class="w-4 h-4" />
-          角色定位
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Target class="w-4 h-4" />
+            角色定位
+          </h3>
+          <TooltipIcon>
+            定义 AI 的身份、专长和语言偏好
+          </TooltipIcon>
+        </div>
         
         <div>
           <label class="block text-sm mb-2">身份</label>
@@ -62,10 +67,15 @@
 
       <!-- 工作方式 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Settings class="w-4 h-4" />
-          工作方式
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Settings class="w-4 h-4" />
+            工作方式
+          </h3>
+          <TooltipIcon>
+            定义不同类型任务的处理流程
+          </TooltipIcon>
+        </div>
 
         <div v-for="(workflow, key) in workflows" :key="key" class="space-y-2">
           <label class="block text-sm font-medium">{{ workflow.name }}</label>
@@ -100,10 +110,15 @@
 
       <!-- 回答风格 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <MessageSquare class="w-4 h-4" />
-          回答风格
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <MessageSquare class="w-4 h-4" />
+            回答风格
+          </h3>
+          <TooltipIcon>
+            定义 AI 的回复格式和语言习惯
+          </TooltipIcon>
+        </div>
         
         <div>
           <label class="block text-sm mb-2">格式要求</label>
@@ -140,10 +155,15 @@
 
       <!-- 禁止事项 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Shield class="w-4 h-4" />
-          禁止事项
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Shield class="w-4 h-4" />
+            禁止事项
+          </h3>
+          <TooltipIcon>
+            定义 AI 不应该做的事情，设置安全边界
+          </TooltipIcon>
+        </div>
         
         <div class="space-y-2">
           <div v-for="(item, index) in config.prohibitions" :key="index"
@@ -174,10 +194,15 @@
 
       <!-- 特殊指令 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Command class="w-4 h-4" />
-          特殊指令
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Command class="w-4 h-4" />
+            特殊指令
+          </h3>
+          <TooltipIcon>
+            定义快捷指令，触发特定操作
+          </TooltipIcon>
+        </div>
         
         <div class="space-y-2">
           <div v-for="(cmd, index) in config.commands" :key="index"

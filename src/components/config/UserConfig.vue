@@ -14,10 +14,15 @@
     <div class="space-y-6">
       <!-- 基本信息 -->
       <div class="space-y-4">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Contact class="w-4 h-4" />
-          基本信息
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Contact class="w-4 h-4" />
+            基本信息
+          </h3>
+          <TooltipIcon>
+            让 AI 知道如何称呼你，了解你的职业背景
+          </TooltipIcon>
+        </div>
         
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -74,10 +79,15 @@
 
       <!-- 技术背景 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Code class="w-4 h-4" />
-          技术背景
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Code class="w-4 h-4" />
+            技术背景
+          </h3>
+          <TooltipIcon>
+            帮助 AI 了解你的技术栈，在回答时使用你熟悉的技术举例
+          </TooltipIcon>
+        </div>
 
         <div v-for="category in techCategories" :key="category.id" class="space-y-2">
           <label class="block text-xs font-medium">{{ category.name }}</label>
@@ -109,10 +119,15 @@
 
       <!-- 工作习惯 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Clock class="w-4 h-4" />
-          工作习惯
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Clock class="w-4 h-4" />
+            工作习惯
+          </h3>
+          <TooltipIcon>
+            让 AI 了解你的工作节奏和沟通偏好，提供更贴合的服务
+          </TooltipIcon>
+        </div>
 
         <div>
           <label class="block text-xs mb-1.5">工作时间</label>
@@ -208,10 +223,15 @@
 
       <!-- 项目信息 -->
       <div class="space-y-4 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Folder class="w-4 h-4" />
-          项目信息
-        </h3>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Folder class="w-4 h-4" />
+            项目信息
+          </h3>
+          <TooltipIcon>
+            让 AI 了解你当前的项目背景，提供更有针对性的建议
+          </TooltipIcon>
+        </div>
 
         <div>
           <label class="block text-xs mb-1.5">当前项目</label>

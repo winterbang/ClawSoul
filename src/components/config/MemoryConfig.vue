@@ -14,11 +14,15 @@
     <div class="space-y-6">
       <!-- 重要记忆 -->
       <div class="space-y-3">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Star class="w-4 h-4" />
-          重要记忆
-        </h3>
-        <p class="text-xs text-gray-500">记录重要的对话、决策、关键信息</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Star class="w-4 h-4" />
+            重要记忆
+          </h3>
+          <TooltipIcon>
+            记录重要的对话、决策、关键信息
+          </TooltipIcon>
+        </div>
         <div class="space-y-2">
           <div v-for="(memory, index) in config.memories" :key="index"
             class="flex items-start gap-2"
@@ -49,11 +53,15 @@
 
       <!-- 决策记录 -->
       <div class="space-y-3 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <GitCommit class="w-4 h-4" />
-          决策记录
-        </h3>
-        <p class="text-xs text-gray-500">记录重要的决定及其原因</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <GitCommit class="w-4 h-4" />
+            决策记录
+          </h3>
+          <TooltipIcon>
+            记录重要的决定及其原因
+          </TooltipIcon>
+        </div>
         <div class="space-y-2">
           <div v-for="(decision, index) in config.decisions" :key="index"
             class="space-y-2 p-3 bg-cyber-800/30 rounded-lg"
@@ -92,11 +100,15 @@
 
       <!-- 经验教训 -->
       <div class="space-y-3 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Lightbulb class="w-4 h-4" />
-          经验教训
-        </h3>
-        <p class="text-xs text-gray-500">记录学到的教训，避免重复犯错</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Lightbulb class="w-4 h-4" />
+            经验教训
+          </h3>
+          <TooltipIcon>
+            记录学到的教训，避免重复犯错
+          </TooltipIcon>
+        </div>
         <div class="space-y-2">
           <div v-for="(lesson, index) in config.lessons" :key="index"
             class="flex items-start gap-2"
@@ -127,11 +139,15 @@
 
       <!-- 项目上下文 -->
       <div class="space-y-3 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <FolderOpen class="w-4 h-4" />
-          项目上下文
-        </h3>
-        <p class="text-xs text-gray-500">记录当前正在进行的项目相关信息</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <FolderOpen class="w-4 h-4" />
+            项目上下文
+          </h3>
+          <TooltipIcon>
+            记录当前正在进行的项目相关信息
+          </TooltipIcon>
+        </div>
         <textarea 
           :value="config.projectContext"
           @input="updateConfig('projectContext', $event.target.value)"
@@ -143,11 +159,15 @@
 
       <!-- 个人偏好 -->
       <div class="space-y-3 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Heart class="w-4 h-4" />
-          个人偏好
-        </h3>
-        <p class="text-xs text-gray-500">记录用户的喜好和偏好</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Heart class="w-4 h-4" />
+            个人偏好
+          </h3>
+          <TooltipIcon>
+            记录用户的喜好和偏好
+          </TooltipIcon>
+        </div>
         <div class="space-y-2">
           <div v-for="(pref, index) in config.preferences" :key="index"
             class="flex items-center gap-2"
@@ -184,11 +204,15 @@
 
       <!-- 安全提醒 -->
       <div class="space-y-3 pt-4 border-t border-cyber-600/30">
-        <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-          <Shield class="w-4 h-4" />
-          安全提醒
-        </h3>
-        <p class="text-xs text-gray-500">记录安全相关的注意事项</p>
+        <div class="flex items-center gap-2">
+          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+            <Shield class="w-4 h-4" />
+            安全提醒
+          </h3>
+          <TooltipIcon>
+            记录安全相关的注意事项
+          </TooltipIcon>
+        </div>
         <div class="space-y-2">
           <div v-for="(reminder, index) in config.security" :key="index"
             class="flex items-start gap-2"
