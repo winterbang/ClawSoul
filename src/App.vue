@@ -225,7 +225,15 @@ const generatedSoul = computed(() => {
 
 // 生成 AGENTS.md
 const generatedAgents = computed(() => {
-  if (!config.agents.role.identity) return '# AGENTS.md\n\n（未配置）'
+  const hasRoleInfo = config.agents.role.identity || config.agents.role.specialties.length > 0
+  const hasWorkflows = Object.values(config.agents.workflows).some(steps => steps.some(s => s))
+  const hasFormats = config.agents.formats.length > 0 || config.agents.habits.length > 0
+  const hasProhibitions = config.agents.prohibitions.some(p => p)
+  const hasCommands = config.agents.commands.some(c => c.trigger && c.action)
+  
+  if (!hasRoleInfo && !hasWorkflows && !hasFormats && !hasProhibitions && !hasCommands) {
+    return '# AGENTS.md\n\n（未配置）'
+  }
   
   const workflowText = Object.entries(config.agents.workflows)
     .filter(([_, steps]) => steps.some(s => s))
@@ -245,7 +253,29 @@ const generatedAgents = computed(() => {
     .map(c => `- ${c.trigger}: ${c.action}`)
     .join('\n')
 
-  return `# AGENTS.md\n\n## 角色定位\n- **身份**: ${config.agents.role.identity}\n- **专长**: ${config.agents.role.specialties.join('、') || '未指定'}\n- **语言**: ${config.agents.role.language}\n\n## 工作方式\n${workflowText}\n\n## 回答风格\n### 格式要求\n${config.agents.formats.map(f => `- ${f}`).join('\n')}\n\n### 语言习惯\n${config.agents.habits.map(h => `- ${h}`).join('\n')}\n\n## 禁止事项\n${prohibitionText}\n\n## 特殊指令\n${commandText}`
+  let result = '# AGENTS.md\n\n'
+  
+  if (hasRoleInfo) {
+    result += `## 角色定位\n- **身份**: ${config.agents.role.identity || '未指定'}\n- **专长**: ${config.agents.role.specialties.join('、') || '未指定'}\n- **语言**: ${config.agents.role.language}\n\n`
+  }
+  
+  if (hasWorkflows) {
+    result += `## 工作方式\n${workflowText}\n\n`
+  }
+  
+  if (hasFormats) {
+    result += `## 回答风格\n### 格式要求\n${config.agents.formats.map(f => `- ${f}`).join('\n') || '未指定'}\n\n### 语言习惯\n${config.agents.habits.map(h => `- ${h}`).join('\n') || '未指定'}\n\n`
+  }
+  
+  if (hasProhibitions) {
+    result += `## 禁止事项\n${prohibitionText}\n\n`
+  }
+  
+  if (hasCommands) {
+    result += `## 特殊指令\n${commandText}`
+  }
+
+  return result
 })
 
 // 生成 USER.md
