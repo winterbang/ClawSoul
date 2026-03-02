@@ -250,7 +250,10 @@ const generatedAgents = computed(() => {
 
 // 生成 USER.md
 const generatedUser = computed(() => {
-  if (!config.user.basic.name) return '# USER.md\n\n（未配置）'
+  const hasBasicInfo = config.user.basic.name || config.user.basic.occupation || config.user.basic.company
+  const hasTech = Object.values(config.user.tech).some(arr => arr.length > 0)
+  
+  if (!hasBasicInfo && !hasTech) return '# USER.md\n\n（未配置）'
   
   const techText = Object.entries(config.user.tech)
     .filter(([key, _]) => key !== 'other')
@@ -272,7 +275,19 @@ const generatedUser = computed(() => {
       return `- ${labels[k]}`
     }).join('\n')
 
-  return `# USER.md\n\n## 基本信息\n- **姓名**: ${config.user.basic.name}\n- **职业**: ${config.user.basic.occupation || '未指定'}\n- **公司**: ${config.user.basic.company || '未指定'}\n- **工作年限**: ${config.user.basic.experience || '未指定'}\n\n## 技术背景\n${techText}\n\n## 工作习惯\n### 时间安排\n- 工作时间: ${config.user.workSchedule.start} - ${config.user.workSchedule.end} (${config.user.workSchedule.timezone})\n\n### 沟通偏好\n${commPrefs}\n\n### 任务优先级\n${config.user.priorities.filter(p => p).map((p, i) => `${i + 1}. ${p}`).join('\n')}\n\n## 项目信息\n- **名称**: ${config.user.project.name || '未指定'}\n- **技术栈**: ${config.user.project.stack || '未指定'}\n- **团队规模**: ${config.user.project.teamSize || '未指定'}\n- **状态**: ${config.user.project.status || '未指定'}`
+  let result = '# USER.md\n\n'
+  
+  if (hasBasicInfo) {
+    result += `## 基本信息\n- **姓名**: ${config.user.basic.name || '未指定'}\n- **职业**: ${config.user.basic.occupation || '未指定'}\n- **公司**: ${config.user.basic.company || '未指定'}\n- **工作年限**: ${config.user.basic.experience || '未指定'}\n\n`
+  }
+  
+  if (hasTech) {
+    result += `## 技术背景\n${techText}\n\n`
+  }
+  
+  result += `## 工作习惯\n### 时间安排\n- 工作时间: ${config.user.workSchedule.start} - ${config.user.workSchedule.end} (${config.user.workSchedule.timezone})\n\n### 沟通偏好\n${commPrefs || '未指定'}\n\n### 任务优先级\n${config.user.priorities.filter(p => p).map((p, i) => `${i + 1}. ${p}`).join('\n') || '未指定'}\n\n## 项目信息\n- **名称**: ${config.user.project.name || '未指定'}\n- **技术栈**: ${config.user.project.stack || '未指定'}\n- **团队规模**: ${config.user.project.teamSize || '未指定'}\n- **状态**: ${config.user.project.status || '未指定'}`
+
+  return result
 })
 
 // 生成 MEMORY.md
