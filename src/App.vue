@@ -234,11 +234,10 @@ const generatedIdentity = computed(() => {
 // 生成 SOUL.md
 const generatedSoul = computed(() => {
   const traitDescriptions = personalityTraits
-    .filter(t => t.value >= 60)
     .map(t => `- **${t.name}** — ${t.description}（${t.value}%）`)
     .join('\n')
 
-  return `# SOUL.md\n\n## ${config.identity.name} 的风格\n\n${traitDescriptions}`
+  return `# SOUL.md\n\n## ${config.identity.name} 的风格\n\n${traitDescriptions || '（未配置）'}`
 })
 
 // 生成 AGENTS.md
