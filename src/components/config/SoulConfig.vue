@@ -1,10 +1,15 @@
 <!-- SoulConfig.vue -->
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
-    <h2 class="text-xl font-semibold flex items-center gap-2">
-      <Sparkles class="w-5 h-5 text-purple-400" />
-      人格特质 SOUL
-    </h2>
+    <div class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2">
+        <Sparkles class="w-5 h-5 text-purple-400" />
+        人格特质 SOUL
+      </h2>
+      <TooltipIcon position="right">
+        定义 AI 的性格特点、核心价值观和行为风格。这决定了 AI 如何与你互动、表达观点和解决问题。
+      </TooltipIcon>
+    </div>
 
     <div class="space-y-4">
       <!-- 特质列表 -->
@@ -126,6 +131,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Sparkles, Plus, X, Pencil } from 'lucide-vue-next'
+import TooltipIcon from '../TooltipIcon.vue'
 
 const props = defineProps({
   traits: Array

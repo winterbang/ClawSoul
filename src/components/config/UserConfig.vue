@@ -1,10 +1,15 @@
 <!-- UserConfig.vue -->
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
-    <h2 class="text-xl font-semibold flex items-center gap-2">
-      <User class="w-5 h-5 text-green-400" />
-      用户画像 USER
-    </h2>
+    <div class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2">
+        <User class="w-5 h-5 text-green-400" />
+        用户画像 USER
+      </h2>
+      <TooltipIcon position="right">
+        告诉 AI 你是谁：基本信息、技术背景、工作习惯和项目情况。让 AI 更了解你，提供个性化的帮助和建议。
+      </TooltipIcon>
+    </div>
 
     <div class="space-y-6">
       <!-- 基本信息 -->
@@ -271,6 +276,7 @@ import {
   User, Contact, Code, Clock, Folder,
   Plus, X, ArrowUp, ArrowDown
 } from 'lucide-vue-next'
+import TooltipIcon from '../TooltipIcon.vue'
 
 const props = defineProps({
   config: Object

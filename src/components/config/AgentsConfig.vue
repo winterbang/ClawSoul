@@ -1,10 +1,15 @@
 <!-- AgentsConfig.vue -->
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
-    <h2 class="text-xl font-semibold flex items-center gap-2">
-      <Bot class="w-5 h-5 text-blue-400" />
-      行为准则 AGENTS
-    </h2>
+    <div class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2">
+        <Bot class="w-5 h-5 text-blue-400" />
+        行为准则 AGENTS
+      </h2>
+      <TooltipIcon position="right">
+        定义 AI 的工作方式、回答风格和禁止事项。这告诉 AI "如何工作"，包括处理任务的流程、沟通风格和安全边界。
+      </TooltipIcon>
+    </div>
 
     <div class="space-y-6">
       <!-- 角色定位 -->
@@ -213,6 +218,7 @@
 
 <script setup>
 import { Bot, Target, Settings, MessageSquare, Shield, Command, Plus, X } from 'lucide-vue-next'
+import TooltipIcon from '../TooltipIcon.vue'
 
 const props = defineProps({
   config: Object

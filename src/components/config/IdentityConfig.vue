@@ -1,10 +1,15 @@
 <!-- IdentityConfig.vue -->
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
-    <h2 class="text-xl font-semibold flex items-center gap-2">
-      <Fingerprint class="w-5 h-5 text-cyber-accent" />
-      基础身份 IDENTITY
-    </h2>
+    <div class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2">
+        <Fingerprint class="w-5 h-5 text-cyber-accent" />
+        基础身份 IDENTITY
+      </h2>
+      <TooltipIcon position="right">
+        定义 AI 助手的基本身份信息：名字、形象、性格特点和角色定位。这是 AI 认识自己的"身份证"。
+      </TooltipIcon>
+    </div>
     
     <div class="space-y-4">
       <div>
@@ -104,6 +109,7 @@
 
 <script setup>
 import { Fingerprint } from 'lucide-vue-next'
+import TooltipIcon from '../TooltipIcon.vue'
 
 defineProps({
   config: Object,

@@ -48,10 +48,15 @@
             />
 
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">
-              <h2 class="text-xl font-semibold flex items-center gap-2">
-                <span class="text-cyber-pink">⚡</span>
-                技能选择
-              </h2>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl font-semibold flex items-center gap-2">
+                  <span class="text-cyber-pink">⚡</span>
+                  技能选择
+                </h2>
+                <TooltipIcon position="right">
+                  选择你需要的 Skills（功能扩展）。生成配置后，可以将列表复制到 OpenClaw 中一键安装。
+                </TooltipIcon>
+              </div>
 
               <div class="space-y-6 max-h-[500px] overflow-y-auto pr-2">
                 <div v-for="category in skillCategories" :key="category.id">
@@ -156,6 +161,7 @@ import UserConfig from './components/config/UserConfig.vue'
 import MemoryConfig from './components/config/MemoryConfig.vue'
 import PreviewPanel from './components/PreviewPanel.vue'
 import ToastNotification from './components/ToastNotification.vue'
+import TooltipIcon from './components/TooltipIcon.vue'
 
 import { 
   presetEmojis, 

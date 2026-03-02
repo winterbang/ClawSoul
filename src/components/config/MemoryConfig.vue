@@ -1,10 +1,15 @@
 <!-- MemoryConfig.vue -->
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
-    <h2 class="text-xl font-semibold flex items-center gap-2">
-      <Brain class="w-5 h-5 text-yellow-400" />
-      长期记忆 MEMORY
-    </h2>
+    <div class="flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2">
+        <Brain class="w-5 h-5 text-yellow-400" />
+        长期记忆 MEMORY
+      </h2>
+      <TooltipIcon position="right">
+        记录重要信息、决策、教训和偏好。这是 AI 的"笔记本"，帮助 AI 在多次对话中记住关键内容，提供更连贯的服务。
+      </TooltipIcon>
+    </div>
 
     <div class="space-y-6">
       <!-- 重要记忆 -->
@@ -220,6 +225,7 @@ import {
   Brain, Star, GitCommit, Lightbulb, FolderOpen, Heart, Shield,
   Plus, X 
 } from 'lucide-vue-next'
+import TooltipIcon from '../TooltipIcon.vue'
 
 const props = defineProps({
   config: Object
