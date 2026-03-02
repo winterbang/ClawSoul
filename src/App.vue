@@ -32,13 +32,13 @@
             <AgentsConfig 
               v-if="currentView === 'agents'"
               :config="config.agents"
-              @update:config="config.agents = $event"
+              @update:config="updateAgentsConfig"
             />
 
             <UserConfig 
               v-if="currentView === 'user'"
               :config="config.user"
-              @update:config="config.user = $event"
+              @update:config="updateUserConfig"
             />
 
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">
@@ -188,6 +188,14 @@ const updatePersonalityTraits = (newTraits) => {
   newTraits.forEach((trait, index) => {
     personalityTraits[index].value = trait.value
   })
+}
+
+const updateAgentsConfig = (newConfig) => {
+  Object.assign(config.agents, newConfig)
+}
+
+const updateUserConfig = (newConfig) => {
+  Object.assign(config.user, newConfig)
 }
 
 const getRoleNames = () => {
