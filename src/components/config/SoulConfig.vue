@@ -7,13 +7,14 @@
     </h2>
 
     <div class="space-y-6">
-      <div v-for="trait in traits" :key="trait.id" class="space-y-2">
+      <div v-for="(trait, index) in localTraits" :key="trait.id" class="space-y-2">
         <div class="flex justify-between items-center">
           <label class="text-sm font-medium">{{ trait.name }}</label>
           <span class="text-xs text-purple-400">{{ trait.value }}%</span>
         </div>
         <input 
-          v-model="trait.value"
+          :value="trait.value"
+          @input="updateTrait(index, $event.target.value)"
           type="range" 
           min="0" 
           max="100"
@@ -26,9 +27,21 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
 import { Sparkles } from 'lucide-vue-next'
 
-defineProps({
+const props = defineProps({
   traits: Array
 })
+
+const emit = defineEmits(['update:traits'])
+
+// 创建本地副本用于显示
+const localTraits = computed(() => props.traits)
+
+const updateTrait = (index, value) => {
+  const newTraits = JSON.parse(JSON.stringify(props.traits))
+  newTraits[index].value = parseInt(value)
+  emit('update:traits', newTraits)
+}
 </script>

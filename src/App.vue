@@ -26,6 +26,7 @@
             <SoulConfig 
               v-if="currentView === 'soul'"
               :traits="personalityTraits"
+              @update:traits="updatePersonalityTraits"
             />
 
             <AgentsConfig 
@@ -180,6 +181,13 @@ const toggleRole = (roleId) => {
 
 const updateRoleDesc = (roleId, desc) => {
   config.identity.roleDescriptions[roleId] = desc
+}
+
+const updatePersonalityTraits = (newTraits) => {
+  // 更新 personalityTraits 数组
+  newTraits.forEach((trait, index) => {
+    personalityTraits[index].value = trait.value
+  })
 }
 
 const getRoleNames = () => {
