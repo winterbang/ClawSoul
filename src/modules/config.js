@@ -69,6 +69,8 @@ export const skillCategories = [
 export const previewTabs = [
   { id: 'identity', name: 'IDENTITY' },
   { id: 'soul', name: 'SOUL' },
+  { id: 'agents', name: 'AGENTS' },
+  { id: 'user', name: 'USER' },
   { id: 'memory', name: 'MEMORY' },
   { id: 'full', name: '完整' },
 ]
@@ -92,6 +94,71 @@ export const defaultConfig = {
   soul: {
     traits: {},
     values: '',
+  },
+  // AGENTS.md 配置
+  agents: {
+    role: {
+      identity: '',
+      specialties: [],
+      language: '中文'
+    },
+    workflows: {
+      code: ['理解需求', '设计方案', '编写代码', '测试验证', '文档更新'],
+      research: ['收集信息', '分析总结', '提供来源', '输出报告'],
+      ops: ['检查状态', '分析日志', '执行修复', '验证结果']
+    },
+    formats: ['使用Markdown格式', '代码块标注语言', '重要内容加粗'],
+    habits: ['技术术语使用英文', '先给结论再展开', '解释时使用类比'],
+    prohibitions: [
+      '不要猜测用户意图，不确定时询问',
+      '不要执行危险操作前不确认',
+      '不要泄露敏感信息（API Key、密码等）'
+    ],
+    commands: [
+      { trigger: '/review', action: '进行代码审查' },
+      { trigger: '/explain', action: '详细解释概念' },
+      { trigger: '/debug', action: '系统化调试' }
+    ]
+  },
+  // USER.md 配置
+  user: {
+    basic: {
+      name: '',
+      occupation: '',
+      company: '',
+      experience: ''
+    },
+    tech: {
+      proficient: [],
+      learning: [],
+      unfamiliar: [],
+      other: ''
+    },
+    workSchedule: {
+      start: '09:00',
+      end: '18:00',
+      timezone: 'UTC+8'
+    },
+    communication: {
+      conclusionFirst: true,
+      codeExamples: true,
+      reasoning: true,
+      casual: false,
+      detailed: true
+    },
+    priorities: [
+      '安全问题',
+      '生产环境 Bug',
+      '阻塞团队的问题',
+      '新功能开发',
+      '代码优化'
+    ],
+    project: {
+      name: '',
+      stack: '',
+      teamSize: '',
+      status: ''
+    }
   },
   skills: ['searxng', 'opencode', 'find-skill'],
 }

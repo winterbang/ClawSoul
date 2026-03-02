@@ -28,6 +28,16 @@
               :traits="personalityTraits"
             />
 
+            <AgentsConfig 
+              v-if="currentView === 'agents'"
+              :config="config.agents"
+            />
+
+            <UserConfig 
+              v-if="currentView === 'user'"
+              :config="config.user"
+            />
+
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">
               <h2 class="text-xl font-semibold flex items-center gap-2">
                 <span class="text-cyber-pink">⚡</span>
@@ -74,7 +84,7 @@
                   <h3 class="font-medium mb-3">配置摘要</h3>
                   <div class="text-sm text-gray-400 space-y-2">
                     <div class="flex justify-between">
-                      <span>名字：</span>
+                      <span>AI名字：</span>
                       <span class="text-cyber-accent">{{ config.identity.name || '未设置' }}</span>
                     </div>
                     <div class="flex justify-between">
@@ -84,6 +94,14 @@
                     <div class="flex justify-between">
                       <span>技能：</span>
                       <span class="text-cyber-accent">{{ config.skills.length }} 个</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>AGENTS：</span>
+                      <span class="text-cyber-accent">{{ config.agents.role.identity || '未配置' }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                      <span>USER：</span>
+                      <span class="text-cyber-accent">{{ config.user.basic.name || '未配置' }}</span>
                     </div>
                   </div>
                 </div>
@@ -120,6 +138,8 @@ import Header from './components/Layout/Header.vue'
 import Navigation from './components/Layout/Navigation.vue'
 import IdentityConfig from './components/config/IdentityConfig.vue'
 import SoulConfig from './components/config/SoulConfig.vue'
+import AgentsConfig from './components/config/AgentsConfig.vue'
+import UserConfig from './components/config/UserConfig.vue'
 import PreviewPanel from './components/PreviewPanel.vue'
 import ToastNotification from './components/ToastNotification.vue'
 
@@ -164,6 +184,7 @@ const getRoleNames = () => {
   return config.identity.roles.map(id => roles.find(r => r.id === id)?.name).filter(Boolean)
 }
 
+// 生成 IDENTITY.md
 const generatedIdentity = computed(() => {
   const roleText = config.identity.roles.map(r => {
     const roleName = roles.find(x => x.id === r)?.name
@@ -174,6 +195,7 @@ const generatedIdentity = computed(() => {
   return `# IDENTITY.md\n\n- **Name:** ${config.identity.name}\n- **Creature:** ${config.identity.creature}\n- **Vibe:** ${config.identity.vibe}\n- **Emoji:** ${config.identity.emoji}\n\n## 角色定位${roleText}`
 })
 
+// 生成 SOUL.md
 const generatedSoul = computed(() => {
   const traitDescriptions = personalityTraits
     .filter(t => t.value >= 60)
@@ -183,6 +205,59 @@ const generatedSoul = computed(() => {
   return `# SOUL.md\n\n## ${config.identity.name} 的风格\n\n${traitDescriptions}`
 })
 
+// 生成 AGENTS.md
+const generatedAgents = computed(() => {
+  if (!config.agents.role.identity) return '# AGENTS.md\n\n（未配置）'
+  
+  const workflowText = Object.entries(config.agents.workflows)
+    .filter(([_, steps]) => steps.some(s => s))
+    .map(([key, steps]) => {
+      const name = key === 'code' ? '代码开发' : key === 'research' ? '研究任务' : '系统运维'
+      const stepList = steps.filter(s => s).map((s, i) => `${i + 1}. ${s}`).join('\n   ')
+      return `### ${name}\n${stepList}`
+    }).join('\n\n')
+  
+  const prohibitionText = config.agents.prohibitions
+    .filter(p => p)
+    .map(p => `- ${p}`)
+    .join('\n')
+  
+  const commandText = config.agents.commands
+    .filter(c => c.trigger && c.action)
+    .map(c => `- ${c.trigger}: ${c.action}`)
+    .join('\n')
+
+  return `# AGENTS.md\n\n## 角色定位\n- **身份**: ${config.agents.role.identity}\n- **专长**: ${config.agents.role.specialties.join('、') || '未指定'}\n- **语言**: ${config.agents.role.language}\n\n## 工作方式\n${workflowText}\n\n## 回答风格\n### 格式要求\n${config.agents.formats.map(f => `- ${f}`).join('\n')}\n\n### 语言习惯\n${config.agents.habits.map(h => `- ${h}`).join('\n')}\n\n## 禁止事项\n${prohibitionText}\n\n## 特殊指令\n${commandText}`
+})
+
+// 生成 USER.md
+const generatedUser = computed(() => {
+  if (!config.user.basic.name) return '# USER.md\n\n（未配置）'
+  
+  const techText = Object.entries(config.user.tech)
+    .filter(([key, _]) => key !== 'other')
+    .map(([key, list]) => {
+      const name = key === 'proficient' ? '熟练技术' : key === 'learning' ? '学习中' : '不熟悉'
+      return `### ${name}\n${list.map(t => `- ${t}`).join('\n') || '未指定'}`
+    }).join('\n\n')
+  
+  const commPrefs = Object.entries(config.user.communication)
+    .filter(([_, v]) => v)
+    .map(([k, _]) => {
+      const labels = {
+        conclusionFirst: '先给结论，再展开解释',
+        codeExamples: '代码示例比文字描述更有帮助',
+        reasoning: '重要决策需要原因说明',
+        casual: '不喜欢过于正式的语言',
+        detailed: '偏好详细的解释'
+      }
+      return `- ${labels[k]}`
+    }).join('\n')
+
+  return `# USER.md\n\n## 基本信息\n- **姓名**: ${config.user.basic.name}\n- **职业**: ${config.user.basic.occupation || '未指定'}\n- **公司**: ${config.user.basic.company || '未指定'}\n- **工作年限**: ${config.user.basic.experience || '未指定'}\n\n## 技术背景\n${techText}\n\n## 工作习惯\n### 时间安排\n- 工作时间: ${config.user.workSchedule.start} - ${config.user.workSchedule.end} (${config.user.workSchedule.timezone})\n\n### 沟通偏好\n${commPrefs}\n\n### 任务优先级\n${config.user.priorities.filter(p => p).map((p, i) => `${i + 1}. ${p}`).join('\n')}\n\n## 项目信息\n- **名称**: ${config.user.project.name || '未指定'}\n- **技术栈**: ${config.user.project.stack || '未指定'}\n- **团队规模**: ${config.user.project.teamSize || '未指定'}\n- **状态**: ${config.user.project.status || '未指定'}`
+})
+
+// 生成 MEMORY.md
 const generatedMemory = computed(() => {
   const skillList = config.skills.map(s => {
     const skill = skillCategories.flatMap(c => c.skills).find(x => x.id === s)
@@ -196,8 +271,10 @@ const previewContent = computed(() => {
   switch (currentPreview.value) {
     case 'identity': return generatedIdentity.value
     case 'soul': return generatedSoul.value
+    case 'agents': return generatedAgents.value
+    case 'user': return generatedUser.value
     case 'memory': return generatedMemory.value
-    default: return `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedMemory.value}`
+    default: return `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
   }
 })
 
