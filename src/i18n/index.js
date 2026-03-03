@@ -219,7 +219,9 @@ const zh = {
   preview: {
     title: '实时预览',
     download: '下载 Markdown',
-    copy: '复制当前配置'
+    copy: '复制当前配置',
+    styleTitle: '的风格',
+    notConfigured: '（未配置）'
   },
   export: {
     summary: '配置摘要',
@@ -498,7 +500,9 @@ const en = {
   preview: {
     title: 'Live Preview',
     download: 'Download Markdown',
-    copy: 'Copy Config'
+    copy: 'Copy Config',
+    styleTitle: ' Style',
+    notConfigured: '(Not configured)'
   },
   export: {
     summary: 'Config Summary',

@@ -24,7 +24,7 @@
               @blur="saveEdit(index, $event.target.value)"
               @keyup.enter="saveEdit(index, $event.target.value)"
             />
-            <span v-else class="text-sm font-medium text-[var(--text-primary)]">{{ $t(trait.nameKey, trait.name) }}</span>
+            <span v-else class="text-sm font-medium text-[var(--text-primary)]">{{ trait.nameKey ? $t(trait.nameKey, trait.name) : trait.name }}</span>
             <button 
               v-if="editingIndex !== index"
               @click="startEdit(index)" 
