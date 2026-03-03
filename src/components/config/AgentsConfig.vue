@@ -2,12 +2,12 @@
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-semibold flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
         <Bot class="w-5 h-5 text-blue-400" />
-        行为准则 AGENTS
+        {{ $t('agents.title') }}
       </h2>
       <TooltipIcon position="right">
-        定义 AI 的工作方式、回答风格和禁止事项。这告诉 AI "如何工作"，包括处理任务的流程、沟通风格和安全边界。
+        {{ $t('agents.tooltip') }}
       </TooltipIcon>
     </div>
 
@@ -15,28 +15,26 @@
       <!-- 角色定位 -->
       <div class="space-y-4">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Target class="w-4 h-4" />
-            角色定位
+            {{ $t('agents.role.title') }}
           </h3>
-          <TooltipIcon>
-            定义 AI 的身份、专长和语言偏好
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('agents.role.tooltip') }}</TooltipIcon>
         </div>
         
         <div>
-          <label class="block text-sm mb-2">身份</label>
+          <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.role.identity') }}</label>
           <input 
             :value="config.role.identity"
             @input="updateConfig('role.identity', $event.target.value)"
             type="text" 
-            placeholder="例如：高级软件工程师助手"
+            :placeholder="$t('agents.role.identityPlaceholder')"
             class="cyber-input w-full text-sm"
           />
         </div>
 
         <div>
-          <label class="block text-sm mb-2">专长领域</label>
+          <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.role.specialties') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
               v-for="spec in specialtyOptions" :key="spec"
@@ -44,7 +42,7 @@
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
               :class="config.role.specialties.includes(spec) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
-                : 'border-cyber-600 hover:border-blue-400/50'"
+                : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
               {{ spec }}
             </button>
@@ -52,38 +50,36 @@
         </div>
 
         <div>
-          <label class="block text-sm mb-2">主要语言</label>
+          <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.role.language') }}</label>
           <select 
             :value="config.role.language" 
             @change="updateConfig('role.language', $event.target.value)"
             class="cyber-input w-full text-sm"
           >
-            <option value="中文">中文</option>
-            <option value="英文">英文</option>
-            <option value="中英混合">中英混合（技术术语保持英文）</option>
+            <option value="中文">{{ $t('agents.role.chinese') }}</option>
+            <option value="英文">{{ $t('agents.role.english') }}</option>
+            <option value="中英混合">{{ $t('agents.role.bilingual') }}</option>
           </select>
         </div>
       </div>
 
       <!-- 工作方式 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Settings class="w-4 h-4" />
-            工作方式
+            {{ $t('agents.workflow.title') }}
           </h3>
-          <TooltipIcon>
-            定义不同类型任务的处理流程
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('agents.workflow.tooltip') }}</TooltipIcon>
         </div>
 
         <div v-for="(workflow, key) in workflows" :key="key" class="space-y-2">
-          <label class="block text-sm font-medium">{{ workflow.name }}</label>
+          <label class="block text-sm font-medium text-[var(--text-primary)]">{{ workflow.name }}</label>
           <div class="space-y-2">
             <div v-for="(step, index) in config.workflows[key]" :key="index"
               class="flex items-center gap-2"
             >
-              <span class="text-xs text-gray-500 w-5">{{ index + 1 }}.</span>
+              <span class="text-xs text-[var(--text-muted)] w-5">{{ index + 1 }}.</span>
               <input 
                 :value="step"
                 @input="updateWorkflow(key, index, $event.target.value)"
@@ -102,26 +98,24 @@
               @click="addWorkflowStep(key)"
               class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
             >
-              <Plus class="w-3.5 h-3.5" /> 添加步骤
+              <Plus class="w-3.5 h-3.5" /> {{ $t('agents.workflow.addStep') }}
             </button>
           </div>
         </div>
       </div>
 
       <!-- 回答风格 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <MessageSquare class="w-4 h-4" />
-            回答风格
+            {{ $t('agents.style.title') }}
           </h3>
-          <TooltipIcon>
-            定义 AI 的回复格式和语言习惯
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('agents.style.tooltip') }}</TooltipIcon>
         </div>
         
         <div>
-          <label class="block text-sm mb-2">格式要求</label>
+          <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.style.format') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
               v-for="fmt in formatOptions" :key="fmt"
@@ -129,7 +123,7 @@
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
               :class="config.formats.includes(fmt) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
-                : 'border-cyber-600 hover:border-blue-400/50'"
+                : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
               {{ fmt }}
             </button>
@@ -137,7 +131,7 @@
         </div>
 
         <div>
-          <label class="block text-sm mb-2">语言习惯</label>
+          <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.style.habits') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
               v-for="habit in habitOptions" :key="habit"
@@ -145,7 +139,7 @@
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
               :class="config.habits.includes(habit) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
-                : 'border-cyber-600 hover:border-blue-400/50'"
+                : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
               {{ habit }}
             </button>
@@ -154,15 +148,13 @@
       </div>
 
       <!-- 禁止事项 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Shield class="w-4 h-4" />
-            禁止事项
+            {{ $t('agents.prohibitions.title') }}
           </h3>
-          <TooltipIcon>
-            定义 AI 不应该做的事情，设置安全边界
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('agents.prohibitions.tooltip') }}</TooltipIcon>
         </div>
         
         <div class="space-y-2">
@@ -174,7 +166,7 @@
               @input="updateProhibition(index, $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
-              placeholder="例如：不要猜测用户意图，不确定时询问"
+              :placeholder="$t('agents.prohibitions.placeholder')"
             />
             <button 
               @click="removeProhibition(index)"
@@ -187,21 +179,19 @@
             @click="addProhibition"
             class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
           >
-            <Plus class="w-3.5 h-3.5" /> 添加禁止项
+            <Plus class="w-3.5 h-3.5" /> {{ $t('agents.prohibitions.add') }}
           </button>
         </div>
       </div>
 
       <!-- 特殊指令 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Command class="w-4 h-4" />
-            特殊指令
+            {{ $t('agents.commands.title') }}
           </h3>
-          <TooltipIcon>
-            定义快捷指令，触发特定操作
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('agents.commands.tooltip') }}</TooltipIcon>
         </div>
         
         <div class="space-y-2">
@@ -213,14 +203,14 @@
               @input="updateCommand(index, 'trigger', $event.target.value)"
               type="text"
               class="cyber-input w-24 text-xs py-2"
-              placeholder="/review"
+              :placeholder="$t('agents.commands.triggerPlaceholder')"
             />
             <input 
               :value="cmd.action"
               @input="updateCommand(index, 'action', $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
-              placeholder="执行动作描述"
+              :placeholder="$t('agents.commands.actionPlaceholder')"
             />
             <button 
               @click="removeCommand(index)"
@@ -233,7 +223,7 @@
             @click="addCommand"
             class="text-xs text-blue-400 hover:text-blue-300 flex items-center gap-1"
           >
-            <Plus class="w-3.5 h-3.5" /> 添加指令
+            <Plus class="w-3.5 h-3.5" /> {{ $t('agents.commands.add') }}
           </button>
         </div>
       </div>
@@ -242,8 +232,12 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Bot, Target, Settings, MessageSquare, Shield, Command, Plus, X } from 'lucide-vue-next'
 import TooltipIcon from '../ui/TooltipIcon.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   config: Object
@@ -251,36 +245,49 @@ const props = defineProps({
 
 const emit = defineEmits(['update:config'])
 
-const specialtyOptions = [
-  'Web开发', '系统架构', '代码审查', 
-  '数据分析', '机器学习', 'DevOps',
-  '移动开发', '数据库', '网络安全'
-]
+const specialtyOptions = computed(() => [
+  t('agents.specialty.web') || 'Web开发',
+  t('agents.specialty.architecture') || '系统架构', 
+  t('agents.specialty.codeReview') || '代码审查',
+  t('agents.specialty.data') || '数据分析',
+  t('agents.specialty.ml') || '机器学习',
+  t('agents.specialty.devops') || 'DevOps',
+  t('agents.specialty.mobile') || '移动开发',
+  t('agents.specialty.database') || '数据库',
+  t('agents.specialty.security') || '网络安全'
+])
 
-const formatOptions = [
-  '使用Markdown格式', '代码块标注语言', '长内容使用标题分隔',
-  '重要内容加粗', '适当使用列表', '适当使用表格'
-]
+const formatOptions = computed(() => [
+  t('agents.format.markdown') || '使用Markdown格式',
+  t('agents.format.codeLang') || '代码块标注语言',
+  t('agents.format.headings') || '长内容使用标题分隔',
+  t('agents.format.bold') || '重要内容加粗',
+  t('agents.format.lists') || '适当使用列表',
+  t('agents.format.tables') || '适当使用表格'
+])
 
-const habitOptions = [
-  '技术术语使用英文', '解释时使用类比', '避免过于口语化',
-  '先给结论再展开', '提供多个方案时说明优劣'
-]
+const habitOptions = computed(() => [
+  t('agents.habit.techTerms') || '技术术语使用英文',
+  t('agents.habit.analogy') || '解释时使用类比',
+  t('agents.habit.formal') || '避免过于口语化',
+  t('agents.habit.conclusionFirst') || '先给结论再展开',
+  t('agents.habit.compare') || '提供多个方案时说明优劣'
+])
 
-const workflows = {
+const workflows = computed(() => ({
   code: {
-    name: '代码开发流程',
-    placeholder: '例如：理解需求'
+    name: t('agents.workflow.code'),
+    placeholder: t('agents.workflow.stepPlaceholder')
   },
   research: {
-    name: '研究任务流程', 
-    placeholder: '例如：多渠道搜索'
+    name: t('agents.workflow.research'), 
+    placeholder: t('agents.workflow.stepPlaceholder')
   },
   ops: {
-    name: '系统运维流程',
-    placeholder: '例如：检查状态'
+    name: t('agents.workflow.ops'),
+    placeholder: t('agents.workflow.stepPlaceholder')
   }
-}
+}))
 
 // 通用更新方法
 const updateConfig = (path, value) => {

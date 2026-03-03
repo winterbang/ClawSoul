@@ -95,6 +95,32 @@ const zh = {
       triggerPlaceholder: '/review',
       actionPlaceholder: '执行动作描述',
       add: '添加指令'
+    },
+    specialty: {
+      web: 'Web开发',
+      architecture: '系统架构',
+      codeReview: '代码审查',
+      data: '数据分析',
+      ml: '机器学习',
+      devops: 'DevOps',
+      mobile: '移动开发',
+      database: '数据库',
+      security: '网络安全'
+    },
+    format: {
+      markdown: '使用Markdown格式',
+      codeLang: '代码块标注语言',
+      headings: '长内容使用标题分隔',
+      bold: '重要内容加粗',
+      lists: '适当使用列表',
+      tables: '适当使用表格'
+    },
+    habit: {
+      techTerms: '技术术语使用英文',
+      analogy: '解释时使用类比',
+      formal: '避免过于口语化',
+      conclusionFirst: '先给结论再展开',
+      compare: '提供多个方案时说明优劣'
     }
   },
   user: {
@@ -286,6 +312,32 @@ const en = {
       triggerPlaceholder: '/review',
       actionPlaceholder: 'Action description',
       add: 'Add Command'
+    },
+    specialty: {
+      web: 'Web Development',
+      architecture: 'System Architecture',
+      codeReview: 'Code Review',
+      data: 'Data Analysis',
+      ml: 'Machine Learning',
+      devops: 'DevOps',
+      mobile: 'Mobile Development',
+      database: 'Database',
+      security: 'Security'
+    },
+    format: {
+      markdown: 'Use Markdown format',
+      codeLang: 'Annotate code blocks with language',
+      headings: 'Use headings for long content',
+      bold: 'Bold important content',
+      lists: 'Use lists appropriately',
+      tables: 'Use tables appropriately'
+    },
+    habit: {
+      techTerms: 'Use English for technical terms',
+      analogy: 'Use analogies when explaining',
+      formal: 'Avoid overly casual language',
+      conclusionFirst: 'Give conclusion first then elaborate',
+      compare: 'Explain pros/cons when providing multiple options'
     }
   },
   user: {
