@@ -2,12 +2,12 @@
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-semibold flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
         <User class="w-5 h-5 text-green-400" />
-        用户画像 USER
+        {{ $t('user.title') }}
       </h2>
       <TooltipIcon position="right">
-        告诉 AI 你是谁：基本信息、技术背景、工作习惯和项目情况。让 AI 更了解你，提供个性化的帮助和建议。
+        {{ $t('user.tooltip') }}
       </TooltipIcon>
     </div>
 
@@ -15,34 +15,32 @@
       <!-- 基本信息 -->
       <div class="space-y-4">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Contact class="w-4 h-4" />
-            基本信息
+            {{ $t('user.basic') }}
           </h3>
-          <TooltipIcon>
-            让 AI 知道如何称呼你，了解你的职业背景
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('user.basicTooltip') || '让 AI 知道如何称呼你，了解你的职业背景' }}</TooltipIcon>
         </div>
         
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs mb-1.5">姓名</label>
+            <label class="block text-xs mb-1.5 text-[var(--text-primary)]">{{ $t('user.name') }}</label>
             <input 
               :value="config.basic.name"
               @input="updateConfig('basic.name', $event.target.value)"
               type="text" 
-              placeholder="你的姓名"
+              :placeholder="$t('user.namePlaceholder') || '你的姓名'"
               class="cyber-input w-full text-sm py-2"
             />
           </div>
 
           <div>
-            <label class="block text-xs mb-1.5">职业</label>
+            <label class="block text-xs mb-1.5 text-[var(--text-primary)]">{{ $t('user.occupation') || '职业' }}</label>
             <input 
               :value="config.basic.occupation"
               @input="updateConfig('basic.occupation', $event.target.value)"
               type="text" 
-              placeholder="例如：全栈开发工程师"
+              :placeholder="$t('user.occupationPlaceholder') || '例如：全栈开发工程师'"
               class="cyber-input w-full text-sm py-2"
             />
           </div>
@@ -50,47 +48,45 @@
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs mb-1.5">公司/组织</label>
+            <label class="block text-xs mb-1.5 text-[var(--text-primary)]">{{ $t('user.company') || '公司/组织' }}</label>
             <input 
               :value="config.basic.company"
               @input="updateConfig('basic.company', $event.target.value)"
               type="text" 
-              placeholder="你的公司"
+              :placeholder="$t('user.companyPlaceholder') || '你的公司'"
               class="cyber-input w-full text-sm py-2"
             />
           </div>
 
           <div>
-            <label class="block text-xs mb-1.5">工作年限</label>
+            <label class="block text-xs mb-1.5 text-[var(--text-primary)]">{{ $t('user.experience') || '工作年限' }}</label>
             <select 
               :value="config.basic.experience" 
               @change="updateConfig('basic.experience', $event.target.value)"
               class="cyber-input w-full text-sm py-2"
             >
-              <option value="">请选择</option>
-              <option value="1-3年">1-3年</option>
-              <option value="3-5年">3-5年</option>
-              <option value="5-8年">5-8年</option>
-              <option value="8年以上">8年以上</option>
+              <option value="">{{ $t('user.select') || '请选择' }}</option>
+              <option value="1-3年">1-3 {{ $t('user.years') || '年' }}</option>
+              <option value="3-5年">3-5 {{ $t('user.years') || '年' }}</option>
+              <option value="5-8年">5-8 {{ $t('user.years') || '年' }}</option>
+              <option value="8年以上">8 {{ $t('user.yearsPlus') || '年以上' }}</option>
             </select>
           </div>
         </div>
       </div>
 
       <!-- 技术背景 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Code class="w-4 h-4" />
-            技术背景
+            {{ $t('user.tech') }}
           </h3>
-          <TooltipIcon>
-            帮助 AI 了解你的技术栈，在回答时使用你熟悉的技术举例
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('user.techTooltip') }}</TooltipIcon>
         </div>
 
         <div v-for="category in techCategories" :key="category.id" class="space-y-2">
-          <label class="block text-xs font-medium">{{ category.name }}</label>
+          <label class="block text-xs font-medium text-[var(--text-primary)]">{{ category.name }}</label>
           <div class="flex flex-wrap gap-1.5">
             <button 
               v-for="tech in category.options" :key="tech"
@@ -98,193 +94,97 @@
               class="px-2.5 py-1 rounded-full text-xs border transition-all"
               :class="config.tech[category.id].includes(tech) 
                 ? 'border-green-400 bg-green-400/20 text-green-400' 
-                : 'border-cyber-600 hover:border-green-400/50'"
+                : 'border-[var(--border-color)] hover:border-green-400/50 text-[var(--text-secondary)]'"
             >
               {{ tech }}
             </button>
           </div>
         </div>
-
-        <div>
-          <label class="block text-xs mb-1.5">其他技术</label>
-          <input 
-            :value="config.tech.other"
-            @input="updateConfig('tech.other', $event.target.value)"
-            type="text" 
-            placeholder="用逗号分隔，例如：GraphQL, Docker, Kubernetes"
-            class="cyber-input w-full text-sm py-2"
-          />
-        </div>
       </div>
 
       <!-- 工作习惯 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-            <Clock class="w-4 h-4" />
-            工作习惯
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
+            <Briefcase class="w-4 h-4" />
+            {{ $t('user.work') }}
           </h3>
-          <TooltipIcon>
-            让 AI 了解你的工作节奏和沟通偏好，提供更贴合的服务
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('user.workTooltip') }}</TooltipIcon>
         </div>
 
-        <div>
-          <label class="block text-xs mb-1.5">工作时间</label>
-          <div class="flex items-center gap-2">
+        <div class="space-y-3">
+          <div v-for="(habit, index) in config.workHabits" :key="index"
+            class="flex items-center gap-2"
+          >
             <input 
-              :value="config.workSchedule.start"
-              @input="updateConfig('workSchedule.start', $event.target.value)"
-              type="time"
-              class="cyber-input text-sm py-2"
+              :value="habit"
+              @input="updateWorkHabit(index, $event.target.value)"
+              type="text"
+              class="cyber-input flex-1 text-sm py-2"
+              :placeholder="$t('user.workPlaceholder') || '例如：偏好简洁高效的沟通方式'"
             />
-            <span class="text-gray-400">-</span>
-            <input 
-              :value="config.workSchedule.end"
-              @input="updateConfig('workSchedule.end', $event.target.value)"
-              type="time"
-              class="cyber-input text-sm py-2"
-            />
-            <select 
-              :value="config.workSchedule.timezone" 
-              @change="updateConfig('workSchedule.timezone', $event.target.value)"
-              class="cyber-input text-sm py-2 ml-2"
-            >
-              <option value="UTC+8">UTC+8</option>
-              <option value="UTC+0">UTC+0</option>
-              <option value="UTC-5">UTC-5</option>
-              <option value="UTC-8">UTC-8</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs mb-2">沟通偏好</label>
-          <div class="space-y-2">
-            <label v-for="pref in communicationPrefs" :key="pref.id"
-              class="flex items-center gap-2 cursor-pointer"
-            >
-              <input 
-                :checked="config.communication[pref.id]"
-                @change="updateCommunication(pref.id, $event.target.checked)"
-                type="checkbox"
-                class="w-4 h-4 rounded border-cyber-600 text-green-400"
-              />
-              <span class="text-xs">{{ pref.label }}</span>
-            </label>
-          </div>
-        </div>
-
-        <div>
-          <label class="block text-xs mb-2">任务优先级</label>
-          <div class="space-y-2">
-            <div v-for="(priority, index) in config.priorities" :key="index"
-              class="flex items-center gap-2"
-            >
-              <span class="text-xs text-gray-500 w-5">{{ index + 1 }}.</span>
-              <input 
-                :value="priority"
-                @input="updatePriority(index, $event.target.value)"
-                type="text"
-                class="cyber-input flex-1 text-xs py-2"
-                placeholder="例如：安全问题"
-              />
-              <button 
-                v-if="index > 0"
-                @click="movePriorityUp(index)"
-                class="text-gray-400 hover:text-green-400"
-              >
-                <ArrowUp class="w-3.5 h-3.5" />
-              </button>
-              <button 
-                v-if="index < config.priorities.length - 1"
-                @click="movePriorityDown(index)"
-                class="text-gray-400 hover:text-green-400"
-              >
-                <ArrowDown class="w-3.5 h-3.5" />
-              </button>
-              <button 
-                @click="removePriority(index)"
-                class="text-red-400 hover:text-red-300"
-              >
-                <X class="w-3.5 h-3.5" />
-              </button>
-            </div>
             <button 
-              v-if="config.priorities.length < 6"
-              @click="addPriority"
-              class="text-xs text-green-400 hover:text-green-300 flex items-center gap-1"
+              @click="removeWorkHabit(index)"
+              class="text-red-400 hover:text-red-300 px-1"
             >
-              <Plus class="w-3.5 h-3.5" /> 添加优先级
+              <X class="w-3.5 h-3.5" />
             </button>
           </div>
+          
+          <button 
+            @click="addWorkHabit"
+            class="text-xs text-green-400 hover:text-green-300 flex items-center gap-1"
+          >
+            <Plus class="w-3.5 h-3.5" /> {{ $t('user.addWorkHabit') || '添加工作习惯' }}
+          </button>
         </div>
       </div>
 
-      <!-- 项目信息 -->
-      <div class="space-y-4 pt-4 border-t border-cyber-600/30">
+      <!-- 当前项目 -->
+      <div class="space-y-4 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
-            <Folder class="w-4 h-4" />
-            项目信息
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
+            <FolderOpen class="w-4 h-4" />
+            {{ $t('user.projects') }}
           </h3>
-          <TooltipIcon>
-            让 AI 了解你当前的项目背景，提供更有针对性的建议
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('user.projectsTooltip') }}</TooltipIcon>
         </div>
 
-        <div>
-          <label class="block text-xs mb-1.5">当前项目</label>
-          <input 
-            :value="config.project.name"
-            @input="updateConfig('project.name', $event.target.value)"
-            type="text" 
-            placeholder="项目名称"
-            class="cyber-input w-full text-sm py-2"
-          />
-        </div>
-
-        <div>
-          <label class="block text-xs mb-1.5">技术栈</label>
-          <input 
-            :value="config.project.stack"
-            @input="updateConfig('project.stack', $event.target.value)"
-            type="text" 
-            placeholder="例如：Next.js + Prisma + PostgreSQL"
-            class="cyber-input w-full text-sm py-2"
-          />
-        </div>
-
-        <div class="grid grid-cols-2 gap-3">
-          <div>
-            <label class="block text-xs mb-1.5">团队规模</label>
-            <select 
-              :value="config.project.teamSize" 
-              @change="updateConfig('project.teamSize', $event.target.value)"
+        <div class="space-y-3">
+          <div v-for="(project, index) in config.projects" :key="index"
+            class="space-y-2 p-3 user-project-card rounded-lg"
+          >
+            <input 
+              :value="project.name"
+              @input="updateProject(index, 'name', $event.target.value)"
+              type="text"
+              :placeholder="$t('user.projectName') || '项目名称'"
               class="cyber-input w-full text-sm py-2"
-            >
-              <option value="">请选择</option>
-              <option value="1人">1人</option>
-              <option value="2-5人">2-5人</option>
-              <option value="5-10人">5-10人</option>
-              <option value="10人以上">10人以上</option>
-            </select>
+            />
+            <textarea 
+              :value="project.description"
+              @input="updateProject(index, 'description', $event.target.value)"
+              rows="2"
+              :placeholder="$t('user.projectDesc') || '项目描述...'"
+              class="cyber-input w-full text-xs resize-none"
+            />
+            
+            <div class="flex justify-end">
+              <button 
+                @click="removeProject(index)"
+                class="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
+              >
+                <X class="w-3 h-3" /> {{ $t('user.removeProject') || '删除' }}
+              </button>
+            </div>
           </div>
-
-          <div>
-            <label class="block text-xs mb-1.5">项目状态</label>
-            <select 
-              :value="config.project.status" 
-              @change="updateConfig('project.status', $event.target.value)"
-              class="cyber-input w-full text-sm py-2"
-            >
-              <option value="">请选择</option>
-              <option value="规划中">规划中</option>
-              <option value="开发中">开发中</option>
-              <option value="测试中">测试中</option>
-              <option value="已上线">已上线</option>
-            </select>
-          </div>
+          
+          <button 
+            @click="addProject"
+            class="text-xs text-green-400 hover:text-green-300 flex items-center gap-1"
+          >
+            <Plus class="w-3.5 h-3.5" /> {{ $t('user.addProject') || '添加项目' }}
+          </button>
         </div>
       </div>
     </div>
@@ -292,10 +192,7 @@
 </template>
 
 <script setup>
-import { 
-  User, Contact, Code, Clock, Folder,
-  Plus, X, ArrowUp, ArrowDown
-} from 'lucide-vue-next'
+import { User, Contact, Code, Briefcase, FolderOpen, Plus, X } from 'lucide-vue-next'
 import TooltipIcon from '../ui/TooltipIcon.vue'
 
 const props = defineProps({
@@ -306,31 +203,32 @@ const emit = defineEmits(['update:config'])
 
 const techCategories = [
   {
-    id: 'proficient',
-    name: '熟练技术',
-    options: ['React', 'Vue', 'Angular', 'TypeScript', 'Node.js', 'Python', 'Go', 'Java', 'PHP', 'Rust']
+    id: 'languages',
+    name: '编程语言',
+    options: ['JavaScript', 'TypeScript', 'Python', 'Java', 'Go', 'Rust', 'C++', 'Ruby', 'PHP']
   },
   {
-    id: 'learning',
-    name: '学习中',
-    options: ['Rust', 'Kubernetes', '机器学习', 'WebAssembly', '区块链']
+    id: 'frontend',
+    name: '前端技术',
+    options: ['Vue', 'React', 'Angular', 'Svelte', 'Next.js', 'TailwindCSS', 'Webpack', 'Vite']
   },
   {
-    id: 'unfamiliar',
-    name: '不熟悉',
-    options: ['.NET', 'Java 企业级', '移动端原生', '嵌入式', '游戏开发']
+    id: 'backend',
+    name: '后端技术',
+    options: ['Node.js', 'Django', 'Spring Boot', 'Laravel', 'Express', 'FastAPI', 'GraphQL']
+  },
+  {
+    id: 'database',
+    name: '数据库',
+    options: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Elasticsearch', 'SQLite']
+  },
+  {
+    id: 'devops',
+    name: 'DevOps',
+    options: ['Docker', 'Kubernetes', 'AWS', 'Azure', 'GCP', 'CI/CD', 'Terraform', 'Linux']
   }
 ]
 
-const communicationPrefs = [
-  { id: 'conclusionFirst', label: '偏好先给结论，再展开解释' },
-  { id: 'codeExamples', label: '代码示例比文字描述更有帮助' },
-  { id: 'reasoning', label: '重要决策需要原因说明' },
-  { id: 'casual', label: '不喜欢过于正式的语言' },
-  { id: 'detailed', label: '偏好详细的解释' }
-]
-
-// 通用更新方法
 const updateConfig = (path, value) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
   const keys = path.split('.')
@@ -342,57 +240,62 @@ const updateConfig = (path, value) => {
   emit('update:config', newConfig)
 }
 
-const toggleTech = (categoryId, tech) => {
+const toggleTech = (category, tech) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  const list = newConfig.tech[categoryId]
-  const index = list.indexOf(tech)
+  const index = newConfig.tech[category].indexOf(tech)
   if (index > -1) {
-    list.splice(index, 1)
+    newConfig.tech[category].splice(index, 1)
   } else {
-    list.push(tech)
+    newConfig.tech[category].push(tech)
   }
   emit('update:config', newConfig)
 }
 
-const updateCommunication = (id, value) => {
+const updateWorkHabit = (index, value) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  newConfig.communication[id] = value
+  newConfig.workHabits[index] = value
   emit('update:config', newConfig)
 }
 
-const updatePriority = (index, value) => {
+const addWorkHabit = () => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  newConfig.priorities[index] = value
+  newConfig.workHabits.push('')
   emit('update:config', newConfig)
 }
 
-const addPriority = () => {
+const removeWorkHabit = (index) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  newConfig.priorities.push('')
+  newConfig.workHabits.splice(index, 1)
   emit('update:config', newConfig)
 }
 
-const removePriority = (index) => {
+const updateProject = (index, field, value) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  newConfig.priorities.splice(index, 1)
+  newConfig.projects[index][field] = value
   emit('update:config', newConfig)
 }
 
-const movePriorityUp = (index) => {
-  if (index <= 0) return
+const addProject = () => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  const temp = newConfig.priorities[index]
-  newConfig.priorities[index] = newConfig.priorities[index - 1]
-  newConfig.priorities[index - 1] = temp
+  newConfig.projects.push({ name: '', description: '' })
   emit('update:config', newConfig)
 }
 
-const movePriorityDown = (index) => {
+const removeProject = (index) => {
   const newConfig = JSON.parse(JSON.stringify(props.config))
-  if (index >= newConfig.priorities.length - 1) return
-  const temp = newConfig.priorities[index]
-  newConfig.priorities[index] = newConfig.priorities[index + 1]
-  newConfig.priorities[index + 1] = temp
+  newConfig.projects.splice(index, 1)
   emit('update:config', newConfig)
 }
 </script>
+
+<style scoped>
+.user-project-card {
+  background-color: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+[data-theme="light"] .user-project-card {
+  background-color: rgba(99, 102, 241, 0.03);
+  border: 1px solid rgba(99, 102, 241, 0.08);
+}
+</style>
