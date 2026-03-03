@@ -109,7 +109,7 @@
 
 <script setup>
 import { Fingerprint } from 'lucide-vue-next'
-import TooltipIcon from '../TooltipIcon.vue'
+import TooltipIcon from '../ui/TooltipIcon.vue'
 
 defineProps({
   config: Object,

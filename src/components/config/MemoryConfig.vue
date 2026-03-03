@@ -249,7 +249,7 @@ import {
   Brain, Star, GitCommit, Lightbulb, FolderOpen, Heart, Shield,
   Plus, X 
 } from 'lucide-vue-next'
-import TooltipIcon from '../TooltipIcon.vue'
+import TooltipIcon from '../ui/TooltipIcon.vue'
 
 const props = defineProps({
   config: Object

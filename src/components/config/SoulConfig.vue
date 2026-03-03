@@ -131,7 +131,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Sparkles, Plus, X, Pencil } from 'lucide-vue-next'
-import TooltipIcon from '../TooltipIcon.vue'
+import TooltipIcon from '../ui/TooltipIcon.vue'
 
 const props = defineProps({
   traits: Array

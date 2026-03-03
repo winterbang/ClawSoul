@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import OpenClawLogo from '../OpenClawLogo.vue'
+import OpenClawLogo from '../ui/OpenClawLogo.vue'
 </script>
 
 <style scoped>

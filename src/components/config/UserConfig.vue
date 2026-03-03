@@ -296,7 +296,7 @@ import {
   User, Contact, Code, Clock, Folder,
   Plus, X, ArrowUp, ArrowDown
 } from 'lucide-vue-next'
-import TooltipIcon from '../TooltipIcon.vue'
+import TooltipIcon from '../ui/TooltipIcon.vue'
 
 const props = defineProps({
   config: Object

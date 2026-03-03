@@ -150,17 +150,17 @@
 
 <script setup>
 import { ref, computed, reactive } from 'vue'
-import Header from './components/Layout/Header.vue'
-import Navigation from './components/Layout/Navigation.vue'
+import Header from './components/layout/Header.vue'
+import Navigation from './components/layout/Navigation.vue'
 import IdentityConfig from './components/config/IdentityConfig.vue'
 import SoulConfig from './components/config/SoulConfig.vue'
 import AgentsConfig from './components/config/AgentsConfig.vue'
 import UserConfig from './components/config/UserConfig.vue'
 import MemoryConfig from './components/config/MemoryConfig.vue'
-import PreviewPanel from './components/PreviewPanel.vue'
-import ToastNotification from './components/ToastNotification.vue'
-import TooltipIcon from './components/TooltipIcon.vue'
-import ConfirmDialog from './components/ConfirmDialog.vue'
+import PreviewPanel from './components/preview/PreviewPanel.vue'
+import ToastNotification from './components/ui/ToastNotification.vue'
+import TooltipIcon from './components/ui/TooltipIcon.vue'
+import ConfirmDialog from './components/ui/ConfirmDialog.vue'
 
 import { 
   presetEmojis, 
