@@ -29,14 +29,30 @@ const zh = {
     vibePlaceholder: '例如：朴素、耐心、真诚',
     emoji: 'Emoji 标识',
     roles: '角色定位',
-    rolesTooltip: '选择 AI 在与你互动时扮演的角色，可多选'
+    rolesTooltip: '选择 AI 在与你互动时扮演的角色，可多选',
+    roleDescTitle: '自定义角色描述：',
+    roleDescPlaceholder: '描述这个角色的具体定位...'
+  },
+  roles: {
+    companion: '小伙伴',
+    friend: '朋友',
+    teacher: '老师',
+    assistant: '助手',
+    advisor: '顾问',
+    partner: '合作伙伴'
   },
   soul: {
     title: '人格特质 SOUL',
     tooltip: '定义 AI 的性格特点、核心价值观和行为风格。这决定了 AI 如何与你互动、表达观点和解决问题。',
     addTrait: '添加自定义特质',
     addDesc: '点击添加描述',
-    delete: '删除'
+    delete: '删除',
+    traitNamePlaceholder: '特质名称',
+    traitDescPlaceholder: '描述（可选）',
+    confirmAdd: '确认添加',
+    cancel: '取消',
+    confirmDeleteTitle: '确认删除',
+    confirmDeleteMsg: '确定要删除特质"{name}"吗？'
   },
   agents: {
     title: '行为模式 AGENTS',
@@ -169,14 +185,30 @@ const en = {
     vibePlaceholder: 'e.g., Simple, Patient, Sincere',
     emoji: 'Emoji',
     roles: 'Role Positioning',
-    rolesTooltip: 'Select roles for the AI to play when interacting with you, multiple choices allowed'
+    rolesTooltip: 'Select roles for the AI to play when interacting with you, multiple choices allowed',
+    roleDescTitle: 'Custom role descriptions:',
+    roleDescPlaceholder: 'Describe the specific positioning of this role...'
+  },
+  roles: {
+    companion: 'Companion',
+    friend: 'Friend',
+    teacher: 'Teacher',
+    assistant: 'Assistant',
+    advisor: 'Advisor',
+    partner: 'Partner'
   },
   soul: {
     title: 'Soul',
     tooltip: 'Define the AI\'s personality traits, core values, and behavioral style. This determines how the AI interacts with you, expresses opinions, and solves problems.',
     addTrait: 'Add Custom Trait',
     addDesc: 'Click to add description',
-    delete: 'Delete'
+    delete: 'Delete',
+    traitNamePlaceholder: 'Trait name',
+    traitDescPlaceholder: 'Description (optional)',
+    confirmAdd: 'Confirm',
+    cancel: 'Cancel',
+    confirmDeleteTitle: 'Confirm Delete',
+    confirmDeleteMsg: 'Are you sure you want to delete the trait "{name}"?'
   },
   agents: {
     title: 'Agents',

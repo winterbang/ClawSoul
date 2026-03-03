@@ -2,12 +2,12 @@
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-semibold flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
         <Sparkles class="w-5 h-5 text-purple-400" />
-        人格特质 SOUL
+        {{ $t('soul.title') }}
       </h2>
       <TooltipIcon position="right">
-        定义 AI 的性格特点、核心价值观和行为风格。这决定了 AI 如何与你互动、表达观点和解决问题。
+        {{ $t('soul.tooltip') }}
       </TooltipIcon>
     </div>
 
@@ -39,7 +39,7 @@
             <button 
               @click="showDeleteConfirm(index)" 
               class="text-[var(--text-muted)] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
-              title="删除"
+              :title="$t('soul.delete')"
             >
               <X class="w-4 h-4" />
             </button>
@@ -63,14 +63,14 @@
             class="cyber-input text-xs py-1 px-2 flex-1"
             @blur="saveDescEdit(index, $event.target.value)"
             @keyup.enter="saveDescEdit(index, $event.target.value)"
-            placeholder="描述这个特质..."
+            :placeholder="$t('soul.descPlaceholder') || '描述这个特质...'"
           />
           
           <p 
             v-else 
             class="text-xs text-[var(--text-muted)] flex-1 cursor-pointer hover:text-purple-400" 
             @click="startDescEdit(index)"
-          >{{ trait.description || '点击添加描述' }}</p>
+          >{{ trait.description || $t('soul.addDesc') }}</p>
           
           
           <button 
@@ -86,7 +86,7 @@
       <!-- 添加新特质 -->
       <div v-if="!isAdding" class="p-3 border border-dashed border-[var(--border-color)] rounded-lg hover:border-purple-400 transition-colors">
         <button @click="startAdd" class="text-xs text-purple-500 hover:text-purple-600 flex items-center gap-1 w-full justify-center py-2">
-          <Plus class="w-4 h-4" /> 添加自定义特质
+          <Plus class="w-4 h-4" /> {{ $t('soul.addTrait') }}
         </button>
       </div>
       
@@ -94,21 +94,21 @@
         <input 
           v-model="newTraitName"
           type="text"
-          placeholder="特质名称"
+          :placeholder="$t('soul.traitNamePlaceholder') || '特质名称'"
           class="cyber-input w-full text-sm"
           @keyup.enter="addTrait"
         />
         <input 
           v-model="newTraitDesc"
           type="text"
-          placeholder="描述（可选）"
+          :placeholder="$t('soul.traitDescPlaceholder') || '描述（可选）'"
           class="cyber-input w-full text-sm"
           @keyup.enter="addTrait"
         />
         
         <div class="flex gap-2">
-          <button @click="addTrait" class="cyber-btn-primary text-xs py-2 flex-1">确认添加</button>
-          <button @click="cancelAdd" class="cyber-btn-secondary text-xs py-2 flex-1">取消</button>
+          <button @click="addTrait" class="cyber-btn-primary text-xs py-2 flex-1">{{ $t('soul.confirmAdd') || '确认添加' }}</button>
+          <button @click="cancelAdd" class="cyber-btn-secondary text-xs py-2 flex-1">{{ $t('soul.cancel') || '取消' }}</button>
         </div>
       </div>
     </div>
@@ -117,11 +117,11 @@
     <div v-if="deleteIndex !== null" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
     >
       <div class="glass rounded-xl p-6 max-w-sm mx-4">
-        <h3 class="text-lg font-semibold mb-3">确认删除</h3>
-        <p class="text-sm text-gray-400 mb-4">确定要删除特质"{{ traits[deleteIndex]?.name }}"吗？</p>
+        <h3 class="text-lg font-semibold mb-3 text-[var(--text-primary)]">{{ $t('soul.confirmDeleteTitle') || '确认删除' }}</h3>
+        <p class="text-sm text-[var(--text-muted)] mb-4">{{ $t('soul.confirmDeleteMsg', { name: traits[deleteIndex]?.name }) || `确定要删除特质"${traits[deleteIndex]?.name}"吗？` }}</p>
         <div class="flex gap-3">
-          <button @click="confirmDelete" class="cyber-btn-primary text-sm py-2 flex-1 bg-red-500 hover:bg-red-600">删除</button>
-          <button @click="cancelDelete" class="cyber-btn-secondary text-sm py-2 flex-1">取消</button>
+          <button @click="confirmDelete" class="cyber-btn-primary text-sm py-2 flex-1 bg-red-500 hover:bg-red-600">{{ $t('soul.delete') }}</button>
+          <button @click="cancelDelete" class="cyber-btn-secondary text-sm py-2 flex-1">{{ $t('soul.cancel') || '取消' }}</button>
         </div>
       </div>
     </div>

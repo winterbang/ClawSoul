@@ -2,51 +2,51 @@
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-semibold flex items-center gap-2">
-        <Fingerprint class="w-5 h-5 text-cyber-accent" />
-        基础身份 IDENTITY
+      <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
+        <Fingerprint class="w-5 h-5 text-[var(--accent-primary)]" />
+        {{ $t('identity.title') }}
       </h2>
       <TooltipIcon position="right">
-        定义 AI 助手的基本身份信息：名字、形象、性格特点和角色定位。这是 AI 认识自己的"身份证"。
+        {{ $t('identity.tooltip') }}
       </TooltipIcon>
     </div>
     
     <div class="space-y-4">
       <div>
-        <label class="block text-sm font-medium mb-2">AI 名字</label>
+        <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.name') }}</label>
         <input 
           :value="config.name"
           @input="$emit('update:config', { ...config, name: $event.target.value })"
           type="text" 
-          placeholder="例如：吉量"
+          :placeholder="$t('identity.namePlaceholder')"
           class="cyber-input w-full"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2">形象描述</label>
+        <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.creature') }}</label>
         <input 
           :value="config.creature"
           @input="$emit('update:config', { ...config, creature: $event.target.value })"
           type="text" 
-          placeholder="例如：传说中的吉量马 — 乘之寿千岁 🐴"
+          :placeholder="$t('identity.creaturePlaceholder')"
           class="cyber-input w-full"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2">性格特点</label>
+        <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.vibe') }}</label>
         <input 
           :value="config.vibe"
           @input="$emit('update:config', { ...config, vibe: $event.target.value })"
           type="text" 
-          placeholder="例如：朴素、耐心、真诚"
+          :placeholder="$t('identity.vibePlaceholder')"
           class="cyber-input w-full"
         />
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2">Emoji 标识</label>
+        <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.emoji') }}</label>
         <div class="flex gap-2">
           <input 
             :value="config.emoji"
@@ -71,7 +71,10 @@
       </div>
 
       <div>
-        <label class="block text-sm font-medium mb-2">角色定位</label>
+        <div class="flex items-center gap-2 mb-2">
+          <label class="block text-sm font-medium text-[var(--text-primary)]">{{ $t('identity.roles') }}</label>
+          <TooltipIcon>{{ $t('identity.rolesTooltip') }}</TooltipIcon>
+        </div>
         <div class="grid grid-cols-3 gap-2">
           <button 
             v-for="role in roles" 
@@ -79,25 +82,25 @@
             @click="$emit('toggle-role', role.id)"
             class="p-3 rounded-lg border transition-all text-sm"
             :class="config.roles.includes(role.id) 
-              ? 'border-cyber-accent bg-cyber-accent/10 text-cyber-accent' 
-              : 'border-cyber-600 hover:border-cyber-accent/50'"
+              ? 'border-[var(--accent-primary)] bg-[var(--accent-primary)]/10 text-[var(--accent-primary)]' 
+              : 'border-[var(--border-color)] hover:border-[var(--accent-primary)]/50 text-[var(--text-secondary)]'"
           >
-            {{ role.name }}
+            {{ $t(`roles.${role.id}`, role.name) }}
           </button>
         </div>
         
         <!-- 角色描述编辑 -->
         <div v-if="config.roles.length > 0" class="mt-4 space-y-3">
-          <p class="text-xs text-gray-400">自定义角色描述：</p>
+          <p class="text-xs text-[var(--text-muted)]">{{ $t('identity.roleDescTitle') || '自定义角色描述：' }}</p>
           <div v-for="roleId in config.roles" :key="roleId" class="space-y-1">
-            <label class="text-xs font-medium text-cyber-accent">
-              {{ roles.find(r => r.id === roleId)?.name }}
+            <label class="text-xs font-medium text-[var(--accent-primary)]">
+              {{ $t(`roles.${roleId}`, roles.find(r => r.id === roleId)?.name) }}
             </label>
             <input 
               :value="config.roleDescriptions[roleId]"
               @input="$emit('update:role-desc', roleId, $event.target.value)"
               type="text" 
-              placeholder="描述这个角色的具体定位..."
+              :placeholder="$t('identity.roleDescPlaceholder') || '描述这个角色的具体定位...'"
               class="cyber-input w-full text-sm"
             />
           </div>
