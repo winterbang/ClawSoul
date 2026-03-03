@@ -5,16 +5,25 @@
       <div class="flex items-center gap-3">
         <img src="/logo.png" alt="logo" class="w-10 h-10 rounded-lg object-cover ghost-float" />
         <div>
-          <h1 class="text-xl font-bold neon-text">ClawSoul</h1>
-          <p class="text-xs text-[var(--text-secondary)]">订制你的数字助手</p>
+          <h1 class="text-xl font-bold neon-text">{{ $t('header.title') }}</h1>
+          <p class="text-xs text-[var(--text-secondary)]">{{ $t('header.subtitle') }}</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
+        <!-- 语言切换按钮 -->
+        <button
+          @click="toggleLocale"
+          class="cyber-btn-secondary text-sm p-2"
+          :title="isZh ? 'Switch to English' : '切换到中文'"
+        >
+          <span class="text-xs font-medium">{{ currentLocale === 'zh' ? '中' : 'En' }}</span>
+        </button>
+
         <!-- 主题切换按钮 -->
         <button
           @click="toggleTheme"
           class="cyber-btn-secondary text-sm p-2"
-          :title="isDark ? '切换到浅色主题' : '切换到深色主题'"
+          :title="isDark ? 'Switch to light theme' : 'Switch to dark theme'"
         >
           <Sun v-if="isDark" class="w-4 h-4" />
           <Moon v-else class="w-4 h-4" />
@@ -24,19 +33,19 @@
           href="https://openclaw.ai" 
           target="_blank"
           class="cyber-btn-secondary text-sm"
-          title="OpenClaw 官网"
+          title="OpenClaw"
         >
           <OpenClawLogo class="w-5 h-5" />
-          <span class="hidden sm:inline">官网</span>
+          <span class="hidden sm:inline">{{ $t('header.official') }}</span>
         </a>
         <a 
           href="https://docs.openclaw.ai" 
           target="_blank"
           class="cyber-btn-secondary text-sm"
-          title="OpenClaw 文档"
+          title="Documentation"
         >
           <OpenClawLogo class="w-5 h-5" />
-          <span class="hidden sm:inline">文档</span>
+          <span class="hidden sm:inline">{{ $t('header.docs') }}</span>
         </a>
       </div>
     </div>
@@ -47,8 +56,10 @@
 import { Sun, Moon } from 'lucide-vue-next'
 import OpenClawLogo from '../ui/OpenClawLogo.vue'
 import { useTheme } from '../../composables/useTheme.js'
+import { useLocale } from '../../composables/useLocale.js'
 
 const { isDark, toggleTheme } = useTheme()
+const { currentLocale, toggleLocale, isZh } = useLocale()
 </script>
 
 <style scoped>

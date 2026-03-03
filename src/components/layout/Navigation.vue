@@ -19,7 +19,7 @@
           :class="currentView === step.id ? 'nav-btn-active nav-btn-active-cyan' : 'nav-btn-inactive'"
         >
           <component :is="step.icon" class="w-3.5 h-3.5" />
-          <span>{{ step.name }}</span>
+          <span>{{ $t(`nav.${step.id}`) }}</span>
         </button>
       </div>
       
@@ -36,7 +36,7 @@
           :class="currentView === step.id ? 'nav-btn-active nav-btn-active-purple' : 'nav-btn-inactive'"
         >
           <component :is="step.icon" class="w-3.5 h-3.5" />
-          <span>{{ step.name }}</span>
+          <span>{{ $t(`nav.${step.id}`) }}</span>
         </button>
       </div>
       
@@ -51,14 +51,14 @@
           :class="currentView === 'export' ? 'nav-btn-active nav-btn-active-green' : 'nav-btn-inactive'"
         >
           <FileText class="w-3.5 h-3.5" />
-          <span>摘要</span>
+          <span>{{ $t('nav.summary') }}</span>
         </button>
         <button 
           @click="$emit('reset')"
           class="nav-btn-reset flex items-center gap-1 px-2 py-1.5 rounded-md transition-all duration-200 text-xs whitespace-nowrap"
         >
           <RotateCcw class="w-3.5 h-3.5" />
-          <span>重置</span>
+          <span>{{ $t('nav.reset') }}</span>
         </button>
       </div>
     </div>
@@ -78,15 +78,15 @@ defineProps({
 defineEmits(['change-view', 'reset'])
 
 const identitySteps = [
-  { id: 'identity', name: '身份', icon: Fingerprint },
-  { id: 'soul', name: '人格', icon: Sparkles },
+  { id: 'identity', icon: Fingerprint },
+  { id: 'soul', icon: Sparkles },
 ]
 
 const behaviorSteps = [
-  { id: 'agents', name: '行为', icon: Bot },
-  { id: 'user', name: '用户', icon: User },
-  { id: 'memory', name: '记忆', icon: Brain },
-  { id: 'skills', name: '技能', icon: Wrench },
+  { id: 'agents', icon: Bot },
+  { id: 'user', icon: User },
+  { id: 'memory', icon: Brain },
+  { id: 'skills', icon: Wrench },
 ]
 </script>
 
