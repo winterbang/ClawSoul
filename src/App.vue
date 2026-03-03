@@ -221,7 +221,17 @@ const generatedIdentity = computed(() => {
     return `\n- **${roleName}** — ${description}`
   }).join('')
 
-  return `# IDENTITY.md\n\n- **Name:** ${config.identity.name}\n- **Creature:** ${config.identity.creature}\n- **Vibe:** ${config.identity.vibe}\n- **Emoji:** ${config.identity.emoji}\n\n## 角色定位${roleText}`
+  let result = '# IDENTITY.md\n\n'
+  if (config.identity.name) result += `- **Name:** ${config.identity.name}\n`
+  if (config.identity.creature) result += `- **Creature:** ${config.identity.creature}\n`
+  if (config.identity.vibe) result += `- **Vibe:** ${config.identity.vibe}\n`
+  if (config.identity.emoji) result += `- **Emoji:** ${config.identity.emoji}\n`
+  
+  if (roleText) {
+    result += `\n## 角色定位${roleText}`
+  }
+  
+  return result || '# IDENTITY.md\n\n（未配置）'
 })
 
 // 生成 SOUL.md
@@ -266,7 +276,11 @@ const generatedAgents = computed(() => {
   let result = '# AGENTS.md\n\n'
   
   if (hasRoleInfo) {
-    result += `## 角色定位\n- **身份**: ${config.agents.role.identity || '未指定'}\n- **专长**: ${config.agents.role.specialties.join('、') || '未指定'}\n- **语言**: ${config.agents.role.language}\n\n`
+    result += `## 角色定位\n`
+    if (config.agents.role.identity) result += `- **身份**: ${config.agents.role.identity}\n`
+    if (config.agents.role.specialties.length > 0) result += `- **专长**: ${config.agents.role.specialties.join('、')}\n`
+    if (config.agents.role.language) result += `- **语言**: ${config.agents.role.language}\n`
+    result += '\n'
   }
   
   if (hasWorkflows) {
@@ -274,7 +288,13 @@ const generatedAgents = computed(() => {
   }
   
   if (hasFormats) {
-    result += `## 回答风格\n### 格式要求\n${config.agents.formats.map(f => `- ${f}`).join('\n') || '未指定'}\n\n### 语言习惯\n${config.agents.habits.map(h => `- ${h}`).join('\n') || '未指定'}\n\n`
+    result += `## 回答风格\n`
+    if (config.agents.formats.length > 0) {
+      result += `### 格式要求\n${config.agents.formats.map(f => `- ${f}`).join('\n')}\n\n`
+    }
+    if (config.agents.habits.length > 0) {
+      result += `### 语言习惯\n${config.agents.habits.map(h => `- ${h}`).join('\n')}\n\n`
+    }
   }
   
   if (hasProhibitions) {
@@ -299,8 +319,11 @@ const generatedUser = computed(() => {
     .filter(([key, _]) => key !== 'other')
     .map(([key, list]) => {
       const name = key === 'proficient' ? '熟练技术' : key === 'learning' ? '学习中' : '不熟悉'
-      return `### ${name}\n${list.map(t => `- ${t}`).join('\n') || '未指定'}`
-    }).join('\n\n')
+      if (list.length === 0) return null
+      return `### ${name}\n${list.map(t => `- ${t}`).join('\n')}`
+    })
+    .filter(Boolean)
+    .join('\n\n')
   
   const commPrefs = Object.entries(config.user.communication)
     .filter(([_, v]) => v)
@@ -318,14 +341,39 @@ const generatedUser = computed(() => {
   let result = '# USER.md\n\n'
   
   if (hasBasicInfo) {
-    result += `## 基本信息\n- **姓名**: ${config.user.basic.name || '未指定'}\n- **职业**: ${config.user.basic.occupation || '未指定'}\n- **公司**: ${config.user.basic.company || '未指定'}\n- **工作年限**: ${config.user.basic.experience || '未指定'}\n\n`
+    result += `## 基本信息\n`
+    if (config.user.basic.name) result += `- **姓名**: ${config.user.basic.name}\n`
+    if (config.user.basic.occupation) result += `- **职业**: ${config.user.basic.occupation}\n`
+    if (config.user.basic.company) result += `- **公司**: ${config.user.basic.company}\n`
+    if (config.user.basic.experience) result += `- **工作年限**: ${config.user.basic.experience}\n`
+    result += '\n'
   }
   
   if (hasTech) {
     result += `## 技术背景\n${techText}\n\n`
   }
   
-  result += `## 工作习惯\n### 时间安排\n- 工作时间: ${config.user.workSchedule.start} - ${config.user.workSchedule.end} (${config.user.workSchedule.timezone})\n\n### 沟通偏好\n${commPrefs || '未指定'}\n\n### 任务优先级\n${config.user.priorities.filter(p => p).map((p, i) => `${i + 1}. ${p}`).join('\n') || '未指定'}\n\n## 项目信息\n- **名称**: ${config.user.project.name || '未指定'}\n- **技术栈**: ${config.user.project.stack || '未指定'}\n- **团队规模**: ${config.user.project.teamSize || '未指定'}\n- **状态**: ${config.user.project.status || '未指定'}`
+  const prioritiesText = config.user.priorities.filter(p => p).map((p, i) => `${i + 1}. ${p}`).join('\n')
+  
+  const projectInfo = []
+  if (config.user.project.name) projectInfo.push(`- **名称**: ${config.user.project.name}`)
+  if (config.user.project.stack) projectInfo.push(`- **技术栈**: ${config.user.project.stack}`)
+  if (config.user.project.teamSize) projectInfo.push(`- **团队规模**: ${config.user.project.teamSize}`)
+  if (config.user.project.status) projectInfo.push(`- **状态**: ${config.user.project.status}`)
+
+  result += `## 工作习惯\n### 时间安排\n- 工作时间: ${config.user.workSchedule.start} - ${config.user.workSchedule.end} (${config.user.workSchedule.timezone})\n\n`
+  
+  if (commPrefs) {
+    result += `### 沟通偏好\n${commPrefs}\n\n`
+  }
+  
+  if (prioritiesText) {
+    result += `### 任务优先级\n${prioritiesText}\n\n`
+  }
+  
+  if (projectInfo.length > 0) {
+    result += `## 项目信息\n${projectInfo.join('\n')}`
+  }
 
   return result
 })
