@@ -88,11 +88,6 @@
             </div>
 
             <div v-if="currentView === 'export'" class="glass rounded-xl p-6 space-y-6">
-              <h2 class="text-xl font-semibold flex items-center gap-2">
-                <span class="text-green-400">⬇</span>
-                导出配置
-              </h2>
-
               <div class="space-y-4">
                 <div class="p-4 bg-cyber-800/50 rounded-lg border border-cyber-600/30">
                   <h3 class="font-medium mb-3">配置摘要</h3>
@@ -122,15 +117,6 @@
                       <span class="text-cyber-accent">{{ config.memory.memories.length + config.memory.decisions.length + config.memory.lessons.length }} 条</span>
                     </div>
                   </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3">
-                  <button @click="exportAsMarkdown" class="cyber-btn-primary">
-                    下载 Markdown
-                  </button>
-                  <button @click="copyToClipboard" class="cyber-btn-secondary">
-                    复制到剪贴板
-                  </button>
                 </div>
               </div>
             </div>
