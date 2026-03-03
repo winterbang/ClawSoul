@@ -13,7 +13,7 @@
 
     <div class="space-y-4">
       <!-- 特质列表 -->
-      <div v-for="(trait, index) in traits" :key="trait.id" class="space-y-2 p-3 bg-cyber-800/30 rounded-lg group">
+      <div v-for="(trait, index) in traits" :key="trait.id" class="trait-card space-y-2 p-3 rounded-lg group">
         <div class="flex justify-between items-center">
           <div class="flex items-center gap-2 flex-1">
             <input 
@@ -24,21 +24,21 @@
               @blur="saveEdit(index, $event.target.value)"
               @keyup.enter="saveEdit(index, $event.target.value)"
             />
-            <span v-else class="text-sm font-medium">{{ trait.name }}</span>
+            <span v-else class="text-sm font-medium text-[var(--text-primary)]">{{ trait.name }}</span>
             <button 
               v-if="editingIndex !== index"
               @click="startEdit(index)" 
-              class="text-gray-500 hover:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              class="text-[var(--text-muted)] hover:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
             >
               <Pencil class="w-3 h-3" />
             </button>
           </div>
           
           <div class="flex items-center gap-2">
-            <span class="text-xs text-purple-400 w-10 text-right">{{ trait.value }}%</span>
+            <span class="text-xs text-purple-500 w-10 text-right">{{ trait.value }}%</span>
             <button 
               @click="showDeleteConfirm(index)" 
-              class="text-gray-500 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
+              class="text-[var(--text-muted)] hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity"
               title="删除"
             >
               <X class="w-4 h-4" />
@@ -52,7 +52,7 @@
           type="range" 
           min="0" 
           max="100"
-          class="w-full h-2 bg-cyber-700 rounded-lg appearance-none cursor-pointer accent-purple-400"
+          class="trait-slider w-full h-2 rounded-lg appearance-none cursor-pointer"
         />
         
         <div class="flex items-center gap-2">
@@ -68,7 +68,7 @@
           
           <p 
             v-else 
-            class="text-xs text-gray-500 flex-1 cursor-pointer hover:text-purple-400" 
+            class="text-xs text-[var(--text-muted)] flex-1 cursor-pointer hover:text-purple-400" 
             @click="startDescEdit(index)"
           >{{ trait.description || '点击添加描述' }}</p>
           
@@ -76,7 +76,7 @@
           <button 
             v-if="editingDescIndex !== index"
             @click="startDescEdit(index)" 
-            class="text-gray-500 hover:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
+            class="text-[var(--text-muted)] hover:text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity"
           >
             <Pencil class="w-3 h-3" />
           </button>
@@ -84,13 +84,13 @@
       </div>
       
       <!-- 添加新特质 -->
-      <div v-if="!isAdding" class="p-3 border border-dashed border-cyber-600 rounded-lg">
-        <button @click="startAdd" class="text-xs text-purple-400 hover:text-purple-300 flex items-center gap-1 w-full justify-center py-2">
+      <div v-if="!isAdding" class="p-3 border border-dashed border-[var(--border-color)] rounded-lg hover:border-purple-400 transition-colors">
+        <button @click="startAdd" class="text-xs text-purple-500 hover:text-purple-600 flex items-center gap-1 w-full justify-center py-2">
           <Plus class="w-4 h-4" /> 添加自定义特质
         </button>
       </div>
       
-      <div v-else class="p-3 border border-cyber-600 rounded-lg space-y-3">
+      <div v-else class="p-3 border border-[var(--border-color)] rounded-lg space-y-3 bg-[var(--bg-secondary)]">
         <input 
           v-model="newTraitName"
           type="text"
@@ -231,3 +231,38 @@ const addTrait = () => {
   newTraitDesc.value = ''
 }
 </script>
+
+<style scoped>
+.trait-card {
+  background-color: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+[data-theme="light"] .trait-card {
+  background-color: rgba(99, 102, 241, 0.03);
+  border: 1px solid rgba(99, 102, 241, 0.08);
+}
+
+.trait-slider {
+  background-color: rgba(99, 102, 241, 0.2);
+  accent-color: #a855f7;
+}
+
+[data-theme="light"] .trait-slider {
+  background-color: rgba(99, 102, 241, 0.15);
+  accent-color: #7c3aed;
+}
+
+.trait-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #a855f7;
+  cursor: pointer;
+}
+
+[data-theme="light"] .trait-slider::-webkit-slider-thumb {
+  background: #7c3aed;
+}
+</style>
