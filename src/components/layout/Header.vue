@@ -6,7 +6,7 @@
         <img src="/logo.png" alt="logo" class="w-10 h-10 rounded-lg object-cover ghost-float" />
         <div>
           <h1 class="text-xl font-bold neon-text">ClawSoul</h1>
-          <p class="text-xs text-[var(--text-secondary)]">打造你的数字助手</p>
+          <p class="text-xs text-[var(--text-secondary)]">订制你的数字助手</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
