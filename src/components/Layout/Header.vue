@@ -26,38 +26,52 @@ import { Github } from 'lucide-vue-next'
 </script>
 
 <style scoped>
-/* 幽灵飘浮动画 */
+/* 幽灵飘浮动画 - 带发光跟随 */
 @keyframes ghostFloat {
   0%, 100% {
     transform: translate(0, 0) rotate(0deg);
+    filter: drop-shadow(2px 2px 12px rgba(0, 212, 255, 0.4)) 
+            drop-shadow(-1px -1px 8px rgba(168, 85, 247, 0.3));
   }
   15% {
     transform: translate(3px, -4px) rotate(1deg);
+    filter: drop-shadow(5px 1px 14px rgba(0, 212, 255, 0.5)) 
+            drop-shadow(-2px -5px 10px rgba(168, 85, 247, 0.4));
   }
   30% {
     transform: translate(-2px, -6px) rotate(-1deg);
+    filter: drop-shadow(0px 4px 16px rgba(0, 212, 255, 0.6)) 
+            drop-shadow(2px -6px 12px rgba(168, 85, 247, 0.5));
   }
   45% {
     transform: translate(-4px, -2px) rotate(0.5deg);
+    filter: drop-shadow(-3px 2px 14px rgba(0, 212, 255, 0.5)) 
+            drop-shadow(4px -3px 10px rgba(168, 85, 247, 0.4));
   }
   60% {
     transform: translate(-1px, 3px) rotate(-0.5deg);
+    filter: drop-shadow(-2px 6px 12px rgba(0, 212, 255, 0.45)) 
+            drop-shadow(1px 4px 8px rgba(168, 85, 247, 0.35));
   }
   75% {
     transform: translate(3px, 2px) rotate(1deg);
+    filter: drop-shadow(5px 4px 14px rgba(0, 212, 255, 0.5)) 
+            drop-shadow(-3px 2px 10px rgba(168, 85, 247, 0.4));
   }
   90% {
     transform: translate(2px, -1px) rotate(-0.5deg);
+    filter: drop-shadow(4px 0px 12px rgba(0, 212, 255, 0.45)) 
+            drop-shadow(-2px -2px 8px rgba(168, 85, 247, 0.35));
   }
 }
 
 .ghost-float {
   animation: ghostFloat 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(0, 212, 255, 0.3));
 }
 
 .ghost-float:hover {
   animation-duration: 3s;
-  filter: drop-shadow(0 0 15px rgba(0, 212, 255, 0.6));
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.8)) 
+          drop-shadow(0 0 30px rgba(168, 85, 247, 0.6)) !important;
 }
 </style>
