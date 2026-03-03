@@ -162,6 +162,8 @@ import ToastNotification from './components/ui/ToastNotification.vue'
 import TooltipIcon from './components/ui/TooltipIcon.vue'
 import ConfirmDialog from './components/ui/ConfirmDialog.vue'
 
+import { useI18n } from 'vue-i18n'
+
 import { 
   presetEmojis, 
   roles, 
@@ -170,6 +172,8 @@ import {
   previewTabs,
   defaultConfig 
 } from './modules/config.js'
+
+const { t } = useI18n()
 
 const currentView = ref('identity')
 const currentPreview = ref('identity')
@@ -255,10 +259,14 @@ const generatedIdentity = computed(() => {
 // 生成 SOUL.md
 const generatedSoul = computed(() => {
   const traitDescriptions = personalityTraits
-    .map(t => `- **${t.name}** — ${t.description}（${t.value}%）`)
+    .map(t => {
+      const name = t.nameKey ? t(t.nameKey, t.name) : t.name
+      const desc = t.descKey ? t(t.descKey, t.description) : t.description
+      return `- **${name}** — ${desc}（${t.value}%）`
+    })
     .join('\n')
 
-  return `# SOUL.md\n\n## ${config.identity.name} 的风格\n\n${traitDescriptions || '（未配置）'}`
+  return `# SOUL.md\n\n## ${config.identity.name || t('default.name')} ${t('preview.styleTitle', '的风格')}\n\n${traitDescriptions || t('preview.notConfigured', '（未配置）')}`
 })
 
 // 生成 AGENTS.md

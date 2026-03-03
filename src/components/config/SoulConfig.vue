@@ -24,7 +24,7 @@
               @blur="saveEdit(index, $event.target.value)"
               @keyup.enter="saveEdit(index, $event.target.value)"
             />
-            <span v-else class="text-sm font-medium text-[var(--text-primary)]">{{ trait.name }}</span>
+            <span v-else class="text-sm font-medium text-[var(--text-primary)]">{{ $t(trait.nameKey, trait.name) }}</span>
             <button 
               v-if="editingIndex !== index"
               @click="startEdit(index)" 
@@ -70,7 +70,7 @@
             v-else 
             class="text-xs text-[var(--text-muted)] flex-1 cursor-pointer hover:text-purple-400" 
             @click="startDescEdit(index)"
-          >{{ trait.description || $t('soul.addDesc') }}</p>
+          >{{ trait.description || (trait.descKey ? $t(trait.descKey) : $t('soul.addDesc')) }}</p>
           
           
           <button 
