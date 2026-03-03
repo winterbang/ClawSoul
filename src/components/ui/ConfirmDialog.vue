@@ -24,23 +24,23 @@
         >
           <div 
             v-if="show" 
-            class="glass rounded-xl p-6 max-w-sm w-full border border-cyber-600/50 shadow-2xl"
+            class="confirm-dialog glass rounded-xl p-6 max-w-sm w-full shadow-2xl"
             @click.stop
           >
             <!-- 图标 -->
             <div class="flex justify-center mb-4">
-              <div class="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-                <AlertTriangle class="w-8 h-8 text-red-400" />
+              <div class="confirm-icon w-16 h-16 rounded-full flex items-center justify-center">
+                <AlertTriangle class="w-8 h-8 text-red-500" />
               </div>
             </div>
             
             <!-- 标题 -->
-            <h3 class="text-lg font-semibold text-center mb-2 text-white">
+            <h3 class="text-lg font-semibold text-center mb-2 text-[var(--text-primary)]">
               {{ title }}
             </h3>
             
             <!-- 内容 -->
-            <p class="text-sm text-gray-400 text-center mb-6">
+            <p class="text-sm text-[var(--text-secondary)] text-center mb-6">
               {{ message }}
             </p>
             
@@ -48,13 +48,13 @@
             <div class="flex gap-3">
               <button 
                 @click="handleCancel"
-                class="flex-1 py-2.5 px-4 rounded-lg border border-cyber-600 text-gray-300 hover:bg-cyber-700/50 hover:text-white transition-all text-sm font-medium"
+                class="confirm-btn-cancel flex-1 py-2.5 px-4 rounded-lg transition-all text-sm font-medium"
               >
                 {{ cancelText }}
               </button>
               <button 
                 @click="handleConfirm"
-                class="flex-1 py-2.5 px-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-400 hover:bg-red-500/30 hover:text-red-300 transition-all text-sm font-medium"
+                class="confirm-btn-confirm flex-1 py-2.5 px-4 rounded-lg transition-all text-sm font-medium"
               >
                 {{ confirmText }}
               </button>
@@ -106,3 +106,47 @@ const handleBackdropClick = () => {
   emit('update:show', false)
 }
 </script>
+
+<style scoped>
+.confirm-dialog {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+}
+
+.confirm-icon {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.confirm-btn-cancel {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.confirm-btn-cancel:hover {
+  background-color: rgba(99, 102, 241, 0.1);
+  border-color: var(--accent-primary);
+  color: var(--text-primary);
+}
+
+.confirm-btn-confirm {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #ef4444;
+}
+
+.confirm-btn-confirm:hover {
+  background-color: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+}
+
+[data-theme="light"] .confirm-btn-confirm {
+  background-color: rgba(239, 68, 68, 0.08);
+  color: #dc2626;
+}
+
+[data-theme="light"] .confirm-btn-confirm:hover {
+  background-color: rgba(239, 68, 68, 0.15);
+}
+</style>
