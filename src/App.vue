@@ -8,7 +8,7 @@
         <div class="flex flex-col h-[calc(100vh-140px)]">
           <Navigation 
             :current-view="currentView"
-            @change-view="currentView = $event"
+            @change-view="handleViewChange"
             @reset="resetConfig"
           />
 
@@ -505,6 +505,25 @@ const doCopy = async (text, successMessage) => {
   } catch (err) {
     showToast('复制失败，请手动复制')
     console.error('Copy failed:', err)
+  }
+}
+
+// 处理视图切换，同步更新预览标签
+const handleViewChange = (view) => {
+  currentView.value = view
+  
+  // 映射视图到预览标签
+  const viewToPreview = {
+    'identity': 'identity',
+    'soul': 'soul',
+    'agents': 'agents',
+    'user': 'user',
+    'memory': 'memory'
+  }
+  
+  // 如果切换到可映射的视图，同步切换预览
+  if (viewToPreview[view]) {
+    currentPreview.value = viewToPreview[view]
   }
 }
 
