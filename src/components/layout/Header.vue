@@ -1,15 +1,25 @@
 <!-- Header.vue -->
 <template>
-  <header class="border-b border-cyber-600/30 glass sticky top-0 z-50">
+  <header class="border-b border-[var(--border-color)] glass sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
       <div class="flex items-center gap-3">
         <img src="/logo.png" alt="logo" class="w-10 h-10 rounded-lg object-cover ghost-float" />
         <div>
           <h1 class="text-xl font-bold neon-text">ClawSoul</h1>
-          <p class="text-xs text-gray-400">打造你的数字助手</p>
+          <p class="text-xs text-[var(--text-secondary)]">打造你的数字助手</p>
         </div>
       </div>
       <div class="flex items-center gap-2">
+        <!-- 主题切换按钮 -->
+        <button
+          @click="toggleTheme"
+          class="cyber-btn-secondary text-sm p-2"
+          :title="isDark ? '切换到浅色主题' : '切换到深色主题'"
+        >
+          <Sun v-if="isDark" class="w-4 h-4" />
+          <Moon v-else class="w-4 h-4" />
+        </button>
+        
         <a 
           href="https://openclaw.ai" 
           target="_blank"
@@ -34,7 +44,11 @@
 </template>
 
 <script setup>
+import { Sun, Moon } from 'lucide-vue-next'
 import OpenClawLogo from '../ui/OpenClawLogo.vue'
+import { useTheme } from '../../composables/useTheme.js'
+
+const { isDark, toggleTheme } = useTheme()
 </script>
 
 <style scoped>
