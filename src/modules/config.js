@@ -130,36 +130,14 @@ export const defaultConfig = {
       experience: ''
     },
     tech: {
-      proficient: [],
-      learning: [],
-      unfamiliar: [],
-      other: ''
+      languages: [],
+      frontend: [],
+      backend: [],
+      database: [],
+      devops: []
     },
-    workSchedule: {
-      start: '09:00',
-      end: '18:00',
-      timezone: 'UTC+8'
-    },
-    communication: {
-      conclusionFirst: true,
-      codeExamples: true,
-      reasoning: true,
-      casual: false,
-      detailed: true
-    },
-    priorities: [
-      '安全问题',
-      '生产环境 Bug',
-      '阻塞团队的问题',
-      '新功能开发',
-      '代码优化'
-    ],
-    project: {
-      name: '',
-      stack: '',
-      teamSize: '',
-      status: ''
-    }
+    workHabits: [],
+    projects: []
   },
   // MEMORY.md 配置
   memory: {
