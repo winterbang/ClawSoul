@@ -2,12 +2,12 @@
 <template>
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
-      <h2 class="text-xl font-semibold flex items-center gap-2">
+      <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
         <Brain class="w-5 h-5 text-yellow-600" />
-        长期记忆 MEMORY
+        {{ $t('memory.title') }}
       </h2>
       <TooltipIcon position="right">
-        记录重要信息、决策、教训和偏好。这是 AI 的"笔记本"，帮助 AI 在多次对话中记住关键内容，提供更连贯的服务。
+        {{ $t('memory.tooltip') }}
       </TooltipIcon>
     </div>
 
@@ -16,12 +16,10 @@
       <div class="space-y-3">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <Star class="w-4 h-4" />
-            重要记忆
+            <Star class="w-4 h-4 text-yellow-500" />
+            {{ $t('memory.memories') }}
           </h3>
-          <TooltipIcon>
-            记录重要的对话、决策、关键信息
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.memoriesTooltip') }}</TooltipIcon>
         </div>
         <div class="space-y-2">
           <div v-for="(memory, index) in config.memories" :key="index"
@@ -32,7 +30,7 @@
               :value="memory"
               @input="updateMemory(index, $event.target.value)"
               rows="2"
-              placeholder="例如：用户提到他的生日是3月15日"
+              :placeholder="$t('memory.memoryPlaceholder')"
               class="cyber-input flex-1 text-xs resize-none"
             />
             <button 
@@ -44,9 +42,9 @@
           </div>
           <button 
             @click="addMemory"
-            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-500 dark:hover:text-yellow-400 flex items-center gap-1"
           >
-            <Plus class="w-4 h-4" /> 添加重要记忆
+            <Plus class="w-4 h-4" /> {{ $t('memory.addMemory') }}
           </button>
         </div>
       </div>
@@ -55,12 +53,10 @@
       <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <GitCommit class="w-4 h-4" />
-            决策记录
+            <GitCommit class="w-4 h-4 text-cyan-500" />
+            {{ $t('memory.decisions') }}
           </h3>
-          <TooltipIcon>
-            记录重要的决定及其原因
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.decisionsTooltip') }}</TooltipIcon>
         </div>
         <div class="space-y-2">
           <div v-for="(decision, index) in config.decisions" :key="index"
@@ -70,14 +66,14 @@
               :value="decision.title"
               @input="updateDecision(index, 'title', $event.target.value)"
               type="text"
-              placeholder="决策标题"
+              :placeholder="$t('memory.title')"
               class="cyber-input w-full text-xs py-2"
             />
             <textarea 
               :value="decision.reason"
               @input="updateDecision(index, 'reason', $event.target.value)"
               rows="2"
-              placeholder="决策原因..."
+              :placeholder="$t('memory.reason')"
               class="cyber-input w-full text-xs resize-none"
             />
             <div class="flex justify-end">
@@ -85,15 +81,15 @@
                 @click="removeDecision(index)"
                 class="text-xs text-red-500 hover:text-red-600 flex items-center gap-1"
               >
-                <X class="w-3 h-3" /> 删除
+                <X class="w-3 h-3" /> {{ $t('memory.remove') || '删除' }}
               </button>
             </div>
           </div>
           <button 
             @click="addDecision"
-            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
+            class="text-xs text-cyan-600 hover:text-cyan-700 dark:text-cyan-400 dark:hover:text-cyan-300 flex items-center gap-1"
           >
-            <Plus class="w-4 h-4" /> 添加决策记录
+            <Plus class="w-4 h-4" /> {{ $t('memory.addDecision') }}
           </button>
         </div>
       </div>
@@ -102,12 +98,10 @@
       <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <Lightbulb class="w-4 h-4" />
-            经验教训
+            <Lightbulb class="w-4 h-4 text-yellow-500" />
+            {{ $t('memory.lessons') }}
           </h3>
-          <TooltipIcon>
-            记录学到的教训，避免重复犯错
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.lessonsTooltip') }}</TooltipIcon>
         </div>
         <div class="space-y-2">
           <div v-for="(lesson, index) in config.lessons" :key="index"
@@ -118,7 +112,7 @@
               :value="lesson"
               @input="updateLesson(index, $event.target.value)"
               rows="2"
-              placeholder="例如：不要在没有确认的情况下执行删除操作"
+              :placeholder="$t('memory.lessonPlaceholder')"
               class="cyber-input flex-1 text-xs resize-none"
             />
             <button 
@@ -130,9 +124,9 @@
           </div>
           <button 
             @click="addLesson"
-            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-500 dark:hover:text-yellow-400 flex items-center gap-1"
           >
-            <Plus class="w-4 h-4" /> 添加经验教训
+            <Plus class="w-4 h-4" /> {{ $t('memory.addLesson') }}
           </button>
         </div>
       </div>
@@ -141,18 +135,16 @@
       <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <FolderOpen class="w-4 h-4" />
-            项目上下文
+            <FolderOpen class="w-4 h-4 text-green-500" />
+            {{ $t('memory.project') }}
           </h3>
-          <TooltipIcon>
-            记录当前正在进行的项目相关信息
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.projectTooltip') }}</TooltipIcon>
         </div>
         <textarea 
           :value="config.projectContext"
           @input="updateConfig('projectContext', $event.target.value)"
           rows="4"
-          placeholder="例如：\n- 正在开发电商平台重构项目\n- 技术栈：Next.js + Prisma\n- 预计Q2上线"
+          :placeholder="$t('memory.projectPlaceholder')"
           class="cyber-input w-full text-sm resize-none"
         />
       </div>
@@ -161,12 +153,10 @@
       <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <Heart class="w-4 h-4" />
-            个人偏好
+            <Heart class="w-4 h-4 text-red-500" />
+            {{ $t('memory.preferences') }}
           </h3>
-          <TooltipIcon>
-            记录用户的喜好和偏好
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.preferencesTooltip') }}</TooltipIcon>
         </div>
         <div class="space-y-2">
           <div v-for="(pref, index) in config.preferences" :key="index"
@@ -176,14 +166,14 @@
               :value="pref.key"
               @input="updatePreference(index, 'key', $event.target.value)"
               type="text"
-              placeholder="偏好项"
+              :placeholder="$t('memory.key')"
               class="cyber-input w-1/3 text-xs py-2"
             />
             <input 
               :value="pref.value"
               @input="updatePreference(index, 'value', $event.target.value)"
               type="text"
-              placeholder="偏好值"
+              :placeholder="$t('memory.value')"
               class="cyber-input flex-1 text-xs py-2"
             />
             <button 
@@ -195,9 +185,9 @@
           </div>
           <button 
             @click="addPreference"
-            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
+            class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center gap-1"
           >
-            <Plus class="w-4 h-4" /> 添加偏好
+            <Plus class="w-4 h-4" /> {{ $t('memory.addPreference') }}
           </button>
         </div>
       </div>
@@ -206,12 +196,10 @@
       <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
           <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
-            <Shield class="w-4 h-4" />
-            安全提醒
+            <Shield class="w-4 h-4 text-red-500" />
+            {{ $t('memory.security') }}
           </h3>
-          <TooltipIcon>
-            记录安全相关的注意事项
-          </TooltipIcon>
+          <TooltipIcon>{{ $t('memory.securityTooltip') }}</TooltipIcon>
         </div>
         <div class="space-y-2">
           <div v-for="(reminder, index) in config.security" :key="index"
@@ -222,7 +210,7 @@
               :value="reminder"
               @input="updateSecurity(index, $event.target.value)"
               rows="2"
-              placeholder="例如：不要在群聊中分享 API Key"
+              :placeholder="$t('memory.securityPlaceholder')"
               class="cyber-input flex-1 text-xs resize-none"
             />
             <button 
@@ -234,9 +222,9 @@
           </div>
           <button 
             @click="addSecurity"
-            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
+            class="text-xs text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 flex items-center gap-1"
           >
-            <Plus class="w-4 h-4" /> 添加安全提醒
+            <Plus class="w-4 h-4" /> {{ $t('memory.addSecurity') }}
           </button>
         </div>
       </div>
@@ -369,7 +357,6 @@ const removeSecurity = (index) => {
 .memory-card {
   background-color: rgba(99, 102, 241, 0.05);
   border: 1px solid rgba(99, 102, 241, 0.1);
-  border-radius: 0.5rem;
 }
 
 [data-theme="light"] .memory-card {

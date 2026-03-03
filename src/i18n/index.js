@@ -185,6 +185,13 @@ const zh = {
     tooltip: '选择你需要的 Skills（功能扩展）。生成配置后，可以将列表复制到 OpenClaw 中一键安装。',
     recommended: '推荐'
   },
+  skillCategories: {
+    search: '搜索与信息获取',
+    investment: '投资与金融',
+    dev: '代码开发',
+    doc: '文档与办公',
+    utility: '效率工具'
+  },
   preview: {
     title: '实时预览',
     download: '下载 Markdown',
@@ -401,6 +408,13 @@ const en = {
     title: 'Skills',
     tooltip: 'Select the Skills (feature extensions) you need. After generating the config, you can copy the list to OpenClaw for one-click installation.',
     recommended: 'Recommended'
+  },
+  skillCategories: {
+    search: 'Search & Information',
+    investment: 'Investment & Finance',
+    dev: 'Code Development',
+    doc: 'Documents & Office',
+    utility: 'Utility Tools'
   },
   preview: {
     title: 'Live Preview',

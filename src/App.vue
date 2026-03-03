@@ -51,16 +51,16 @@
               <div class="flex items-center gap-2">
                 <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
                   <span class="text-yellow-500">⚡</span>
-                  技能选择
+                  {{ $t('skills.title') }}
                 </h2>
                 <TooltipIcon position="right">
-                  选择你需要的 Skills（功能扩展）。生成配置后，可以将列表复制到 OpenClaw 中一键安装。
+                  {{ $t('skills.tooltip') }}
                 </TooltipIcon>
               </div>
 
               <div class="space-y-6 max-h-[500px] overflow-y-auto pr-2">
                 <div v-for="category in skillCategories" :key="category.id">
-                  <h3 class="skill-category-title text-sm font-medium text-[var(--text-secondary)] mb-3 sticky top-0 py-1">{{ category.name }}</h3>
+                  <h3 class="skill-category-title text-sm font-medium text-[var(--text-secondary)] mb-3 sticky top-0 py-1">{{ $t(`skillCategories.${category.id}`, category.name) }}</h3>
                   <div class="space-y-2">
                     <label 
                       v-for="skill in category.skills" 
@@ -77,7 +77,7 @@
                       <div class="flex-1">
                         <div class="flex items-center gap-2">
                           <span class="font-medium text-[var(--text-primary)]">{{ skill.name }}</span>
-                          <span v-if="skill.recommended" class="skill-recommended px-2 py-0.5 text-xs rounded">推荐</span>
+                          <span v-if="skill.recommended" class="skill-recommended px-2 py-0.5 text-xs rounded">{{ $t('skills.recommended') }}</span>
                         </div>
                         <p class="text-sm text-[var(--text-muted)] mt-1">{{ skill.description }}</p>
                       </div>
@@ -89,28 +89,28 @@
 
             <div v-if="currentView === 'export'" class="glass rounded-xl p-6 space-y-6">
               <div class="space-y-4">
-                <div class="p-4 bg-cyber-800/50 rounded-lg border border-cyber-600/30">
-                  <h3 class="font-medium mb-3">配置摘要</h3>
-                  <div class="text-sm text-gray-400 space-y-2">
+                <div class="p-4 bg-[var(--bg-secondary)] rounded-lg border border-[var(--border-color)]">
+                  <h3 class="font-medium mb-3 text-[var(--text-primary)]">{{ $t('export.summary') }}</h3>
+                  <div class="text-sm text-[var(--text-muted)] space-y-2">
                     <div class="flex justify-between">
-                      <span>AI名字：</span>
-                      <span class="text-cyber-accent">{{ config.identity.name || '未设置' }}</span>
+                      <span>{{ $t('export.name') }}：</span>
+                      <span class="text-[var(--accent-primary)]">{{ config.identity.name || $t('export.notSet') }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span>角色：</span>
-                      <span class="text-cyber-accent">{{ config.identity.roles.length ? getRoleNames().join('、') : '未选择' }}</span>
+                      <span>{{ $t('export.role') }}：</span>
+                      <span class="text-[var(--accent-primary)]">{{ config.identity.roles.length ? getRoleNames().join('、') : $t('export.notConfigured') }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span>技能：</span>
-                      <span class="text-cyber-accent">{{ config.skills.length }} 个</span>
+                      <span>{{ $t('export.skills') }}：</span>
+                      <span class="text-[var(--accent-primary)]">{{ config.skills.length }} {{ $t('export.items') }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span>AGENTS：</span>
-                      <span class="text-cyber-accent">{{ config.agents.role.identity || '未配置' }}</span>
+                      <span>{{ $t('export.agents') }}：</span>
+                      <span class="text-[var(--accent-primary)]">{{ config.agents.role.identity || $t('export.notConfigured') }}</span>
                     </div>
                     <div class="flex justify-between">
-                      <span>USER：</span>
-                      <span class="text-cyber-accent">{{ config.user.basic.name || '未配置' }}</span>
+                      <span>{{ $t('export.user') }}：</span>
+                      <span class="text-[var(--accent-primary)]">{{ config.user.basic.name || $t('export.notConfigured') }}</span>
                     </div>
                     <div class="flex justify-between">
                       <span>MEMORY：</span>
