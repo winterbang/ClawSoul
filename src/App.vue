@@ -247,7 +247,7 @@ const generatedSoul = computed(() => {
 
 // 生成 AGENTS.md
 const generatedAgents = computed(() => {
-  const hasRoleInfo = config.agents.role.identity || config.agents.role.specialties.length > 0
+  const hasRoleInfo = config.agents.role.identity || config.agents.role.specialties.length > 0 || config.agents.role.language
   const hasWorkflows = Object.values(config.agents.workflows).some(steps => steps.some(s => s))
   const hasFormats = config.agents.formats.length > 0 || config.agents.habits.length > 0
   const hasProhibitions = config.agents.prohibitions.some(p => p)
