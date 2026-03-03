@@ -5,7 +5,7 @@
     @mouseenter="show = true"
     @mouseleave="show = false"
   >
-    <HelpCircle class="w-4 h-4 text-gray-500 hover:text-cyber-accent cursor-help" />
+    <HelpCircle class="w-4 h-4 tooltip-icon cursor-help" />
     
     <Teleport to="body">
       <Transition
@@ -18,18 +18,18 @@
       >
         <div 
           v-if="show" 
-          class="fixed z-[9999] w-72 p-3 bg-cyber-800 border border-cyber-600 rounded-lg shadow-xl text-xs text-gray-300 leading-relaxed"
+          class="tooltip-content fixed z-[9999] w-72 p-3 rounded-lg shadow-xl text-xs leading-relaxed"
           :style="tooltipStyle"
         >
           <slot />
           <!-- 箭头 -->
           <div 
             v-if="position === 'top'"
-            class="absolute w-2 h-2 bg-cyber-800 border-r border-b border-cyber-600 transform rotate-45 -bottom-1 left-1/2 -translate-x-1/2"
+            class="tooltip-arrow absolute w-2 h-2 transform rotate-45 -bottom-1 left-1/2 -translate-x-1/2"
           />
           <div 
             v-if="position === 'right'"
-            class="absolute w-2 h-2 bg-cyber-800 border-l border-b border-cyber-600 transform rotate-45 left-0 top-3 -translate-x-1/2"
+            class="tooltip-arrow absolute w-2 h-2 transform rotate-45 left-0 top-3 -translate-x-1/2"
           />
         </div>
       </Transition>
@@ -86,3 +86,29 @@ const calculatePosition = () => {
   }
 }
 </script>
+
+<style scoped>
+.tooltip-icon {
+  color: var(--text-muted);
+}
+
+.tooltip-icon:hover {
+  color: var(--accent-primary);
+}
+
+.tooltip-content {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.tooltip-arrow {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+.tooltip-arrow {
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+</style>

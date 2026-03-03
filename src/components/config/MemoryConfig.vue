@@ -3,7 +3,7 @@
   <div class="glass rounded-xl p-6 space-y-6">
     <div class="flex items-center gap-2">
       <h2 class="text-xl font-semibold flex items-center gap-2">
-        <Brain class="w-5 h-5 text-yellow-400" />
+        <Brain class="w-5 h-5 text-yellow-600" />
         长期记忆 MEMORY
       </h2>
       <TooltipIcon position="right">
@@ -15,7 +15,7 @@
       <!-- 重要记忆 -->
       <div class="space-y-3">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Star class="w-4 h-4" />
             重要记忆
           </h3>
@@ -27,7 +27,7 @@
           <div v-for="(memory, index) in config.memories" :key="index"
             class="flex items-start gap-2"
           >
-            <span class="text-xs text-gray-500 mt-2">{{ index + 1 }}.</span>
+            <span class="text-xs text-[var(--text-muted)] mt-2">{{ index + 1 }}.</span>
             <textarea 
               :value="memory"
               @input="updateMemory(index, $event.target.value)"
@@ -37,14 +37,14 @@
             />
             <button 
               @click="removeMemory(index)"
-              class="text-red-400 hover:text-red-300 mt-2"
+              class="text-red-500 hover:text-red-600 mt-2"
             >
               <X class="w-4 h-4" />
             </button>
           </div>
           <button 
             @click="addMemory"
-            class="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
           >
             <Plus class="w-4 h-4" /> 添加重要记忆
           </button>
@@ -52,9 +52,9 @@
       </div>
 
       <!-- 决策记录 -->
-      <div class="space-y-3 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <GitCommit class="w-4 h-4" />
             决策记录
           </h3>
@@ -64,7 +64,7 @@
         </div>
         <div class="space-y-2">
           <div v-for="(decision, index) in config.decisions" :key="index"
-            class="space-y-2 p-3 bg-cyber-800/30 rounded-lg"
+            class="space-y-2 p-3 memory-card rounded-lg"
           >
             <input 
               :value="decision.title"
@@ -83,7 +83,7 @@
             <div class="flex justify-end">
               <button 
                 @click="removeDecision(index)"
-                class="text-xs text-red-400 hover:text-red-300 flex items-center gap-1"
+                class="text-xs text-red-500 hover:text-red-600 flex items-center gap-1"
               >
                 <X class="w-3 h-3" /> 删除
               </button>
@@ -91,7 +91,7 @@
           </div>
           <button 
             @click="addDecision"
-            class="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
           >
             <Plus class="w-4 h-4" /> 添加决策记录
           </button>
@@ -99,9 +99,9 @@
       </div>
 
       <!-- 经验教训 -->
-      <div class="space-y-3 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Lightbulb class="w-4 h-4" />
             经验教训
           </h3>
@@ -113,7 +113,7 @@
           <div v-for="(lesson, index) in config.lessons" :key="index"
             class="flex items-start gap-2"
           >
-            <span class="text-xs text-yellow-500 mt-2">💡</span>
+            <span class="text-xs text-yellow-600 mt-2">💡</span>
             <textarea 
               :value="lesson"
               @input="updateLesson(index, $event.target.value)"
@@ -123,14 +123,14 @@
             />
             <button 
               @click="removeLesson(index)"
-              class="text-red-400 hover:text-red-300 mt-2"
+              class="text-red-500 hover:text-red-600 mt-2"
             >
               <X class="w-4 h-4" />
             </button>
           </div>
           <button 
             @click="addLesson"
-            class="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
           >
             <Plus class="w-4 h-4" /> 添加经验教训
           </button>
@@ -138,9 +138,9 @@
       </div>
 
       <!-- 项目上下文 -->
-      <div class="space-y-3 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <FolderOpen class="w-4 h-4" />
             项目上下文
           </h3>
@@ -158,9 +158,9 @@
       </div>
 
       <!-- 个人偏好 -->
-      <div class="space-y-3 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Heart class="w-4 h-4" />
             个人偏好
           </h3>
@@ -188,14 +188,14 @@
             />
             <button 
               @click="removePreference(index)"
-              class="text-red-400 hover:text-red-300"
+              class="text-red-500 hover:text-red-600"
             >
               <X class="w-4 h-4" />
             </button>
           </div>
           <button 
             @click="addPreference"
-            class="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
           >
             <Plus class="w-4 h-4" /> 添加偏好
           </button>
@@ -203,9 +203,9 @@
       </div>
 
       <!-- 安全提醒 -->
-      <div class="space-y-3 pt-4 border-t border-cyber-600/30">
+      <div class="space-y-3 pt-4 border-t border-[var(--border-color)]">
         <div class="flex items-center gap-2">
-          <h3 class="text-sm font-medium text-gray-400 flex items-center gap-2">
+          <h3 class="text-sm font-medium text-[var(--text-secondary)] flex items-center gap-2">
             <Shield class="w-4 h-4" />
             安全提醒
           </h3>
@@ -217,7 +217,7 @@
           <div v-for="(reminder, index) in config.security" :key="index"
             class="flex items-start gap-2"
           >
-            <span class="text-xs text-red-400 mt-2">🔒</span>
+            <span class="text-xs text-red-500 mt-2">🔒</span>
             <textarea 
               :value="reminder"
               @input="updateSecurity(index, $event.target.value)"
@@ -227,14 +227,14 @@
             />
             <button 
               @click="removeSecurity(index)"
-              class="text-red-400 hover:text-red-300 mt-2"
+              class="text-red-500 hover:text-red-600 mt-2"
             >
               <X class="w-4 h-4" />
             </button>
           </div>
           <button 
             @click="addSecurity"
-            class="text-xs text-yellow-400 hover:text-yellow-300 flex items-center gap-1"
+            class="text-xs text-yellow-600 hover:text-yellow-700 dark:text-yellow-600 dark:hover:text-yellow-400 flex items-center gap-1"
           >
             <Plus class="w-4 h-4" /> 添加安全提醒
           </button>
@@ -364,3 +364,16 @@ const removeSecurity = (index) => {
   emit('update:config', newConfig)
 }
 </script>
+
+<style scoped>
+.memory-card {
+  background-color: rgba(99, 102, 241, 0.05);
+  border: 1px solid rgba(99, 102, 241, 0.1);
+  border-radius: 0.5rem;
+}
+
+[data-theme="light"] .memory-card {
+  background-color: rgba(99, 102, 241, 0.03);
+  border: 1px solid rgba(99, 102, 241, 0.08);
+}
+</style>
