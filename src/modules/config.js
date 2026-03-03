@@ -72,6 +72,7 @@ export const previewTabs = [
   { id: 'agents', name: 'AGENTS' },
   { id: 'user', name: 'USER' },
   { id: 'memory', name: 'MEMORY' },
+  { id: 'skills', name: 'SKILLS' },
   { id: 'full', name: '完整' },
 ]
 

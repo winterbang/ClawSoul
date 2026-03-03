@@ -444,6 +444,31 @@ const generatedMemory = computed(() => {
   return result
 })
 
+// 生成技能安装提示词
+const generatedSkillsPrompt = computed(() => {
+  if (config.skills.length === 0) {
+    return '# Skills 安装提示\n\n（未选择任何技能）'
+  }
+  
+  const skillNames = config.skills.map(id => {
+    const skill = skillCategories.find(c => c.id === id)
+    return skill ? skill.name : id
+  })
+  
+  return `# Skills 安装提示
+
+请帮我安装以下 skills：
+
+\`\`\`
+${skillNames.join('\n')}
+\`\`\`
+
+安装命令：
+\`\`\`bash
+${config.skills.map(id => `openclaw skill install ${id}`).join('\n')}
+\`\`\``
+})
+
 const previewContent = computed(() => {
   switch (currentPreview.value) {
     case 'identity': return generatedIdentity.value
@@ -451,7 +476,8 @@ const previewContent = computed(() => {
     case 'agents': return generatedAgents.value
     case 'user': return generatedUser.value
     case 'memory': return generatedMemory.value
-    default: return `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+    case 'skills': return generatedSkillsPrompt.value
+    default: return `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}\n\n---\n\n${generatedSkillsPrompt.value}`
   }
 })
 
@@ -498,9 +524,13 @@ const copyCurrentTab = async () => {
       content = generatedMemory.value
       message = '已复制 MEMORY 到剪贴板！'
       break
+    case 'skills':
+      content = generatedSkillsPrompt.value
+      message = '已复制 Skills 提示词到剪贴板！'
+      break
     default:
       // 完整模式
-      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}\n\n---\n\n${generatedSkillsPrompt.value}`
       message = '已复制完整配置到剪贴板！'
   }
   
@@ -533,9 +563,13 @@ const downloadCurrentTab = (tab) => {
       content = generatedMemory.value
       filename = 'MEMORY.md'
       break
+    case 'skills':
+      content = generatedSkillsPrompt.value
+      filename = 'skills-install.md'
+      break
     default:
       // 完整模式
-      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}\n\n---\n\n${generatedSkillsPrompt.value}`
       filename = 'clawsoul-config.md'
   }
   
