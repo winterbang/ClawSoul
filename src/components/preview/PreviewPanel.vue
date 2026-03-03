@@ -4,7 +4,7 @@
     <div class="flex items-center justify-between mb-4">
       <h2 class="text-lg font-semibold flex items-center gap-2 text-[var(--text-primary)]">
         <Eye class="w-5 h-5 text-[var(--accent-primary)]" />
-        实时预览
+        {{ $t('preview.title') }}
       </h2>
       <div class="flex gap-1">
         <button 
@@ -28,7 +28,7 @@
       <button 
         @click="copyCurrentTab"
         class="copy-btn absolute top-2 right-2 p-1.5 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-        title="复制当前配置"
+        :title="$t('preview.copy')"
       >
         <Copy class="w-4 h-4" />
       </button>
@@ -37,13 +37,13 @@
     <!-- 下载区域 -->
     <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
       <div class="flex items-center justify-between">
-        <span class="text-xs text-[var(--text-muted)]">{{ currentTab === 'full' ? '完整配置' : getFileName() }}</span>
+        <span class="text-xs text-[var(--text-muted)]">{{ currentTab === 'full' ? $t('preview.full') : getFileName() }}</span>
         <button 
           @click="downloadMarkdown"
           class="preview-download-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all text-xs"
         >
           <Download class="w-3.5 h-3.5" />
-          <span>下载 Markdown</span>
+          <span>{{ $t('preview.download') }}</span>
         </button>
       </div>
     </div>

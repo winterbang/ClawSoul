@@ -52,7 +52,17 @@ const zh = {
     confirmAdd: '确认添加',
     cancel: '取消',
     confirmDeleteTitle: '确认删除',
-    confirmDeleteMsg: '确定要删除特质"{name}"吗？'
+    confirmDeleteMsg: '确定要删除特质"{name}"吗？',
+    traitHelpful: '真诚帮助',
+    traitHelpfulDesc: '少说套话，多做实事',
+    traitOpinionated: '有主见',
+    traitOpinionatedDesc: '敢于表达不同意见',
+    traitResourceful: '先尝试',
+    traitResourcefulDesc: '先自己探索再问人',
+    traitTrustworthy: '可信赖',
+    traitTrustworthyDesc: '谨慎处理外部操作',
+    traitRespectful: '尊重隐私',
+    traitRespectfulDesc: '像客人一样尊重主人'
   },
   agents: {
     title: '行为准则 AGENTS',
@@ -183,7 +193,21 @@ const zh = {
   skills: {
     title: '技能选择',
     tooltip: '选择你需要的 Skills（功能扩展）。生成配置后，可以将列表复制到 OpenClaw 中一键安装。',
-    recommended: '推荐'
+    recommended: '推荐',
+    searxngDesc: '隐私搜索，本地 SearXNG 实例',
+    webSearchDesc: 'Brave 搜索 API',
+    aStockMonitorDesc: 'A股量化监控系统',
+    astockResearchDesc: 'A股深度投研分析',
+    buffettAnalysisDesc: '巴菲特视角投资分析',
+    astockDailyDesc: '每日A股精选',
+    opencodeDesc: 'AI 编程助手',
+    codeSimplifierDesc: '代码重构简化',
+    frontendDesignDesc: '前端界面设计',
+    wechatMiniprogramDesc: '微信小程序 CI/CD',
+    documentSkillsDesc: 'DOCX/PDF 处理',
+    findSkillDesc: 'Skill 发现搜索',
+    ralphLoopDesc: '迭代开发工作流',
+    skillCreatorDesc: '创建新 Skill'
   },
   skillCategories: {
     search: '搜索与信息获取',
@@ -221,6 +245,37 @@ const zh = {
     copied: '已复制到剪贴板！',
     downloaded: '已下载！',
     reset: '配置已重置'
+  },
+  default: {
+    name: '吉量',
+    creature: '传说中的吉量马 — 乘之寿千岁 🐴',
+    vibe: '朴素、耐心、真诚',
+    roleDesc: {
+      companion: '陪你一起探索、解决问题',
+      friend: '真诚相待，有不同意见会直说',
+      teacher: '用朴素的方式耐心解答，帮助你理解',
+      assistant: '高效执行，精准完成任务',
+      advisor: '提供专业建议，辅助决策',
+      collaborator: '平等合作，共同创造'
+    }
+  },
+  preview: {
+    identity: 'IDENTITY',
+    soul: 'SOUL',
+    agents: 'AGENTS',
+    user: 'USER',
+    memory: 'MEMORY',
+    skills: 'SKILLS',
+    full: '完整',
+    nameLabel: 'Name',
+    creatureLabel: 'Creature',
+    vibeLabel: 'Vibe',
+    emojiLabel: 'Emoji',
+    rolePositioning: 'Role Positioning',
+    coreValues: 'Core Values',
+    personalityTraits: 'Personality Traits',
+    skillsToInstall: 'Skills to Install',
+    copyInstruction: 'Copy the above list to OpenClaw to install these skills'
   }
 }
 
@@ -276,7 +331,17 @@ const en = {
     confirmAdd: 'Confirm',
     cancel: 'Cancel',
     confirmDeleteTitle: 'Confirm Delete',
-    confirmDeleteMsg: 'Are you sure you want to delete the trait "{name}"?'
+    confirmDeleteMsg: 'Are you sure you want to delete the trait "{name}"?',
+    traitHelpful: 'Helpful',
+    traitHelpfulDesc: 'Less talk, more action',
+    traitOpinionated: 'Opinionated',
+    traitOpinionatedDesc: 'Willing to express different opinions',
+    traitResourceful: 'Resourceful',
+    traitResourcefulDesc: 'Explore on your own before asking',
+    traitTrustworthy: 'Trustworthy',
+    traitTrustworthyDesc: 'Handle external operations carefully',
+    traitRespectful: 'Respectful',
+    traitRespectfulDesc: 'Respect the user like a guest'
   },
   agents: {
     title: 'Agents',
@@ -407,7 +472,21 @@ const en = {
   skills: {
     title: 'Skills',
     tooltip: 'Select the Skills (feature extensions) you need. After generating the config, you can copy the list to OpenClaw for one-click installation.',
-    recommended: 'Recommended'
+    recommended: 'Recommended',
+    searxngDesc: 'Privacy search, local SearXNG instance',
+    webSearchDesc: 'Brave Search API',
+    aStockMonitorDesc: 'A-Stock quantitative monitoring system',
+    astockResearchDesc: 'A-Stock in-depth research analysis',
+    buffettAnalysisDesc: 'Buffett perspective investment analysis',
+    astockDailyDesc: 'Daily A-Stock picks',
+    opencodeDesc: 'AI coding assistant',
+    codeSimplifierDesc: 'Code refactoring and simplification',
+    frontendDesignDesc: 'Frontend interface design',
+    wechatMiniprogramDesc: 'WeChat Mini Program CI/CD',
+    documentSkillsDesc: 'DOCX/PDF processing',
+    findSkillDesc: 'Skill discovery search',
+    ralphLoopDesc: 'Iterative development workflow',
+    skillCreatorDesc: 'Create new Skill'
   },
   skillCategories: {
     search: 'Search & Information',
@@ -445,6 +524,37 @@ const en = {
     copied: 'Copied to clipboard!',
     downloaded: 'Downloaded!',
     reset: 'Config reset'
+  },
+  default: {
+    name: 'Jiliang',
+    creature: 'Legendary Jiliang Horse — ride it for a thousand years 🐴',
+    vibe: 'Simple, Patient, Sincere',
+    roleDesc: {
+      companion: 'Explore and solve problems with you',
+      friend: 'Treat you sincerely, speak up when having different opinions',
+      teacher: 'Patiently explain in a simple way to help you understand',
+      assistant: 'Execute efficiently and complete tasks accurately',
+      advisor: 'Provide professional advice to assist decision-making',
+      collaborator: 'Equal cooperation, create together'
+    }
+  },
+  preview: {
+    identity: 'IDENTITY',
+    soul: 'SOUL',
+    agents: 'AGENTS',
+    user: 'USER',
+    memory: 'MEMORY',
+    skills: 'SKILLS',
+    full: 'Full',
+    nameLabel: 'Name',
+    creatureLabel: 'Creature',
+    vibeLabel: 'Vibe',
+    emojiLabel: 'Emoji',
+    rolePositioning: 'Role Positioning',
+    coreValues: 'Core Values',
+    personalityTraits: 'Personality Traits',
+    skillsToInstall: 'Skills to Install',
+    copyInstruction: 'Copy the above list to OpenClaw to install these skills'
   }
 }
 
