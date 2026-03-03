@@ -9,20 +9,30 @@
           <p class="text-xs text-gray-400">打造你的数字助手</p>
         </div>
       </div>
-      <a 
-        href="https://github.com/winterbang/ClawSoul" 
-        target="_blank"
-        class="cyber-btn-secondary text-sm"
-      >
-        <Github class="w-4 h-4" />
-        <span class="hidden sm:inline">GitHub</span>
-      </a>
+      <div class="flex items-center gap-2">
+        <a 
+          href="https://openclaw.ai" 
+          target="_blank"
+          class="cyber-btn-secondary text-sm"
+        >
+          <Globe class="w-4 h-4" />
+          <span class="hidden sm:inline">官网</span>
+        </a>
+        <a 
+          href="https://docs.openclaw.ai" 
+          target="_blank"
+          class="cyber-btn-secondary text-sm"
+        >
+          <BookOpen class="w-4 h-4" />
+          <span class="hidden sm:inline">文档</span>
+        </a>
+      </div>
     </div>
   </header>
 </template>
 
 <script setup>
-import { Github } from 'lucide-vue-next'
+import { Globe, BookOpen } from 'lucide-vue-next'
 </script>
 
 <style scoped>

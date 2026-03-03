@@ -630,7 +630,8 @@ const handleViewChange = (view) => {
     'soul': 'soul',
     'agents': 'agents',
     'user': 'user',
-    'memory': 'memory'
+    'memory': 'memory',
+    'skills': 'skills'
   }
   
   // 如果切换到可映射的视图，同步切换预览
