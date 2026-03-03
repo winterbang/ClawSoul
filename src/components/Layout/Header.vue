@@ -14,16 +14,18 @@
           href="https://openclaw.ai" 
           target="_blank"
           class="cyber-btn-secondary text-sm"
+          title="OpenClaw 官网"
         >
-          <Globe class="w-4 h-4" />
+          <OpenClawLogo class="w-5 h-5" />
           <span class="hidden sm:inline">官网</span>
         </a>
         <a 
           href="https://docs.openclaw.ai" 
           target="_blank"
           class="cyber-btn-secondary text-sm"
+          title="OpenClaw 文档"
         >
-          <BookOpen class="w-4 h-4" />
+          <OpenClawLogo class="w-5 h-5" />
           <span class="hidden sm:inline">文档</span>
         </a>
       </div>
@@ -32,7 +34,7 @@
 </template>
 
 <script setup>
-import { Globe, BookOpen } from 'lucide-vue-next'
+import OpenClawLogo from '../OpenClawLogo.vue'
 </script>
 
 <style scoped>
