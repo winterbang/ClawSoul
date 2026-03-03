@@ -123,14 +123,22 @@
           </div>
         </div>
 
-        <PreviewPanel 
-          :content="previewContent"
-          :current-tab="currentPreview"
-          :tabs="previewTabs"
-          @change-tab="currentPreview = $event"
-          @copy-current="copyCurrentTab"
-          @download="downloadCurrentTab"
-        />
+        <!-- Right Panel: Preview -->
+        <div class="flex flex-col h-[calc(100vh-140px)]">
+          <!-- 占位元素，与左侧 Navigation 对齐 -->
+          <div class="mb-4 flex-shrink-0 h-[42px]"></div>
+          
+          <div class="flex-1 overflow-y-auto pr-2">
+            <PreviewPanel 
+              :content="previewContent"
+              :current-tab="currentPreview"
+              :tabs="previewTabs"
+              @change-tab="currentPreview = $event"
+              @copy-current="copyCurrentTab"
+              @download="downloadCurrentTab"
+            />
+          </div>
+        </div>
       </div>
     </main>
 
