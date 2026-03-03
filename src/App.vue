@@ -49,8 +49,8 @@
 
             <div v-if="currentView === 'skills'" class="glass rounded-xl p-6 space-y-6">
               <div class="flex items-center gap-2">
-                <h2 class="text-xl font-semibold flex items-center gap-2">
-                  <span class="text-cyber-pink">⚡</span>
+                <h2 class="text-xl font-semibold flex items-center gap-2 text-[var(--text-primary)]">
+                  <span class="text-yellow-500">⚡</span>
                   技能选择
                 </h2>
                 <TooltipIcon position="right">
@@ -60,26 +60,26 @@
 
               <div class="space-y-6 max-h-[500px] overflow-y-auto pr-2">
                 <div v-for="category in skillCategories" :key="category.id">
-                  <h3 class="text-sm font-medium text-gray-400 mb-3 sticky top-0 bg-cyber-800/50 py-1">{{ category.name }}</h3>
+                  <h3 class="skill-category-title text-sm font-medium text-[var(--text-secondary)] mb-3 sticky top-0 py-1">{{ category.name }}</h3>
                   <div class="space-y-2">
                     <label 
                       v-for="skill in category.skills" 
                       :key="skill.id"
-                      class="flex items-start gap-3 p-3 rounded-lg border border-cyber-600/30 hover:border-cyber-accent/30 cursor-pointer transition-all"
-                      :class="config.skills.includes(skill.id) ? 'bg-cyber-accent/5' : ''"
+                      class="skill-item flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-all"
+                      :class="config.skills.includes(skill.id) ? 'skill-item-active' : 'skill-item-inactive'"
                     >
                       <input 
                         type="checkbox"
                         :value="skill.id"
                         v-model="config.skills"
-                        class="mt-1 w-4 h-4 rounded border-cyber-600 text-cyber-accent"
+                        class="skill-checkbox mt-1 w-4 h-4 rounded"
                       />
                       <div class="flex-1">
                         <div class="flex items-center gap-2">
-                          <span class="font-medium">{{ skill.name }}</span>
-                          <span v-if="skill.recommended" class="px-2 py-0.5 text-xs bg-cyber-accent/20 text-cyber-accent rounded">推荐</span>
+                          <span class="font-medium text-[var(--text-primary)]">{{ skill.name }}</span>
+                          <span v-if="skill.recommended" class="skill-recommended px-2 py-0.5 text-xs rounded">推荐</span>
                         </div>
-                        <p class="text-sm text-gray-400 mt-1">{{ skill.description }}</p>
+                        <p class="text-sm text-[var(--text-muted)] mt-1">{{ skill.description }}</p>
                       </div>
                     </label>
                   </div>
@@ -675,3 +675,52 @@ const resetConfig = () => {
   confirmDialog.show = true
 }
 </script>
+
+<style>
+.skill-category-title {
+  background-color: rgba(99, 102, 241, 0.05);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+}
+
+[data-theme="light"] .skill-category-title {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.15);
+}
+
+.skill-item {
+  border: 1px solid var(--border-color);
+}
+
+.skill-item-inactive {
+  background-color: transparent;
+}
+
+.skill-item-inactive:hover {
+  border-color: var(--accent-primary);
+}
+
+.skill-item-active {
+  background-color: rgba(0, 212, 255, 0.05);
+  border-color: rgba(0, 212, 255, 0.3);
+}
+
+[data-theme="light"] .skill-item-active {
+  background-color: rgba(8, 145, 178, 0.05);
+  border-color: rgba(8, 145, 178, 0.25);
+}
+
+.skill-checkbox {
+  border-color: var(--border-color);
+  accent-color: var(--accent-primary);
+}
+
+.skill-recommended {
+  background-color: rgba(0, 212, 255, 0.15);
+  color: #00d4ff;
+}
+
+[data-theme="light"] .skill-recommended {
+  background-color: rgba(8, 145, 178, 0.12);
+  color: #0891b2;
+}
+</style>
