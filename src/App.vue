@@ -143,6 +143,7 @@
           :tabs="previewTabs"
           @change-tab="currentPreview = $event"
           @copy-current="copyCurrentTab"
+          @download="downloadCurrentTab"
         />
       </div>
     </main>
@@ -469,6 +470,48 @@ const copyCurrentTab = async () => {
   }
   
   await doCopy(content, message)
+}
+
+// 下载当前标签页的 Markdown
+const downloadCurrentTab = (tab) => {
+  let content = ''
+  let filename = ''
+  
+  switch (tab) {
+    case 'identity':
+      content = generatedIdentity.value
+      filename = 'IDENTITY.md'
+      break
+    case 'soul':
+      content = generatedSoul.value
+      filename = 'SOUL.md'
+      break
+    case 'agents':
+      content = generatedAgents.value
+      filename = 'AGENTS.md'
+      break
+    case 'user':
+      content = generatedUser.value
+      filename = 'USER.md'
+      break
+    case 'memory':
+      content = generatedMemory.value
+      filename = 'MEMORY.md'
+      break
+    default:
+      // 完整模式
+      content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}`
+      filename = 'clawsoul-config.md'
+  }
+  
+  const blob = new Blob([content], { type: 'text/markdown' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  a.click()
+  URL.revokeObjectURL(url)
+  showToast(`${filename} 已下载！`)
 }
 
 const doCopy = async (text, successMessage) => {

@@ -33,22 +33,52 @@
         <Copy class="w-4 h-4" />
       </button>
     </div>
+
+    <!-- 下载区域 -->
+    <div class="mt-4 pt-4 border-t border-cyber-600/30">
+      <div class="flex items-center justify-between">
+        <span class="text-xs text-gray-500">{{ currentTab === 'full' ? '完整配置' : getFileName() }}</span>
+        <button 
+          @click="downloadMarkdown"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyber-accent/10 border border-cyber-accent/30 text-cyber-accent hover:bg-cyber-accent/20 transition-all text-xs"
+        >
+          <Download class="w-3.5 h-3.5" />
+          <span>下载 Markdown</span>
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { Eye, Copy } from 'lucide-vue-next'
+import { Eye, Copy, Download } from 'lucide-vue-next'
 
-defineProps({
+const props = defineProps({
   content: String,
   currentTab: String,
   tabs: Array
 })
 
-const emit = defineEmits(['change-tab', 'copy-current'])
+const emit = defineEmits(['change-tab', 'copy-current', 'download'])
 
 const copyCurrentTab = () => {
   emit('copy-current')
+}
+
+const downloadMarkdown = () => {
+  emit('download', props.currentTab)
+}
+
+const getFileName = () => {
+  const names = {
+    'identity': 'IDENTITY.md',
+    'soul': 'SOUL.md',
+    'agents': 'AGENTS.md',
+    'user': 'USER.md',
+    'memory': 'MEMORY.md',
+    'full': 'clawsoul-config.md'
+  }
+  return names[props.currentTab] || 'config.md'
 }
 </script>
 
