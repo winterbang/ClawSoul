@@ -51,7 +51,7 @@
           :class="currentView === 'export' ? 'bg-green-500/20 text-green-400' : 'text-gray-400 hover:text-gray-200 hover:bg-cyber-600/30'"
         >
           <Download class="w-3.5 h-3.5" />
-          <span>导出</span>
+          <span>摘要</span>
         </button>
         <button 
           @click="$emit('reset')"
