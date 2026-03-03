@@ -136,6 +136,15 @@
     </main>
 
     <ToastNotification :show="toast.show" :message="toast.message" />
+    
+    <ConfirmDialog
+      v-model:show="confirmDialog.show"
+      :title="confirmDialog.title"
+      :message="confirmDialog.message"
+      confirm-text="确认重置"
+      cancel-text="取消"
+      @confirm="confirmDialog.onConfirm"
+    />
   </div>
 </template>
 
@@ -151,6 +160,7 @@ import MemoryConfig from './components/config/MemoryConfig.vue'
 import PreviewPanel from './components/PreviewPanel.vue'
 import ToastNotification from './components/ToastNotification.vue'
 import TooltipIcon from './components/TooltipIcon.vue'
+import ConfirmDialog from './components/ConfirmDialog.vue'
 
 import { 
   presetEmojis, 
@@ -168,6 +178,14 @@ const config = reactive(JSON.parse(JSON.stringify(defaultConfig)))
 // 让 personalityTraits 响应式
 const personalityTraits = reactive(JSON.parse(JSON.stringify(defaultTraits)))
 const toast = reactive({ show: false, message: '' })
+
+// 确认对话框状态
+const confirmDialog = reactive({
+  show: false,
+  title: '',
+  message: '',
+  onConfirm: null
+})
 
 const showToast = (message) => {
   toast.message = message
@@ -641,7 +659,9 @@ const handleViewChange = (view) => {
 }
 
 const resetConfig = () => {
-  if (confirm('确定要重置所有配置吗？')) {
+  confirmDialog.title = '重置配置'
+  confirmDialog.message = '确定要重置所有配置吗？此操作不可恢复，所有已填写的配置将被清空。'
+  confirmDialog.onConfirm = () => {
     Object.assign(config, JSON.parse(JSON.stringify(defaultConfig)))
     // 重置 personalityTraits
     const newTraits = JSON.parse(JSON.stringify(defaultTraits))
@@ -649,7 +669,9 @@ const resetConfig = () => {
       trait.value = newTraits[index].value
     })
     currentView.value = 'identity'
+    currentPreview.value = 'identity'
     showToast('配置已重置')
   }
+  confirmDialog.show = true
 }
 </script>
