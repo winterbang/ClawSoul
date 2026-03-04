@@ -1,50 +1,53 @@
 <!-- PreviewPanel.vue -->
 <template>
-  <div class="glass rounded-xl p-6 h-fit">
-    <div class="flex items-center justify-between mb-4">
-      <h2 class="text-lg font-semibold flex items-center gap-2 text-[var(--text-primary)]">
-        <Eye class="w-5 h-5 text-[var(--accent-primary)]" />
-        {{ $t('preview.title') }}
-      </h2>
-      <div class="flex gap-1">
-        <button 
-          v-for="tab in tabs" 
-          :key="tab.id"
-          @click="$emit('change-tab', tab.id)"
-          class="px-2 py-1 text-xs rounded transition-all"
-          :class="currentTab === tab.id ? 'preview-tab-active' : 'preview-tab-inactive'"
-        >
-          {{ tab.nameKey ? $t(tab.nameKey, tab.name || tab.id.toUpperCase()) : (tab.name || tab.id.toUpperCase()) }}
-        </button>
-      </div>
+  <div class="h-fit">
+    <!-- 标题单独放在 card 上方 -->
+    <div class="flex items-center gap-2 mb-3 px-1">
+      <Eye class="w-5 h-5 text-[var(--accent-primary)]" />
+      <h2 class="text-lg font-semibold text-[var(--text-primary)]">{{ $t('preview.title') }}</h2>
     </div>
 
-    <div class="relative group">
-      <div class="code-block text-xs leading-relaxed max-h-[600px] overflow-y-auto">
-        <pre>{{ content }}</pre>
-      </div>
-      
-      <!-- 复制按钮放在代码块内 -->
+    <!-- Tab 按钮放在标题下方 -->
+    <div class="flex gap-1 mb-3 px-1">
       <button 
-        @click="copyCurrentTab"
-        class="copy-btn absolute top-2 right-2 p-1.5 rounded-lg transition-all opacity-0 group-hover:opacity-100"
-        :title="$t('preview.copy')"
+        v-for="tab in tabs" 
+        :key="tab.id"
+        @click="$emit('change-tab', tab.id)"
+        class="px-2 py-1 text-xs rounded transition-all"
+        :class="currentTab === tab.id ? 'preview-tab-active' : 'preview-tab-inactive'"
       >
-        <Copy class="w-4 h-4" />
+        {{ tab.nameKey ? $t(tab.nameKey, tab.name || tab.id.toUpperCase()) : (tab.name || tab.id.toUpperCase()) }}
       </button>
     </div>
 
-    <!-- 下载区域 -->
-    <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
-      <div class="flex items-center justify-between">
-        <span class="text-xs text-[var(--text-muted)]">{{ currentTab === 'full' ? $t('preview.full') : getFileName() }}</span>
+    <div class="glass rounded-xl p-6">
+      <div class="relative group">
+        <div class="code-block text-xs leading-relaxed max-h-[600px] overflow-y-auto">
+          <pre>{{ content }}</pre>
+        </div>
+        
+        <!-- 复制按钮放在代码块内 -->
         <button 
-          @click="downloadMarkdown"
-          class="preview-download-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all text-xs"
+          @click="copyCurrentTab"
+          class="copy-btn absolute top-2 right-2 p-1.5 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+          :title="$t('preview.copy')"
         >
-          <Download class="w-3.5 h-3.5" />
-          <span>{{ $t('preview.download') }}</span>
+          <Copy class="w-4 h-4" />
         </button>
+      </div>
+
+      <!-- 下载区域 -->
+      <div class="mt-4 pt-4 border-t border-[var(--border-color)]">
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-[var(--text-muted)]">{{ currentTab === 'full' ? $t('preview.full') : getFileName() }}</span>
+          <button 
+            @click="downloadMarkdown"
+            class="preview-download-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg transition-all text-xs"
+          >
+            <Download class="w-3.5 h-3.5" />
+            <span>{{ $t('preview.download') }}</span>
+          </button>
+        </div>
       </div>
     </div>
   </div>

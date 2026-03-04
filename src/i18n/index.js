@@ -556,7 +556,7 @@ const en = {
     utility: 'Utility Tools'
   },
   preview: {
-    title: 'Live Preview',
+    title: 'Preview',
     download: 'Download Markdown',
     copy: 'Copy Current Config',
     styleTitle: ' Style',
