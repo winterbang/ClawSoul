@@ -37,14 +37,14 @@
           <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.role.specialties') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
-              v-for="spec in specialtyOptions" :key="spec"
-              @click="toggleSpecialty(spec)"
+              v-for="spec in specialtyOptions" :key="spec.key"
+              @click="toggleSpecialty(spec.key)"
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
-              :class="config.role.specialties.includes(spec) 
+              :class="config.role.specialties.includes(spec.key) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
                 : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
-              {{ spec }}
+              {{ spec.label }}
             </button>
           </div>
         </div>
@@ -118,14 +118,14 @@
           <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.style.format') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
-              v-for="fmt in formatOptions" :key="fmt"
-              @click="toggleFormat(fmt)"
+              v-for="fmt in formatOptions" :key="fmt.key"
+              @click="toggleFormat(fmt.key)"
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
-              :class="config.formats.includes(fmt) 
+              :class="config.formats.includes(fmt.key) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
                 : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
-              {{ fmt }}
+              {{ fmt.label }}
             </button>
           </div>
         </div>
@@ -134,14 +134,14 @@
           <label class="block text-sm mb-2 text-[var(--text-primary)]">{{ $t('agents.style.habits') }}</label>
           <div class="flex flex-wrap gap-2">
             <button 
-              v-for="habit in habitOptions" :key="habit"
-              @click="toggleHabit(habit)"
+              v-for="habit in habitOptions" :key="habit.key"
+              @click="toggleHabit(habit.key)"
               class="px-3 py-1.5 rounded-full text-xs border transition-all"
-              :class="config.habits.includes(habit) 
+              :class="config.habits.includes(habit.key) 
                 ? 'border-blue-400 bg-blue-400/20 text-blue-400' 
                 : 'border-[var(--border-color)] hover:border-blue-400/50 text-[var(--text-secondary)]'"
             >
-              {{ habit }}
+              {{ habit.label }}
             </button>
           </div>
         </div>
@@ -256,32 +256,32 @@ const displayValue = (value) => {
 }
 
 const specialtyOptions = computed(() => [
-  t('agents.specialty.web') || 'Web开发',
-  t('agents.specialty.architecture') || '系统架构', 
-  t('agents.specialty.codeReview') || '代码审查',
-  t('agents.specialty.data') || '数据分析',
-  t('agents.specialty.ml') || '机器学习',
-  t('agents.specialty.devops') || 'DevOps',
-  t('agents.specialty.mobile') || '移动开发',
-  t('agents.specialty.database') || '数据库',
-  t('agents.specialty.security') || '网络安全'
+  { key: 'agents.specialty.web', label: t('agents.specialty.web') || 'Web开发' },
+  { key: 'agents.specialty.architecture', label: t('agents.specialty.architecture') || '系统架构' },
+  { key: 'agents.specialty.codeReview', label: t('agents.specialty.codeReview') || '代码审查' },
+  { key: 'agents.specialty.data', label: t('agents.specialty.data') || '数据分析' },
+  { key: 'agents.specialty.ml', label: t('agents.specialty.ml') || '机器学习' },
+  { key: 'agents.specialty.devops', label: t('agents.specialty.devops') || 'DevOps' },
+  { key: 'agents.specialty.mobile', label: t('agents.specialty.mobile') || '移动开发' },
+  { key: 'agents.specialty.database', label: t('agents.specialty.database') || '数据库' },
+  { key: 'agents.specialty.security', label: t('agents.specialty.security') || '网络安全' }
 ])
 
 const formatOptions = computed(() => [
-  t('agents.format.markdown') || '使用Markdown格式',
-  t('agents.format.codeLang') || '代码块标注语言',
-  t('agents.format.headings') || '长内容使用标题分隔',
-  t('agents.format.bold') || '重要内容加粗',
-  t('agents.format.lists') || '适当使用列表',
-  t('agents.format.tables') || '适当使用表格'
+  { key: 'agents.format.markdown', label: t('agents.format.markdown') || '使用Markdown格式' },
+  { key: 'agents.format.codeLang', label: t('agents.format.codeLang') || '代码块标注语言' },
+  { key: 'agents.format.headings', label: t('agents.format.headings') || '长内容使用标题分隔' },
+  { key: 'agents.format.bold', label: t('agents.format.bold') || '重要内容加粗' },
+  { key: 'agents.format.lists', label: t('agents.format.lists') || '适当使用列表' },
+  { key: 'agents.format.tables', label: t('agents.format.tables') || '适当使用表格' }
 ])
 
 const habitOptions = computed(() => [
-  t('agents.habit.techTerms') || '技术术语使用英文',
-  t('agents.habit.analogy') || '解释时使用类比',
-  t('agents.habit.formal') || '避免过于口语化',
-  t('agents.habit.conclusionFirst') || '先给结论再展开',
-  t('agents.habit.compare') || '提供多个方案时说明优劣'
+  { key: 'agents.habit.techTerms', label: t('agents.habit.techTerms') || '技术术语使用英文' },
+  { key: 'agents.habit.analogy', label: t('agents.habit.analogy') || '解释时使用类比' },
+  { key: 'agents.habit.formal', label: t('agents.habit.formal') || '避免过于口语化' },
+  { key: 'agents.habit.conclusionFirst', label: t('agents.habit.conclusionFirst') || '先给结论再展开' },
+  { key: 'agents.habit.compare', label: t('agents.habit.compare') || '提供多个方案时说明优劣' }
 ])
 
 const workflows = computed(() => ({

@@ -285,18 +285,18 @@ const generatedAgents = computed(() => {
     .filter(([_, steps]) => steps.some(s => s))
     .map(([key, steps]) => {
       const name = key === 'code' ? t('agents.workflow.code') : key === 'research' ? t('agents.workflow.research') : t('agents.workflow.ops')
-      const stepList = steps.filter(s => s).map((s, i) => `${i + 1}. ${s}`).join('\n   ')
+      const stepList = steps.filter(s => s).map((s, i) => `${i + 1}. ${t(s, s)}`).join('\n   ')
       return `### ${name}\n${stepList}`
     }).join('\n\n')
   
   const prohibitionText = config.agents.prohibitions
     .filter(p => p)
-    .map(p => `- ${p}`)
+    .map(p => `- ${t(p, p)}`)
     .join('\n')
   
   const commandText = config.agents.commands
     .filter(c => c.trigger && c.action)
-    .map(c => `- ${c.trigger}: ${c.action}`)
+    .map(c => `- ${c.trigger}: ${t(c.action, c.action)}`)
     .join('\n')
 
   let result = '# AGENTS.md\n\n'
@@ -304,7 +304,7 @@ const generatedAgents = computed(() => {
   if (hasRoleInfo) {
     result += `## ${t('agents.role.title')}\n`
     if (config.agents.role.identity) result += `- **${t('agents.role.identity')}**: ${config.agents.role.identity}\n`
-    if (config.agents.role.specialties.length > 0) result += `- **${t('agents.role.specialties')}**: ${config.agents.role.specialties.join('、')}\n`
+    if (config.agents.role.specialties.length > 0) result += `- **${t('agents.role.specialties')}**: ${config.agents.role.specialties.map(s => t(s, s)).join('、')}\n`
     if (config.agents.role.language) result += `- **${t('agents.role.language')}**: ${config.agents.role.language}\n`
     result += '\n'
   }
@@ -316,10 +316,10 @@ const generatedAgents = computed(() => {
   if (hasFormats) {
     result += `## ${t('agents.style.title')}\n`
     if (config.agents.formats.length > 0) {
-      result += `### ${t('agents.style.format')}\n${config.agents.formats.map(f => `- ${f}`).join('\n')}\n\n`
+      result += `### ${t('agents.style.format')}\n${config.agents.formats.map(f => `- ${t(f, f)}`).join('\n')}\n\n`
     }
     if (config.agents.habits.length > 0) {
-      result += `### ${t('agents.style.habits')}\n${config.agents.habits.map(h => `- ${h}`).join('\n')}\n\n`
+      result += `### ${t('agents.style.habits')}\n${config.agents.habits.map(h => `- ${t(h, h)}`).join('\n')}\n\n`
     }
   }
   
