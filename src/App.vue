@@ -79,7 +79,7 @@
                           <span class="font-medium text-[var(--text-primary)]">{{ skill.name }}</span>
                           <span v-if="skill.recommended" class="skill-recommended px-2 py-0.5 text-xs rounded">{{ $t('skills.recommended') }}</span>
                         </div>
-                        <p class="text-sm text-[var(--text-muted)] mt-1">{{ skill.description }}</p>
+                        <p class="text-sm text-[var(--text-muted)] mt-1">{{ skill.descriptionKey ? $t(skill.descriptionKey, skill.description) : skill.description }}</p>
                       </div>
                     </label>
                   </div>

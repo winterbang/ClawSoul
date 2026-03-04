@@ -25,44 +25,44 @@ export const skillCategories = [
     id: 'search',
     nameKey: 'skillCategories.search',
     skills: [
-      { id: 'searxng', name: 'searxng', descriptionKey: 'skills.searxngDesc', recommended: true },
-      { id: 'web_search', name: 'web_search', descriptionKey: 'skills.webSearchDesc' },
+      { id: 'searxng', name: 'searxng', description: '隐私搜索，本地 SearXNG 实例', descriptionKey: 'skills.searxngDesc', recommended: true },
+      { id: 'web_search', name: 'web_search', description: 'Brave 搜索 API', descriptionKey: 'skills.webSearchDesc' },
     ]
   },
   {
     id: 'investment',
     nameKey: 'skillCategories.investment',
     skills: [
-      { id: 'a-stock-monitor', name: 'a-stock-monitor', descriptionKey: 'skills.aStockMonitorDesc' },
-      { id: 'astock-research', name: 'astock-research', descriptionKey: 'skills.astockResearchDesc' },
-      { id: 'buffett-analysis', name: 'buffett-analysis', descriptionKey: 'skills.buffettAnalysisDesc' },
-      { id: 'astock-daily', name: 'astock-daily', descriptionKey: 'skills.astockDailyDesc' },
+      { id: 'a-stock-monitor', name: 'a-stock-monitor', description: 'A股量化监控系统', descriptionKey: 'skills.aStockMonitorDesc' },
+      { id: 'astock-research', name: 'astock-research', description: 'A股深度投研分析', descriptionKey: 'skills.astockResearchDesc' },
+      { id: 'buffett-analysis', name: 'buffett-analysis', description: '巴菲特视角投资分析', descriptionKey: 'skills.buffettAnalysisDesc' },
+      { id: 'astock-daily', name: 'astock-daily', description: '每日A股精选', descriptionKey: 'skills.astockDailyDesc' },
     ]
   },
   {
     id: 'dev',
     nameKey: 'skillCategories.dev',
     skills: [
-      { id: 'opencode', name: 'opencode', descriptionKey: 'skills.opencodeDesc', recommended: true },
-      { id: 'code-simplifier', name: 'code-simplifier', descriptionKey: 'skills.codeSimplifierDesc' },
-      { id: 'frontend-design', name: 'frontend-design', descriptionKey: 'skills.frontendDesignDesc' },
-      { id: 'wechat-miniprogram', name: 'wechat-miniprogram', descriptionKey: 'skills.wechatMiniprogramDesc' },
+      { id: 'opencode', name: 'opencode', description: 'AI 编程助手', descriptionKey: 'skills.opencodeDesc', recommended: true },
+      { id: 'code-simplifier', name: 'code-simplifier', description: '代码重构简化', descriptionKey: 'skills.codeSimplifierDesc' },
+      { id: 'frontend-design', name: 'frontend-design', description: '前端界面设计', descriptionKey: 'skills.frontendDesignDesc' },
+      { id: 'wechat-miniprogram', name: 'wechat-miniprogram', description: '微信小程序 CI/CD', descriptionKey: 'skills.wechatMiniprogramDesc' },
     ]
   },
   {
     id: 'doc',
     nameKey: 'skillCategories.doc',
     skills: [
-      { id: 'document-skills', name: 'document-skills', descriptionKey: 'skills.documentSkillsDesc' },
+      { id: 'document-skills', name: 'document-skills', description: 'DOCX/PDF 处理', descriptionKey: 'skills.documentSkillsDesc' },
     ]
   },
   {
     id: 'utility',
     nameKey: 'skillCategories.utility',
     skills: [
-      { id: 'find-skill', name: 'find-skill', descriptionKey: 'skills.findSkillDesc', recommended: true },
-      { id: 'ralph-loop', name: 'ralph-loop', descriptionKey: 'skills.ralphLoopDesc' },
-      { id: 'skill-creator', name: 'skill-creator', descriptionKey: 'skills.skillCreatorDesc' },
+      { id: 'find-skill', name: 'find-skill', description: 'Skill 发现搜索', descriptionKey: 'skills.findSkillDesc', recommended: true },
+      { id: 'ralph-loop', name: 'ralph-loop', description: '迭代开发工作流', descriptionKey: 'skills.ralphLoopDesc' },
+      { id: 'skill-creator', name: 'skill-creator', description: '创建新 Skill', descriptionKey: 'skills.skillCreatorDesc' },
     ]
   },
 ]

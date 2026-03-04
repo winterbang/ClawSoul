@@ -165,6 +165,8 @@ const saveEdit = (index, value) => {
   if (value.trim()) {
     const newTraits = JSON.parse(JSON.stringify(props.traits))
     newTraits[index].name = value.trim()
+    // 如果用户编辑了内置特质，删除 nameKey 使用自定义名称
+    delete newTraits[index].nameKey
     emit('update:traits', newTraits)
   }
   editingIndex.value = -1
@@ -177,6 +179,8 @@ const startDescEdit = (index) => {
 const saveDescEdit = (index, value) => {
   const newTraits = JSON.parse(JSON.stringify(props.traits))
   newTraits[index].description = value.trim()
+  // 如果用户编辑了内置特质描述，删除 descKey 使用自定义描述
+  delete newTraits[index].descKey
   emit('update:traits', newTraits)
   editingDescIndex.value = -1
 }
