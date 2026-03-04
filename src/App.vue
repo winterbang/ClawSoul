@@ -238,22 +238,22 @@ const getRoleNames = () => {
 // 生成 IDENTITY.md
 const generatedIdentity = computed(() => {
   const roleText = config.identity.roles.map(r => {
-    const roleName = $t(`roles.${r}`, roles.find(x => x.id === r)?.name)
+    const roleName = t(`roles.${r}`, roles.find(x => x.id === r)?.name)
     const description = config.identity.roleDescriptions[r] || ''
     return `\n- **${roleName}** — ${description}`
   }).join('')
 
   let result = '# IDENTITY.md\n\n'
-  if (config.identity.name) result += `- **${$t('preview.nameLabel', 'Name')}:** ${config.identity.name}\n`
-  if (config.identity.creature) result += `- **${$t('preview.creatureLabel', 'Creature')}:** ${config.identity.creature}\n`
-  if (config.identity.vibe) result += `- **${$t('preview.vibeLabel', 'Vibe')}:** ${config.identity.vibe}\n`
-  if (config.identity.emoji) result += `- **${$t('preview.emojiLabel', 'Emoji')}:** ${config.identity.emoji}\n`
+  if (config.identity.name) result += `- **${t('preview.nameLabel', 'Name')}:** ${config.identity.name}\n`
+  if (config.identity.creature) result += `- **${t('preview.creatureLabel', 'Creature')}:** ${config.identity.creature}\n`
+  if (config.identity.vibe) result += `- **${t('preview.vibeLabel', 'Vibe')}:** ${config.identity.vibe}\n`
+  if (config.identity.emoji) result += `- **${t('preview.emojiLabel', 'Emoji')}:** ${config.identity.emoji}\n`
   
   if (roleText) {
-    result += `\n## ${$t('preview.rolePositioning', 'Role Positioning')}${roleText}`
+    result += `\n## ${t('preview.rolePositioning', 'Role Positioning')}${roleText}`
   }
   
-  return result || `# IDENTITY.md\n\n${$t('preview.notConfigured', '（未配置）')}`
+  return result || `# IDENTITY.md\n\n${t('preview.notConfigured', '（未配置）')}`
 })
 
 // 生成 SOUL.md
