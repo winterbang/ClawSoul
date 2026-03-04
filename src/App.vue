@@ -6,14 +6,14 @@
       <div class="grid lg:grid-cols-2 gap-6">
         <!-- Left Panel: Configuration -->
         <div class="flex flex-col h-[calc(100vh-140px)]">
-          <Navigation 
+          <Navigation
             :current-view="currentView"
             @change-view="handleViewChange"
             @reset="resetConfig"
           />
 
           <div class="flex-1 overflow-y-auto pr-2">
-            <IdentityConfig 
+            <IdentityConfig
               v-if="currentView === 'identity'"
               :config="config.identity"
               :roles="roles"
@@ -23,25 +23,25 @@
               @update:role-desc="updateRoleDesc"
             />
 
-            <SoulConfig 
+            <SoulConfig
               v-if="currentView === 'soul'"
               :traits="personalityTraits"
               @update:traits="updatePersonalityTraits"
             />
 
-            <AgentsConfig 
+            <AgentsConfig
               v-if="currentView === 'agents'"
               :config="config.agents"
               @update:config="updateAgentsConfig"
             />
 
-            <UserConfig 
+            <UserConfig
               v-if="currentView === 'user'"
               :config="config.user"
               @update:config="updateUserConfig"
             />
 
-            <MemoryConfig 
+            <MemoryConfig
               v-if="currentView === 'memory'"
               :config="config.memory"
               @update:config="updateMemoryConfig"
@@ -62,13 +62,13 @@
                 <div v-for="category in skillCategories" :key="category.id">
                   <h3 class="skill-category-title text-sm font-medium text-[var(--text-secondary)] mb-3 sticky top-0 py-1">{{ $t(`skillCategories.${category.id}`, category.name) }}</h3>
                   <div class="space-y-2">
-                    <label 
-                      v-for="skill in category.skills" 
+                    <label
+                      v-for="skill in category.skills"
                       :key="skill.id"
                       class="skill-item flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-all"
                       :class="config.skills.includes(skill.id) ? 'skill-item-active' : 'skill-item-inactive'"
                     >
-                      <input 
+                      <input
                         type="checkbox"
                         :value="skill.id"
                         v-model="config.skills"
@@ -124,7 +124,7 @@
         </div>
 
         <!-- Right Panel: Preview -->
-        <PreviewPanel 
+        <PreviewPanel
           :content="previewContent"
           :current-tab="currentPreview"
           :tabs="previewTabs"
@@ -136,7 +136,7 @@
     </main>
 
     <ToastNotification :show="toast.show" :message="toast.message" />
-    
+
     <ConfirmDialog
       v-model:show="confirmDialog.show"
       :title="confirmDialog.title"
@@ -170,7 +170,7 @@ import {
   personalityTraits as defaultTraits,
   skillCategories,
   previewTabs,
-  defaultConfig 
+  defaultConfig
 } from './modules/config.js'
 
 const { t } = useI18n()
@@ -237,22 +237,27 @@ const getRoleNames = () => {
 
 // 生成 IDENTITY.md
 const generatedIdentity = computed(() => {
+  // 角色显示：优先用用户自定义描述，否则用内置翻译
   const roleText = config.identity.roles.map(r => {
-    const roleName = t(`roles.${r}`, roles.find(x => x.id === r)?.name)
+    const roleDef = roles.find(x => x.id === r)
+    // 用户输入的描述直接显示，不翻译
     const description = config.identity.roleDescriptions[r] || ''
-    return `\n- **${roleName}** — ${description}`
+    // 角色名称：如果有内置翻译键则翻译，否则直接显示name
+    const roleName = roleDef?.nameKey ? t(roleDef.nameKey, roleDef.name) : roleDef?.name
+    return `\n- **${roleName}** - ${description}`
   }).join('')
 
   let result = '# IDENTITY.md\n\n'
+  // 用户输入的原始值直接显示，不翻译
   if (config.identity.name) result += `- **${t('preview.nameLabel', 'Name')}:** ${config.identity.name}\n`
   if (config.identity.creature) result += `- **${t('preview.creatureLabel', 'Creature')}:** ${config.identity.creature}\n`
   if (config.identity.vibe) result += `- **${t('preview.vibeLabel', 'Vibe')}:** ${config.identity.vibe}\n`
   if (config.identity.emoji) result += `- **${t('preview.emojiLabel', 'Emoji')}:** ${config.identity.emoji}\n`
-  
+
   if (roleText) {
     result += `\n## ${t('preview.rolePositioning', 'Role Positioning')}${roleText}`
   }
-  
+
   return result || `# IDENTITY.md\n\n${t('preview.notConfigured', '（未配置）')}`
 })
 
@@ -260,13 +265,16 @@ const generatedIdentity = computed(() => {
 const generatedSoul = computed(() => {
   const traitDescriptions = personalityTraits
     .map(trait => {
+      // 用户输入的特质名称：如果有 nameKey 说明是内置的，需要翻译；否则是用户自定义的直接显示
       const name = trait.nameKey ? t(trait.nameKey, trait.name) : trait.name
+      // 用户输入的描述：如果有 descKey 说明是内置的，需要翻译；否则直接显示
       const desc = trait.descKey ? t(trait.descKey, trait.description) : trait.description
-      return `- **${name}** — ${desc}（${trait.value}%）`
+      return `- **${name}** - ${desc}（${trait.value}%）`
     })
     .join('\n')
 
-  return `# SOUL.md\n\n## ${config.identity.name || t('default.name')} ${t('preview.styleTitle', '的风格')}\n\n### ${t('preview.personalityTraits', 'Personality Traits')}\n\n${traitDescriptions || t('preview.notConfigured', '（未配置）')}`
+  const aiName = config.identity.name || 'AI助手'
+  return `# SOUL.md\n\n## ${aiName} ${t('preview.styleTitle', '的风格')}\n\n### ${t('preview.personalityTraits', 'Personality Traits')}\n\n${traitDescriptions || t('preview.notConfigured', '（未配置）')}`
 })
 
 // 生成 AGENTS.md
@@ -276,43 +284,55 @@ const generatedAgents = computed(() => {
   const hasFormats = config.agents.formats.length > 0 || config.agents.habits.length > 0
   const hasProhibitions = config.agents.prohibitions.some(p => p)
   const hasCommands = config.agents.commands.some(c => c.trigger && c.action)
-  
+
   if (!hasRoleInfo && !hasWorkflows && !hasFormats && !hasProhibitions && !hasCommands) {
     return `# AGENTS.md\n\n${t('preview.notConfigured', '（未配置）')}`
   }
-  
+
+  // 判断值是否需要翻译：如果是翻译键则翻译，否则直接显示
+  const displayValue = (val) => {
+    if (!val) return ''
+    if (typeof val === 'string' && val.startsWith('agents.')) {
+      return t(val, val)
+    }
+    return val
+  }
+
   const workflowText = Object.entries(config.agents.workflows)
     .filter(([_, steps]) => steps.some(s => s))
     .map(([key, steps]) => {
       const name = key === 'code' ? t('agents.workflow.code') : key === 'research' ? t('agents.workflow.research') : t('agents.workflow.ops')
-      const stepList = steps.filter(s => s).map((s, i) => `${i + 1}. ${t(s, s)}`).join('\n   ')
+      const stepList = steps.filter(s => s).map((s, i) => `${i + 1}. ${displayValue(s)}`).join('\n   ')
       return `### ${name}\n${stepList}`
     }).join('\n\n')
-  
+
   const prohibitionText = config.agents.prohibitions
     .filter(p => p)
-    .map(p => `- ${t(p, p)}`)
+    .map(p => `- ${displayValue(p)}`)
     .join('\n')
-  
+
   const commandText = config.agents.commands
     .filter(c => c.trigger && c.action)
-    .map(c => `- ${c.trigger}: ${t(c.action, c.action)}`)
+    .map(c => `- ${c.trigger}: ${displayValue(c.action)}`)
     .join('\n')
 
   let result = '# AGENTS.md\n\n'
-  
+
   if (hasRoleInfo) {
     result += `## ${t('agents.role.title')}\n`
+    // 用户输入的直接显示
     if (config.agents.role.identity) result += `- **${t('agents.role.identity')}**: ${config.agents.role.identity}\n`
+    // specialties 存储的是翻译键，需要翻译
     if (config.agents.role.specialties.length > 0) result += `- **${t('agents.role.specialties')}**: ${config.agents.role.specialties.map(s => t(s, s)).join('、')}\n`
+    // 用户输入的直接显示
     if (config.agents.role.language) result += `- **${t('agents.role.language')}**: ${config.agents.role.language}\n`
     result += '\n'
   }
-  
+
   if (hasWorkflows) {
     result += `## ${t('agents.workflow.title')}\n${workflowText}\n\n`
   }
-  
+
   if (hasFormats) {
     result += `## ${t('agents.style.title')}\n`
     if (config.agents.formats.length > 0) {
@@ -322,11 +342,11 @@ const generatedAgents = computed(() => {
       result += `### ${t('agents.style.habits')}\n${config.agents.habits.map(h => `- ${t(h, h)}`).join('\n')}\n\n`
     }
   }
-  
+
   if (hasProhibitions) {
     result += `## ${t('agents.prohibitions.title')}\n${prohibitionText}\n\n`
   }
-  
+
   if (hasCommands) {
     result += `## ${t('agents.commands.title')}\n${commandText}`
   }
@@ -338,19 +358,20 @@ const generatedAgents = computed(() => {
 const generatedUser = computed(() => {
   const hasBasicInfo = config.user.basic.name || config.user.basic.occupation || config.user.basic.company
   const hasTech = Object.values(config.user.tech).some(arr => arr.length > 0)
-  
+
   if (!hasBasicInfo && !hasTech) return `# USER.md\n\n${t('preview.notConfigured', '（未配置）')}`
-  
+
   const techText = Object.entries(config.user.tech)
     .filter(([key, _]) => key !== 'other')
     .map(([key, list]) => {
       const name = t(`user.tech${key.charAt(0).toUpperCase() + key.slice(1)}`, key)
       if (list.length === 0) return null
-      return `### ${name}\n${list.map(t => `- ${t}`).join('\n')}`
+      // 技术栈列表直接显示用户输入，不翻译
+      return `### ${name}\n${list.map(item => `- ${item}`).join('\n')}`
     })
     .filter(Boolean)
     .join('\n\n')
-  
+
   const commPrefs = Object.entries(config.user.communication)
     .filter(([_, v]) => v)
     .map(([k, _]) => {
@@ -358,7 +379,7 @@ const generatedUser = computed(() => {
     }).join('\n')
 
   let result = '# USER.md\n\n'
-  
+
   if (hasBasicInfo) {
     result += `## ${t('user.basic')}\n`
     if (config.user.basic.name) result += `- **${t('user.name')}**: ${config.user.basic.name}\n`
@@ -367,7 +388,7 @@ const generatedUser = computed(() => {
     if (config.user.basic.experience) result += `- **${t('user.experience')}**: ${config.user.basic.experience}\n`
     result += '\n'
   }
-  
+
   if (hasTech) {
     result += `## ${t('user.tech')}\n${techText}\n\n`
   }
@@ -383,11 +404,11 @@ const generatedMemory = computed(() => {
     config.memory.projectContext ||
     config.memory.preferences.length > 0 ||
     config.memory.security.length > 0
-  
+
   if (!hasContent) return `# MEMORY.md\n\n${t('preview.notConfigured', '（未配置）')}`
-  
+
   let result = '# MEMORY.md\n\n'
-  
+
   // 重要记忆
   if (config.memory.memories.some(m => m)) {
     result += `## ${t('memory.memories')}\n\n`
@@ -396,7 +417,7 @@ const generatedMemory = computed(() => {
     })
     result += '\n'
   }
-  
+
   // 决策记录
   if (config.memory.decisions.some(d => d.title || d.reason)) {
     result += `## ${t('memory.decisions')}\n\n`
@@ -404,7 +425,7 @@ const generatedMemory = computed(() => {
       result += `### ${decision.title || t('memory.title')}\n${decision.reason || t('memory.reason')}\n\n`
     })
   }
-  
+
   // 经验教训
   if (config.memory.lessons.some(l => l)) {
     result += `## ${t('memory.lessons')}\n\n`
@@ -413,13 +434,13 @@ const generatedMemory = computed(() => {
     })
     result += '\n'
   }
-  
+
   // 项目上下文
   if (config.memory.projectContext) {
     result += `## ${t('memory.project')}\n\n`
     result += config.memory.projectContext + '\n\n'
   }
-  
+
   // 个人偏好
   if (config.memory.preferences.some(p => p.key || p.value)) {
     result += `## ${t('memory.preferences')}\n\n`
@@ -428,7 +449,7 @@ const generatedMemory = computed(() => {
     })
     result += '\n'
   }
-  
+
   // 安全提醒
   if (config.memory.security.some(s => s)) {
     result += `## ${t('memory.security')}\n\n`
@@ -437,7 +458,7 @@ const generatedMemory = computed(() => {
     })
     result += '\n'
   }
-  
+
   return result
 })
 
@@ -446,7 +467,7 @@ const generatedSkillsPrompt = computed(() => {
   if (config.skills.length === 0) {
     return `# Skills\n\n${t('preview.noSkillsSelected', '（未选择任何技能）')}`
   }
-  
+
   return `# ${t('preview.skillsToInstall', 'Skills to Install')}
 
 ${t('preview.copyInstruction', 'Copy the above list to OpenClaw to install these skills')}
@@ -493,7 +514,7 @@ const copyCurrentTab = async () => {
   // 根据当前选中的标签页复制对应内容
   let content = ''
   let message = ''
-  
+
   switch (currentPreview.value) {
     case 'identity':
       content = generatedIdentity.value
@@ -524,7 +545,7 @@ const copyCurrentTab = async () => {
       content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}\n\n---\n\n${generatedSkillsPrompt.value}`
       message = '已复制完整配置到剪贴板！'
   }
-  
+
   await doCopy(content, message)
 }
 
@@ -532,7 +553,7 @@ const copyCurrentTab = async () => {
 const downloadCurrentTab = (tab) => {
   let content = ''
   let filename = ''
-  
+
   switch (tab) {
     case 'identity':
       content = generatedIdentity.value
@@ -563,7 +584,7 @@ const downloadCurrentTab = (tab) => {
       content = `${generatedIdentity.value}\n\n---\n\n${generatedSoul.value}\n\n---\n\n${generatedAgents.value}\n\n---\n\n${generatedUser.value}\n\n---\n\n${generatedMemory.value}\n\n---\n\n${generatedSkillsPrompt.value}`
       filename = 'clawsoul-config.md'
   }
-  
+
   const blob = new Blob([content], { type: 'text/markdown' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
@@ -585,7 +606,7 @@ const doCopy = async (text, successMessage) => {
       console.log('Clipboard API failed, trying fallback')
     }
   }
-  
+
   // 降级方案：使用 textarea 复制
   try {
     const textarea = document.createElement('textarea')
@@ -596,10 +617,10 @@ const doCopy = async (text, successMessage) => {
     document.body.appendChild(textarea)
     textarea.focus()
     textarea.select()
-    
+
     const successful = document.execCommand('copy')
     document.body.removeChild(textarea)
-    
+
     if (successful) {
       showToast(successMessage)
     } else {
@@ -614,7 +635,7 @@ const doCopy = async (text, successMessage) => {
 // 处理视图切换，同步更新预览标签
 const handleViewChange = (view) => {
   currentView.value = view
-  
+
   // 映射视图到预览标签
   const viewToPreview = {
     'identity': 'identity',
@@ -624,7 +645,7 @@ const handleViewChange = (view) => {
     'memory': 'memory',
     'skills': 'skills'
   }
-  
+
   // 如果切换到可映射的视图，同步切换预览
   if (viewToPreview[view]) {
     currentPreview.value = viewToPreview[view]

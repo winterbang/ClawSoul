@@ -80,8 +80,8 @@
               class="flex items-center gap-2"
             >
               <span class="text-xs text-[var(--text-muted)] w-5">{{ index + 1 }}.</span>
-              <input 
-                :value="displayValue(step)"
+              <input
+                :value="step"
                 @input="updateWorkflow(key, index, $event.target.value)"
                 type="text"
                 class="cyber-input flex-1 text-xs py-2"
@@ -162,7 +162,7 @@
             class="flex items-center gap-2"
           >
             <input 
-              :value="displayValue(item)"
+              :value="item"
               @input="updateProhibition(index, $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
@@ -206,7 +206,7 @@
               :placeholder="$t('agents.commands.triggerPlaceholder')"
             />
             <input 
-              :value="displayValue(cmd.action)"
+              :value="cmd.action"
               @input="updateCommand(index, 'action', $event.target.value)"
               type="text"
               class="cyber-input flex-1 text-xs py-2"
@@ -244,16 +244,6 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:config'])
-
-// 处理显示值：如果是翻译键则翻译，否则直接显示
-const displayValue = (value) => {
-  if (!value) return ''
-  // 如果值是翻译键，则进行翻译
-  if (typeof value === 'string' && (value.startsWith('default.') || value.startsWith('agents.') || value.startsWith('user.') || value.startsWith('memory.') || value.startsWith('identity.') || value.startsWith('soul.'))) {
-    return t(value, value)
-  }
-  return value
-}
 
 const specialtyOptions = computed(() => [
   { key: 'agents.specialty.web', label: t('agents.specialty.web') || 'Web开发' },
