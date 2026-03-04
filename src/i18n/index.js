@@ -307,24 +307,6 @@ const zh = {
       advisor: '提供专业建议，辅助决策',
       collaborator: '平等合作，共同创造'
     }
-  },
-  preview: {
-    identity: 'IDENTITY',
-    soul: 'SOUL',
-    agents: 'AGENTS',
-    user: 'USER',
-    memory: 'MEMORY',
-    skills: 'SKILLS',
-    full: '完整',
-    nameLabel: 'Name',
-    creatureLabel: 'Creature',
-    vibeLabel: 'Vibe',
-    emojiLabel: 'Emoji',
-    rolePositioning: 'Role Positioning',
-    coreValues: 'Core Values',
-    personalityTraits: 'Personality Traits',
-    skillsToInstall: 'Skills to Install',
-    copyInstruction: 'Copy the above list to OpenClaw to install these skills'
   }
 }
 
@@ -637,6 +619,12 @@ const en = {
     }
   },
   preview: {
+    title: 'Live Preview',
+    download: 'Download Markdown',
+    copy: 'Copy Config',
+    styleTitle: "'s Style",
+    notConfigured: '(Not Configured)',
+    noSkillsSelected: '(No skills selected)',
     identity: 'IDENTITY',
     soul: 'SOUL',
     agents: 'AGENTS',
