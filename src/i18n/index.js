@@ -85,7 +85,20 @@ const zh = {
       research: '研究任务流程',
       ops: '系统运维流程',
       stepPlaceholder: '例如：理解需求',
-      addStep: '添加步骤'
+      addStep: '添加步骤',
+      step1: '理解需求',
+      step2: '设计方案',
+      step3: '编写代码',
+      step4: '测试验证',
+      step5: '文档更新',
+      research1: '收集信息',
+      research2: '分析总结',
+      research3: '提供来源',
+      research4: '输出报告',
+      ops1: '检查状态',
+      ops2: '分析日志',
+      ops3: '执行修复',
+      ops4: '验证结果'
     },
     style: {
       title: '回答风格',
@@ -123,14 +136,30 @@ const zh = {
       headings: '长内容使用标题分隔',
       bold: '重要内容加粗',
       lists: '适当使用列表',
-      tables: '适当使用表格'
+      tables: '适当使用表格',
+      default1: '使用Markdown格式',
+      default2: '代码块标注语言',
+      default3: '重要内容加粗'
     },
     habit: {
       techTerms: '技术术语使用英文',
       analogy: '解释时使用类比',
       formal: '避免过于口语化',
       conclusionFirst: '先给结论再展开',
-      compare: '提供多个方案时说明优劣'
+      compare: '提供多个方案时说明优劣',
+      default1: '技术术语使用英文',
+      default2: '先给结论再展开',
+      default3: '解释时使用类比'
+    },
+    prohibition: {
+      default1: '不要猜测用户意图，不确定时询问',
+      default2: '不要执行危险操作前不确认',
+      default3: '不要泄露敏感信息（API Key、密码等）'
+    },
+    command: {
+      review: '进行代码审查',
+      explain: '详细解释概念',
+      debug: '系统化调试'
     }
   },
   user: {
@@ -366,7 +395,20 @@ const en = {
       research: 'Research Task Workflow',
       ops: 'System Operations Workflow',
       stepPlaceholder: 'e.g., Understand requirements',
-      addStep: 'Add Step'
+      addStep: 'Add Step',
+      step1: 'Understand requirements',
+      step2: 'Design solution',
+      step3: 'Write code',
+      step4: 'Test and verify',
+      step5: 'Update documentation',
+      research1: 'Collect information',
+      research2: 'Analyze and summarize',
+      research3: 'Provide sources',
+      research4: 'Output report',
+      ops1: 'Check status',
+      ops2: 'Analyze logs',
+      ops3: 'Execute fix',
+      ops4: 'Verify result'
     },
     style: {
       title: 'Response Style',
@@ -404,14 +446,30 @@ const en = {
       headings: 'Use headings for long content',
       bold: 'Bold important content',
       lists: 'Use lists appropriately',
-      tables: 'Use tables appropriately'
+      tables: 'Use tables appropriately',
+      default1: 'Use Markdown format',
+      default2: 'Annotate code blocks with language',
+      default3: 'Bold important content'
     },
     habit: {
       techTerms: 'Use English for technical terms',
       analogy: 'Use analogies when explaining',
       formal: 'Avoid overly casual language',
       conclusionFirst: 'Give conclusion first then elaborate',
-      compare: 'Explain pros/cons when providing multiple options'
+      compare: 'Explain pros/cons when providing multiple options',
+      default1: 'Use English for technical terms',
+      default2: 'Give conclusion first then elaborate',
+      default3: 'Use analogies when explaining'
+    },
+    prohibition: {
+      default1: 'Do not guess user intent, ask when uncertain',
+      default2: 'Do not execute dangerous operations without confirmation',
+      default3: 'Do not leak sensitive information (API Key, password, etc.)'
+    },
+    command: {
+      review: 'Perform code review',
+      explain: 'Explain concept in detail',
+      debug: 'Systematic debugging'
     }
   },
   user: {
