@@ -14,7 +14,7 @@
           class="px-2 py-1 text-xs rounded transition-all"
           :class="currentTab === tab.id ? 'preview-tab-active' : 'preview-tab-inactive'"
         >
-          {{ tab.name }}
+          {{ tab.nameKey ? $t(tab.nameKey, tab.name) : tab.name }}
         </button>
       </div>
     </div>
