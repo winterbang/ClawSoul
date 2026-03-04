@@ -259,10 +259,10 @@ const generatedIdentity = computed(() => {
 // 生成 SOUL.md
 const generatedSoul = computed(() => {
   const traitDescriptions = personalityTraits
-    .map(t => {
-      const name = t.nameKey ? t(t.nameKey, t.name) : t.name
-      const desc = t.descKey ? t(t.descKey, t.description) : t.description
-      return `- **${name}** — ${desc}（${t.value}%）`
+    .map(trait => {
+      const name = trait.nameKey ? t(trait.nameKey, trait.name) : trait.name
+      const desc = trait.descKey ? t(trait.descKey, trait.description) : trait.description
+      return `- **${name}** — ${desc}（${trait.value}%）`
     })
     .join('\n')
 
