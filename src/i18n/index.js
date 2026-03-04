@@ -250,7 +250,24 @@ const zh = {
     download: '下载 Markdown',
     copy: '复制当前配置',
     styleTitle: '的风格',
-    notConfigured: '（未配置）'
+    notConfigured: '（未配置）',
+    noSkillsSelected: '（未选择任何技能）',
+    identity: 'IDENTITY',
+    soul: 'SOUL',
+    agents: 'AGENTS',
+    user: 'USER',
+    memory: 'MEMORY',
+    skills: 'SKILLS',
+    full: '完整',
+    nameLabel: '名字',
+    creatureLabel: '形象',
+    vibeLabel: '性格',
+    emojiLabel: 'Emoji',
+    rolePositioning: '角色定位',
+    coreValues: '核心价值观',
+    personalityTraits: '人格特质',
+    skillsToInstall: '要安装的技能',
+    copyInstruction: '将上面的列表复制到 OpenClaw 以安装这些技能'
   },
   export: {
     summary: '配置摘要',
@@ -275,7 +292,8 @@ const zh = {
   toast: {
     copied: '已复制到剪贴板！',
     downloaded: '已下载！',
-    reset: '配置已重置'
+    reset: '配置已重置',
+    copiedFullConfig: '已复制完整配置到剪贴板！'
   },
   default: {
     name: '吉量',
@@ -558,9 +576,26 @@ const en = {
   preview: {
     title: 'Live Preview',
     download: 'Download Markdown',
-    copy: 'Copy Config',
+    copy: 'Copy Current Config',
     styleTitle: ' Style',
-    notConfigured: '(Not configured)'
+    notConfigured: '(Not Configured)',
+    noSkillsSelected: '(No skills selected)',
+    identity: 'IDENTITY',
+    soul: 'SOUL',
+    agents: 'AGENTS',
+    user: 'USER',
+    memory: 'MEMORY',
+    skills: 'SKILLS',
+    full: 'Full',
+    nameLabel: 'Name',
+    creatureLabel: 'Persona',
+    vibeLabel: 'Vibe',
+    emojiLabel: 'Emoji',
+    rolePositioning: 'Role Positioning',
+    coreValues: 'Core Values',
+    personalityTraits: 'Personality Traits',
+    skillsToInstall: 'Skills to Install',
+    copyInstruction: 'Copy the above list to OpenClaw to install these skills'
   },
   export: {
     summary: 'Config Summary',
@@ -585,7 +620,8 @@ const en = {
   toast: {
     copied: 'Copied to clipboard!',
     downloaded: 'Downloaded!',
-    reset: 'Config reset'
+    reset: 'Config reset',
+    copiedFullConfig: 'Full config copied to clipboard!'
   },
   default: {
     name: 'Jiliang',
