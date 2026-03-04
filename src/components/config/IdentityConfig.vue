@@ -15,7 +15,7 @@
       <div>
         <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.name') }}</label>
         <input 
-          :value="config.name"
+          :value="displayValue(config.name)"
           @input="$emit('update:config', { ...config, name: $event.target.value })"
           type="text" 
           :placeholder="$t('identity.namePlaceholder')"
@@ -26,7 +26,7 @@
       <div>
         <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.creature') }}</label>
         <input 
-          :value="config.creature"
+          :value="displayValue(config.creature)"
           @input="$emit('update:config', { ...config, creature: $event.target.value })"
           type="text" 
           :placeholder="$t('identity.creaturePlaceholder')"
@@ -37,7 +37,7 @@
       <div>
         <label class="block text-sm font-medium mb-2 text-[var(--text-primary)]">{{ $t('identity.vibe') }}</label>
         <input 
-          :value="config.vibe"
+          :value="displayValue(config.vibe)"
           @input="$emit('update:config', { ...config, vibe: $event.target.value })"
           type="text" 
           :placeholder="$t('identity.vibePlaceholder')"
@@ -97,7 +97,7 @@
               {{ $t(`roles.${roleId}`, roles.find(r => r.id === roleId)?.name) }}
             </label>
             <input 
-              :value="config.roleDescriptions[roleId]"
+              :value="displayValue(config.roleDescriptions[roleId])"
               @input="$emit('update:role-desc', roleId, $event.target.value)"
               type="text" 
               :placeholder="$t('identity.roleDescPlaceholder') || '描述这个角色的具体定位...'"
@@ -111,14 +111,27 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { Fingerprint } from 'lucide-vue-next'
 import TooltipIcon from '../ui/TooltipIcon.vue'
 
-defineProps({
+const { t } = useI18n()
+
+const props = defineProps({
   config: Object,
   roles: Array,
   presetEmojis: Array
 })
 
 defineEmits(['update:config', 'toggle-role', 'update:role-desc'])
+
+// 处理显示值：如果是翻译键则翻译，否则直接显示
+const displayValue = (value) => {
+  if (!value) return ''
+  // 如果值是翻译键（以 default. 开头），则进行翻译
+  if (typeof value === 'string' && (value.startsWith('default.') || value.startsWith('identity.') || value.startsWith('agents.') || value.startsWith('user.') || value.startsWith('memory.') || value.startsWith('soul.'))) {
+    return t(value, value)
+  }
+  return value
+}
 </script>

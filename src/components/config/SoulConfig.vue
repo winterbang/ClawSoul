@@ -18,7 +18,7 @@
           <div class="flex items-center gap-2 flex-1">
             <input 
               v-if="editingIndex === index"
-              :value="trait.name"
+              :value="displayValue(trait.name)"
               type="text"
               class="cyber-input text-sm py-1 px-2 w-32"
               @blur="saveEdit(index, $event.target.value)"
@@ -129,15 +129,28 @@
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 import { Sparkles, Plus, X, Pencil } from 'lucide-vue-next'
 import TooltipIcon from '../ui/TooltipIcon.vue'
+
+const { t } = useI18n()
 
 const props = defineProps({
   traits: Array
 })
 
 const emit = defineEmits(['update:traits'])
+
+// 处理显示值：如果是翻译键则翻译，否则直接显示
+const displayValue = (value) => {
+  if (!value) return ''
+  // 如果值是翻译键，则进行翻译
+  if (typeof value === 'string' && (value.startsWith('default.') || value.startsWith('soul.') || value.startsWith('agents.') || value.startsWith('user.') || value.startsWith('memory.') || value.startsWith('identity.'))) {
+    return t(value, value)
+  }
+  return value
+}
 
 // 编辑状态
 const editingIndex = ref(-1)
