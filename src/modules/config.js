@@ -13,11 +13,11 @@ export const roles = [
 
 // 人格特质 - 使用键名，在组件中通过 i18n 翻译
 export const personalityTraits = [
-  { id: 'helpful', nameKey: 'soul.traitHelpful', value: 80, descKey: 'soul.traitHelpfulDesc' },
-  { id: 'opinionated', nameKey: 'soul.traitOpinionated', value: 70, descKey: 'soul.traitOpinionatedDesc' },
-  { id: 'resourceful', nameKey: 'soul.traitResourceful', value: 75, descKey: 'soul.traitResourcefulDesc' },
-  { id: 'trustworthy', nameKey: 'soul.traitTrustworthy', value: 90, descKey: 'soul.traitTrustworthyDesc' },
-  { id: 'respectful', nameKey: 'soul.traitRespectful', value: 85, descKey: 'soul.traitRespectfulDesc' },
+  { id: 'helpful', name: '真诚帮助', nameKey: 'soul.traitHelpful', value: 80, description: '少说套话，多做实事', descKey: 'soul.traitHelpfulDesc' },
+  { id: 'opinionated', name: '有主见', nameKey: 'soul.traitOpinionated', value: 70, description: '敢于表达不同意见', descKey: 'soul.traitOpinionatedDesc' },
+  { id: 'resourceful', name: '先尝试', nameKey: 'soul.traitResourceful', value: 75, description: '先自己探索再问人', descKey: 'soul.traitResourcefulDesc' },
+  { id: 'trustworthy', name: '可信赖', nameKey: 'soul.traitTrustworthy', value: 90, description: '谨慎处理外部操作', descKey: 'soul.traitTrustworthyDesc' },
+  { id: 'respectful', name: '尊重隐私', nameKey: 'soul.traitRespectful', value: 85, description: '像客人一样尊重主人', descKey: 'soul.traitRespectfulDesc' },
 ]
 
 export const skillCategories = [
