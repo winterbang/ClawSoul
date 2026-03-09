@@ -1,6 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import i18n from './i18n/index.js'
-import './assets/main.css'
+import { useAuth } from './composables/useAuth.js'
 
-createApp(App).use(i18n).mount('#app')
+const app = createApp(App)
+
+// 初始化认证状态
+const { initAuth } = useAuth()
+initAuth()
+
+app.mount('#app')
