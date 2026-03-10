@@ -292,6 +292,8 @@ $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION update_updated_at_column() IS '触发器函数：自动更新记录的 updated_at 字段为当前时间';
 
+-- 触发器: 自动更新 profiles.updated_at
+-- 先删除可能存在的旧触发器（支持重新执行脚本）
 DROP TRIGGER IF EXISTS update_profiles_updated_at ON profiles;
 CREATE TRIGGER update_profiles_updated_at
     BEFORE UPDATE ON profiles
@@ -299,6 +301,7 @@ CREATE TRIGGER update_profiles_updated_at
 
 COMMENT ON TRIGGER update_profiles_updated_at ON profiles IS '更新 profile 时自动更新 updated_at 字段';
 
+-- 触发器: 自动更新 configs.updated_at
 DROP TRIGGER IF EXISTS update_configs_updated_at ON configs;
 CREATE TRIGGER update_configs_updated_at
     BEFORE UPDATE ON configs
@@ -323,6 +326,8 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 COMMENT ON FUNCTION public.handle_new_user() IS '触发器函数：新用户注册时自动创建 profile 记录';
 
+-- 触发器: 用户注册后自动创建 profile
+-- 先删除可能存在的旧触发器（支持重新执行脚本）
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
