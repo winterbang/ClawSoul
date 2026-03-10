@@ -18,6 +18,10 @@ const zh = {
     official: '官网',
     docs: '文档'
   },
+  auth: {
+    login: '登录',
+    logout: '退出登录'
+  },
   identity: {
     title: '基础身份 IDENTITY',
     tooltip: '定义 AI 助手的基本身份信息：名字、形象、性格特点和角色定位。这是 AI 认识自己的"身份证"。',
@@ -327,6 +331,10 @@ const en = {
     subtitle: 'Customize Your Digital Assistant',
     official: 'Website',
     docs: 'Docs'
+  },
+  auth: {
+    login: 'Login',
+    logout: 'Logout'
   },
   identity: {
     title: 'Identity',
